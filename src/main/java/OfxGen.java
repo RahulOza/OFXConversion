@@ -18,6 +18,8 @@ public class OfxGen {
             "\r\n\r\n\r\n"+
             "<OFX>\n\r";
 
+    String amazonAccountId = "44000000";
+
     String ofxSignOn ="<OFX>\r\n" +
             "<SIGNONMSGSRSV1>\r\n" +
             "<SONRS>\r\n" +
@@ -29,7 +31,24 @@ public class OfxGen {
             "<DTSERVER>\r\n" +
             "<LANGUAGE>ENG\r\n" +
             "</SONRS>\r\n" +
-            "</SIGNONMSGSRSV1>\r\n";
+            "</SIGNONMSGSRSV1>\r\n"+
+            "<CREDITCARDMSGSRSV1>\r\n"+
+            "<CCSTMTTRNRS>\r\n"+
+            "<TRNUID>0\r\n"+
+            "<STATUS>\r\n"+
+            "<CODE>0\r\n"+
+            "<SEVERITY>INFO\r\n"+
+            "<MESSAGE>OK\r\n"+
+            "</STATUS>\r\n"+
+            "<CCSTMTRS>\r\n"+
+            "<CURDEF>GBP\r\n"+
+            "<CCACCTFROM>"+amazonAccountId+"\r\n"+
+            "</CCACCTFROM>\r\n";
+
+
+     String account
+
+
 
 
     String ofxFooter = "</OFX>";
