@@ -6,7 +6,7 @@ public class TransactionList {
     Double initialBalance = 0.0;
     Double finalBalance = 0.0;
 
-    public static List<Transactions> transactionsListFinal = new ArrayList<Transactions>();
+    List<Transactions> transactionsListFinal = new ArrayList<Transactions>();
 
     void printTransactionList(){
 

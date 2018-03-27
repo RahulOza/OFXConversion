@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DataModeler {
+class DataModeler {
 
 
     List<String> transactionTokenList = new ArrayList<String>();
@@ -15,19 +15,19 @@ public class DataModeler {
     Double finalBalance = 0.0;
 
 
-    void createTransactionList(){
+    TransactionList createTransactionList(){
 
 
         // move date from transactionList and details from transactionList to TransactionList object
         //transactionTokenList
         // we know transactionList[0] has initial balance
-        TransactionList TraslistFinal = new TransactionList();
+        TransactionList traslistFinal = new TransactionList();
 
         DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd-MM-yy", Locale.ENGLISH);
         //LocalDate transDate;
 
-        TraslistFinal.initialBalance = Double.parseDouble(transactionList.get(0));
-        TraslistFinal.finalBalance = finalBalance;
+        traslistFinal.initialBalance = Double.parseDouble(transactionList.get(0));
+        traslistFinal.finalBalance = finalBalance;
 
         transactionList.remove(transactionList.get(0));
 
@@ -54,12 +54,13 @@ public class DataModeler {
                 }
             }
 
-            TraslistFinal.transactionsListFinal.add(trans);
+            traslistFinal.transactionsListFinal.add(trans);
 
             itr++;
         }
 
-        TraslistFinal.printTransactionList();
+        return traslistFinal;
+
 
     }
 

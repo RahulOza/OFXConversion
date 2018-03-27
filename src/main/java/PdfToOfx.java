@@ -1,21 +1,8 @@
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-//import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.Iterator;
-
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-
-import static java.lang.System.exit;
 
 public class PdfToOfx {
 
@@ -42,9 +29,11 @@ public class PdfToOfx {
 
         // tokenise the text
         DM.extract(text);
-        DM.createTransactionList();
+        TransactionList transactionList = DM.createTransactionList();
 
-        OfGen.ofxFileWrite();
+        transactionList.printTransactionList();
+
+        OfGen.ofxFileWriteAmazon(transactionList);
 
         //System.out.println(" /n/n *********************************************** /n/n ");
         //System.out.println(SanitisedString);
