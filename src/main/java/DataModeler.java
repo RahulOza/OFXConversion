@@ -24,7 +24,6 @@ class DataModeler {
         TransactionList traslistFinal = new TransactionList();
 
         DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd-MM-yy", Locale.ENGLISH);
-        //LocalDate transDate;
 
         traslistFinal.initialBalance = Double.parseDouble(transactionList.get(0));
         traslistFinal.finalBalance = finalBalance;

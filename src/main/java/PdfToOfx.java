@@ -1,11 +1,13 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 public class PdfToOfx {
 
+    final static Logger logger = Logger.getLogger(PdfToOfx.class.getName());
 
     public static void main(String[] args) throws IOException {
 
@@ -24,8 +26,7 @@ public class PdfToOfx {
         //Closing the document
         document.close();
 
-
-        //System.out.println(text);
+       // logger.info(text);
 
         // tokenise the text
         DM.extract(text);
@@ -36,7 +37,7 @@ public class PdfToOfx {
         OfGen.ofxFileWriteAmazon(transactionList);
 
         //System.out.println(" /n/n *********************************************** /n/n ");
-        //System.out.println(SanitisedString);
+
     }
 
 

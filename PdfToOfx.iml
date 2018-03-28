@@ -19,5 +19,7 @@
     <orderEntry type="library" name="Maven: net.sf.apt-jelly:apt-jelly-freemarker:2.4" level="project" />
     <orderEntry type="library" name="Maven: net.sf.apt-jelly:apt-jelly-core:2.4" level="project" />
     <orderEntry type="library" name="Maven: freemarker:freemarker:2.3.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.11.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.11.0" level="project" />
   </component>
 </module>
