@@ -74,12 +74,45 @@ class DataModeler {
             if (st.hasMoreTokens())
                 newStr += newStr;
         }*/
-
+        String allTransactionsMulPages ="";
         String delims = "Total Brought Forward From Previous Statement";
         String[] tokens = originalStr.split(delims);
 
+        if(tokens.length > 1) {
+            // update for multiple page statements
+            String delims2 = "Continued";
+            String[] tokens2 = tokens[1].split(delims2);
+
+            if(tokens2.length>1) {
+                // tokens2[0] = useful stuff
+                // token2[1] = needs work
+                String delims3 = "Total Brought Forward From Previous Page";
+                String[] tokens3 = tokens2[1].split(delims3);
+                // token3[0] = useless stuff
+                // token3[1] = useful stuff but it has the amount which needs to be stripped off
+                if(tokens3.length >1) {
+                    Matcher tm1 = Pattern.compile("\\d+(\\.\\d{2})").matcher(tokens3[1]);
+
+                    String[] token4 = {"", ""};
+                    if (tm1.find()) {
+                        token4 = tokens3[1].split(tm1.group(0));
+                    }
+                    //token4[0] = junk
+                    //token4[1] = useful
+                    if(token4.length>1)
+                    allTransactionsMulPages = tokens2[0] + token4[1];
+                }
+            }
+        }
+
+        if(allTransactionsMulPages.length()<=0){
+            allTransactionsMulPages = tokens[1];
+
+        }
+
+
         String delims1 = "Total";
-        String[] tokens1 = tokens[1].split(delims1);
+        String[] tokens1 = allTransactionsMulPages.split(delims1);
 
         Matcher tm = Pattern.compile("\\d+(\\.\\d{2})").matcher(tokens1[1]);
 
