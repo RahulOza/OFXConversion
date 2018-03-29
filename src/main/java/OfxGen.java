@@ -28,7 +28,7 @@ class OfxGen {
        String filePath = "C:/Users/ozara/IdeaProjects/OFXs/";
        DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("yyyyMMdd110000.000", Locale.ENGLISH);
        Integer fitid = 0001;
-       String fitIdPart = new SimpleDateFormat("ddMMyyyyhhmmss").format(new Date());
+       String fitIdPart = new SimpleDateFormat("ddMMyyyyhhmmssS").format(new Date());
        String fitIdPref = "R";
 
       // ofxFileName = filePath + ofxFileName + fileSuffix + ofxExtn;

@@ -145,23 +145,14 @@ class DataModeler {
             int itr = 0;
             while(itr<listOfTransactions.length-1){
                 // we know first element is junk
-                //if(itr == 0){
-                //  itr++;
-
-                //}
-                //else{
                 transactionList.add(listOfTransactions[itr++]);
-                //}
             }
             allTrasactions = listOfTransactions[listOfTransactions.length-1];
         }
 
         transactionList.add(allTrasactions);
 
-
-
         //System.out.println(" /n/n *********************************************** /n/n ");
-
         // ^\d\.(\d+)? for 34.5
 
 
