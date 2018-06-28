@@ -32,13 +32,16 @@
 						<nav>
 							<ul>
 								<!--li><a href="#intro">Intro</a></li-->
-								<li><a href="#elements">PDF Directory</a></li>
 
+
+								<input type="file" id="PDFDir" name="upload" style="visibility: hidden; width: 1px; height: 1px" multiple />
+								<li><a href="" onclick="document.getElementById('PDFDir').click(); return false">PDF Directory</a></li>
 								<!--input type="file" id="files1" name="pdffiles[]" multiple webkitdirectory="" directory=""/ -->
 
-								<li><a href="#contact">OFX Directory</a></li>
+								<input type="file" id="OFXDir" name="upload" style="visibility: hidden; width: 1px; height: 1px" multiple />
+								<li><a href="" onclick="document.getElementById('OFXDir').click(); return false">OFX Directory</a></li>
 								<!--form method="post" action="#"-->
-								<li><a href="#" class="button special icon fa-download">Convert</a></li>
+								<li><a href="#ConvertComplete" class="button special icon fa-download">Convert</a></li>
 								<!--/form-->
 
 							</ul>
@@ -100,8 +103,22 @@
 								</ul>
 							</article>
 
+						<!-- SelectFiles -->
+						<article id="ConvertComplete">
+
+							<h3 class="major">PFD to OFX Conversion now complete :) </h3>
+
+						</article>
+
+
+
 						<!-- Elements -->
 							<article id="elements">
+
+								<input type="file">
+
+
+
 								<h2 class="major">Elements</h2>
 
 								<section>
@@ -113,7 +130,7 @@
 									<h2>Heading Level 2</h2>
 									<h3>Heading Level 3</h3>
 									<h4>Heading Level 4</h4>
-									<h5>Heading Level 5</h5>
+									<h5>dfgdf</h5>
 									<h6>Heading Level 6</h6>
 									<hr />
 									<h4>Blockquote</h4>

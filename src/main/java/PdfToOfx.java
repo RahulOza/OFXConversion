@@ -28,7 +28,7 @@ public class PdfToOfx {
         //Closing the document
         document.close();
 
-        //logger.info(text);
+        logger.info(text);
         logger.info(fileName);
 
         // tokenise the text
