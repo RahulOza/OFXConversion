@@ -56,13 +56,15 @@ public class PdfToOfx {
 
         OfGen.ofxFileWriteAmazon(transactionList,fileName);
 
+        logger.info("Process Competed Successfully");
+
     }
 
     static void convertFileTSB(String fileName) throws IOException {
         DataModelerTSB DMTsb = new DataModelerTSB();
 
         DMTsb.convert(fileName);
-
+        logger.info("Process Competed Successfully");
     }
 
 
@@ -92,17 +94,19 @@ public class PdfToOfx {
             }
         }
         else{
-            if(programType.equals("tsb")){
-                File[] files = new File("C:/Users/ozara/IdeaProjects/TSB").listFiles();
-                for (File file : files) {
-                    if (file.isFile()) {
-                        convertFileTSB(file.getPath());
-                        //listOfPDFs.add(file.getName());
+
+                if (programType.equals("tsb")) {
+                    File[] files = new File("C:/Users/ozara/IdeaProjects/TSB").listFiles();
+                    for (File file : files) {
+                        if (file.isFile()) {
+                            convertFileTSB(file.getPath());
+                            //listOfPDFs.add(file.getName());
+                        }
                     }
                 }
 
 
-            }
+
         }
 
       // SpringApplication.run(PdfToOfx.class, args);

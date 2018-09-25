@@ -27,7 +27,7 @@ class DataModeler {
 
         DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd-MM-yy", Locale.ENGLISH);
 
-        traslistFinal.initialBalance = Double.parseDouble(transactionList.get(0));
+        traslistFinal.initialBalance = Double.parseDouble(transactionList.get(0).replaceAll(",",""));
         traslistFinal.finalBalance = finalBalance;
 
         transactionList.remove(transactionList.get(0));
@@ -44,6 +44,9 @@ class DataModeler {
             while( m.find() ) {
                 // TODO: Log this ?? System.out.println(m.group(0));
                 // here we found the amount.
+                // bug - what if the amount has a comma ? 1,372.72 ...it bombs out, so need
+                // to parse commas out !
+                m.group(0).replaceAll(",","");
                 trans.transactionAmount = Double.parseDouble(m.group(0));
                 // split the amount from the transaction details
                 String [] listOfFinalTransactions = transactionList.get(itr).split(m.group(0));
@@ -85,14 +88,19 @@ class DataModeler {
             String delims2 = "Continued";
             String[] tokens2 = tokens[1].split(delims2);
 
-            if(tokens2.length>1) {
+            int pageCounter1 = tokens2.length;
+           // if(tokens2.length>1) {
+            while(pageCounter1 > 1){
                 // tokens2[0] = useful stuff
                 // token2[1] = needs work
                 String delims3 = "Total Brought Forward From Previous Page";
                 String[] tokens3 = tokens2[1].split(delims3);
                 // token3[0] = useless stuff
                 // token3[1] = useful stuff but it has the amount which needs to be stripped off
-                if(tokens3.length >1) {
+                // bug - break if more than 2 pages..
+                int pageCounter = tokens3.length;
+                //if(tokens3.length >1) { ...working with 2 pages
+                while(pageCounter > 1){
                     Matcher tm1 = Pattern.compile("\\d+(\\.\\d{2})").matcher(tokens3[1]);
 
                     String[] token4 = {"", ""};
@@ -103,7 +111,9 @@ class DataModeler {
                     //token4[1] = useful
                     if(token4.length>1)
                     allTransactionsMulPages = tokens2[0] + token4[1];
+                    pageCounter -= pageCounter;
                 }
+                pageCounter1 -= pageCounter1;
             }
         }
 
