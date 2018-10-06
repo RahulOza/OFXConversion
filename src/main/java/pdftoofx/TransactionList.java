@@ -2,6 +2,8 @@ package pdftoofx;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TransactionList {
 
@@ -23,6 +25,24 @@ public class TransactionList {
             System.out.println(" Amount : £" + t.transactionAmount.toString());
         }
         System.out.println(" *********************************************** ");
+    }
+
+    Boolean datesOutOfSequence(){
+
+        for (Transactions t: transactionsListFinal) {
+
+            // This is due to a bug in Amazon statements wherein dates are messed up
+            // if transaction details contains a date, we have a problem
+            // TODO we need to fix this
+
+            Matcher m = Pattern.compile("\\d\\d-\\d\\d-\\d\\d").matcher(t.transactionDetails);
+
+            if(m.find()){
+                return true;
+
+            }
+        }
+        return false;
     }
 
 }

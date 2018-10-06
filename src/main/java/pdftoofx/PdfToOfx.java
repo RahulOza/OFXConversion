@@ -53,10 +53,15 @@ public class PdfToOfx {
         TransactionList transactionList = DM.createTransactionList();
 
         transactionList.printTransactionList();
-
         OfGen.ofxFileWriteAmazon(transactionList,fileName);
 
-        logger.info("Process Competed Successfully");
+        if(!transactionList.datesOutOfSequence()){
+            logger.info("Process Competed Successfully");
+        }
+        else{
+            logger.info("Dates are out of Sequence, output may be WRONG!!");
+
+        }
 
     }
 

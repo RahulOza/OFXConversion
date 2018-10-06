@@ -68,6 +68,8 @@ class DataModeler {
 
     }
 
+
+
     void extract(String originalStr)
     {   String allTrasactions ="";
         String singleTransaction = "";
@@ -89,8 +91,8 @@ class DataModeler {
             String[] tokens2 = tokens[1].split(delims2);
 
             int pageCounter1 = tokens2.length;
-           // if(tokens2.length>1) {
-            while(pageCounter1 > 1){
+           if(tokens2.length>1) {
+            //while(pageCounter1 > 1){
                 // tokens2[0] = useful stuff
                 // token2[1] = needs work
                 String delims3 = "Total Brought Forward From Previous Page";
@@ -99,8 +101,8 @@ class DataModeler {
                 // token3[1] = useful stuff but it has the amount which needs to be stripped off
                 // bug - break if more than 2 pages..
                 int pageCounter = tokens3.length;
-                //if(tokens3.length >1) { ...working with 2 pages
-                while(pageCounter > 1){
+                if(tokens3.length >1) { //...working with 2 pages
+                //while(pageCounter > 1){
                     Matcher tm1 = Pattern.compile("\\d+(\\.\\d{2})").matcher(tokens3[1]);
 
                     String[] token4 = {"", ""};
@@ -169,4 +171,6 @@ class DataModeler {
 
 
     }
+
+
 }
