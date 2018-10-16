@@ -32,12 +32,10 @@ public class PdfToOfx {
 
         DataModeler DM = new DataModeler();
         OfxGen OfGen = new OfxGen();
-        int numberOfPages = 0;
+
         //Loading an existing document
         File file = new File(fileName);
         PDDocument document = PDDocument.load(file);
-
-        numberOfPages = document.getNumberOfPages();
 
         //Instantiate PDFTextStripper class
         PDFTextStripper pdfStripper = new PDFTextStripper();
@@ -52,7 +50,7 @@ public class PdfToOfx {
         logger.info(fileName);
 
         // tokenise the text
-        DM.extract(text,numberOfPages);
+        DM.extract(text);
         TransactionList transactionList = DM.createTransactionList();
 
         transactionList.printTransactionList();

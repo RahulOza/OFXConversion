@@ -40,14 +40,17 @@ class DataModeler {
             trans.transactionDate = LocalDate.parse(transactionTokenList.get(itr), myformatter);
 
 
-            Matcher m = Pattern.compile("\\d+(\\.\\d{2})").matcher(transactionList.get(itr));
+            //Matcher m = Pattern.compile("\\d+(\\.\\d{2})").matcher(transactionList.get(itr).replace(",",""));
+            Matcher m = Pattern.compile("\\b\\d[\\d,.]*\\b").matcher(transactionList.get(itr));
+
             while( m.find() ) {
                 // TODO: Log this ?? System.out.println(m.group(0));
                 // here we found the amount.
                 // bug - what if the amount has a comma ? 1,372.72 ...it bombs out, so need
                 // to parse commas out !
-                m.group(0).replaceAll(",","");
-                trans.transactionAmount = Double.parseDouble(m.group(0));
+
+                String amountWithoutComma = m.group(0).replace(",","");
+                trans.transactionAmount = Double.parseDouble(amountWithoutComma);
                 // split the amount from the transaction details
                 String [] listOfFinalTransactions = transactionList.get(itr).split(m.group(0));
 
@@ -70,10 +73,10 @@ class DataModeler {
 
 
 
-    void extract(String originalStr, int numberOfPages1)
+    void extract(String originalStr)
     {   String allTrasactions ="";
         String singleTransaction = "";
-        int pageCounter = 1;
+        int pageCounter = 0;
         String allTransactionsMulPages = "";
 
         String workingText = originalStr;
@@ -81,14 +84,16 @@ class DataModeler {
            String delims = "Total Brought Forward From Previous Statement";
            String[] tokens = workingText.split(delims);
 
-           //if (tokens.length > 1) {
-            while (pageCounter > tokens.length -1 ) {
+           String delimspage = "Total Brought Forward From Previous Page";
+           String[] tokensPages = tokens[1].split(delimspage);
+
+            while (pageCounter < tokensPages.length) {
 
 
                 String delims2 = "Continued";
                // String[] tokens2 = tokens[1].split(delims2);
 
-                String[] tokens2 = tokens[pageCounter].split(delims2);
+                String[] tokens2 = tokensPages[pageCounter].split(delims2);
 
                 if (tokens2.length > 1) { // if < 1 => then this is the last page
 
@@ -97,6 +102,7 @@ class DataModeler {
 
 
                     /*
+                    TODO - remove this section
                     code below is old
 
                     String delims3 = "Total Brought Forward From Previous Page";
@@ -106,45 +112,57 @@ class DataModeler {
                     // bug - break if more than 2 pages..
 
                     */
-                    if (tokens3.length > 1) { //...working with 2 pages
+                    if (pageCounter >= 1) { //...for more than 1 page, we need to throw away the amount in first line.
 
-                        Matcher tm1 = Pattern.compile("\\d+(\\.\\d{2})").matcher(tokens3[1]);
+                        Matcher tm1 = Pattern.compile("\\d+(\\.\\d{2})").matcher(tokens2[0]);
 
                         String[] token4 = {"", ""};
                         if (tm1.find()) {
-                            token4 = tokens3[1].split(tm1.group(0));
+                            token4 = tokens2[0].split(tm1.group(0));
                         }
                         //token4[0] = junk
                         //token4[1] = useful
-                        if (token4.length > 1)
-                            allTransactionsMulPages = tokens2[0] + token4[1];
+                        allTransactionsMulPages = allTransactionsMulPages + token4[1];
 
                     }
+                    else
+                        allTransactionsMulPages = allTransactionsMulPages + tokens2[0];
+
 
                 }
+                else{
+                    //if this is the last page ..first throw away the amount from previous page
+                    Matcher tm1 = Pattern.compile("\\d+(\\.\\d{2})").matcher(tokens2[0]);
 
+                    String[] token4 = {"", ""};
+                    if (tm1.find()) {
+                        token4 = tokens2[0].split(tm1.group(0));
+                    }
+                    //token4[0] = junk
+                    //token4[1] = useful
+                    allTransactionsMulPages = allTransactionsMulPages + token4[1];
+                }
+                pageCounter++;
              }
 
-           if (allTransactionsMulPages.length() <= 0) {
+           if (allTransactionsMulPages.length() <= 0 && tokens.length > 1) {
                 //single page statement
                allTransactionsMulPages = tokens[1];
 
            }
-           currentPage--;
+
       // }//while number of pages
         //stuff below is for last page only
         String delims1 = "Total";
         String[] tokens1 = allTransactionsMulPages.split(delims1);
 
-        Matcher tm = Pattern.compile("\\d+(\\.\\d{2})").matcher(tokens1[1]);
+        String finalBalanceString = tokens1[1].replace(",","");
+
+        //final balance may contain commas, filter these out
+        Matcher tm = Pattern.compile("\\d+(\\.\\d{2})").matcher(finalBalanceString);
 
         if( tm.find() ) {
-           // System.out.println(tm.group(0));
-            // here we found the date split the text based on date
-            //if(!transactionTokenList.contains(m.group(0))) {
             finalBalance = Double.parseDouble(tm.group(0));
-
-            //}
         }
 
 
