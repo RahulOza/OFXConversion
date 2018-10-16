@@ -70,61 +70,69 @@ class DataModeler {
 
 
 
-    void extract(String originalStr)
+    void extract(String originalStr, int numberOfPages1)
     {   String allTrasactions ="";
         String singleTransaction = "";
+        int pageCounter = 1;
+        String allTransactionsMulPages = "";
 
-       /*/ StringTokenizer st = new StringTokenizer(originalStr, "Total Brought Forward From Previous Statement");
-        while(st.hasMoreTokens())
-        {   st.nextToken();
-            String throwawayStr = st.nextToken();
-            if (st.hasMoreTokens())
-                newStr += newStr;
-        }*/
-        String allTransactionsMulPages ="";
-        String delims = "Total Brought Forward From Previous Statement";
-        String[] tokens = originalStr.split(delims);
+        String workingText = originalStr;
 
-        if(tokens.length > 1) {
-            // update for multiple page statements
-            String delims2 = "Continued";
-            String[] tokens2 = tokens[1].split(delims2);
+           String delims = "Total Brought Forward From Previous Statement";
+           String[] tokens = workingText.split(delims);
 
-            int pageCounter1 = tokens2.length;
-           if(tokens2.length>1) {
-            //while(pageCounter1 > 1){
-                // tokens2[0] = useful stuff
-                // token2[1] = needs work
-                String delims3 = "Total Brought Forward From Previous Page";
-                String[] tokens3 = tokens2[1].split(delims3);
-                // token3[0] = useless stuff
-                // token3[1] = useful stuff but it has the amount which needs to be stripped off
-                // bug - break if more than 2 pages..
-                int pageCounter = tokens3.length;
-                if(tokens3.length >1) { //...working with 2 pages
-                //while(pageCounter > 1){
-                    Matcher tm1 = Pattern.compile("\\d+(\\.\\d{2})").matcher(tokens3[1]);
+           //if (tokens.length > 1) {
+            while (pageCounter > tokens.length -1 ) {
 
-                    String[] token4 = {"", ""};
-                    if (tm1.find()) {
-                        token4 = tokens3[1].split(tm1.group(0));
+
+                String delims2 = "Continued";
+               // String[] tokens2 = tokens[1].split(delims2);
+
+                String[] tokens2 = tokens[pageCounter].split(delims2);
+
+                if (tokens2.length > 1) { // if < 1 => then this is the last page
+
+                    // tokens2[0] = useful stuff - trsactions from page 1
+                    // token2[1] = needs work
+
+
+                    /*
+                    code below is old
+
+                    String delims3 = "Total Brought Forward From Previous Page";
+                    String[] tokens3 = tokens2[1].split(delims3);
+                    // token3[0] = useless stuff
+                    // token3[1] = useful stuff but it has the amount which needs to be stripped off - transactions from final page
+                    // bug - break if more than 2 pages..
+
+                    */
+                    if (tokens3.length > 1) { //...working with 2 pages
+
+                        Matcher tm1 = Pattern.compile("\\d+(\\.\\d{2})").matcher(tokens3[1]);
+
+                        String[] token4 = {"", ""};
+                        if (tm1.find()) {
+                            token4 = tokens3[1].split(tm1.group(0));
+                        }
+                        //token4[0] = junk
+                        //token4[1] = useful
+                        if (token4.length > 1)
+                            allTransactionsMulPages = tokens2[0] + token4[1];
+
                     }
-                    //token4[0] = junk
-                    //token4[1] = useful
-                    if(token4.length>1)
-                    allTransactionsMulPages = tokens2[0] + token4[1];
-                    pageCounter -= pageCounter;
+
                 }
-                pageCounter1 -= pageCounter1;
-            }
-        }
 
-        if(allTransactionsMulPages.length()<=0){
-            allTransactionsMulPages = tokens[1];
+             }
 
-        }
+           if (allTransactionsMulPages.length() <= 0) {
+                //single page statement
+               allTransactionsMulPages = tokens[1];
 
-
+           }
+           currentPage--;
+      // }//while number of pages
+        //stuff below is for last page only
         String delims1 = "Total";
         String[] tokens1 = allTransactionsMulPages.split(delims1);
 
