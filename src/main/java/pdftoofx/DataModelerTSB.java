@@ -28,7 +28,7 @@ public class DataModelerTSB {
             destFileName = destFileNameParts[0]+destFileSuffix+"."+destFileNameParts[1];
         }
         else{
-            //Something funky here so let the file by fileSuffix
+            //Something funky here so let the file be fileSuffix
             destFileName = destFileSuffix + ".qif";
         }
 
