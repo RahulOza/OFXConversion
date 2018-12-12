@@ -9,28 +9,68 @@ import java.util.logging.Logger;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.springframework.boot.CommandLineRunner;
+/*import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;*/
 
 import static java.lang.System.exit;
 
-@SpringBootApplication
+//@SpringBootApplication
 
 //@EnableWebMvc
 public class PdfToOfx {
 
     final static Logger logger = Logger.getLogger(PdfToOfx.class.getName());
+    public static Double initialBalance = 0.0;
 
 
+    /* 5 Dec 2018 - Unfortunately they keep changing pdf format, which is a pain !!!
+    Rahul has taken a decision to use csv format instead as that will not change.
+    That however requires the previous balance to be input.
+     */
+    static void convertFileRBSSelect(String fileName, Double initialBalance) throws IOException{
+        DataModelerRBSSelect DM = new DataModelerRBSSelect();
+        OfxGen OfGen = new OfxGen();
 
+        TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
+
+        transactionList.printTransactionList();
+        OfGen.ofxFileWriteAmazon(transactionList,fileName,"select");
+
+        if(!transactionList.datesOutOfSequence()){
+            logger.info("Process Competed Successfully");
+        }
+        else{
+            logger.info("Dates are out of Sequence, output may be WRONG!!");
+
+        }
+
+    }
+    static void convertFileAmazon(String fileName, Double initialBalance) throws IOException{
+        DataModelerAmazon DM = new DataModelerAmazon();
+        OfxGen OfGen = new OfxGen();
+
+        TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
+
+        transactionList.printTransactionList();
+        OfGen.ofxFileWriteAmazon(transactionList,fileName,"amazon");
+
+        if(!transactionList.datesOutOfSequence()){
+            logger.info("Process Competed Successfully");
+        }
+        else{
+            logger.info("Dates are out of Sequence, output may be WRONG!!");
+
+        }
+
+    }
     static void convertFile(String fileName) throws IOException{
 
-        DataModeler DM = new DataModeler();
+        DataModelerAmazon DM = new DataModelerAmazon();
         OfxGen OfGen = new OfxGen();
 
         //Loading an existing document
@@ -54,7 +94,7 @@ public class PdfToOfx {
         TransactionList transactionList = DM.createTransactionList();
 
         transactionList.printTransactionList();
-        OfGen.ofxFileWriteAmazon(transactionList,fileName);
+        OfGen.ofxFileWriteAmazon(transactionList,fileName,"amazon");
 
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");
@@ -65,7 +105,6 @@ public class PdfToOfx {
         }
 
     }
-
     static void convertFileTSB(String fileName) throws IOException {
         DataModelerTSB DMTsb = new DataModelerTSB();
 
@@ -78,14 +117,21 @@ public class PdfToOfx {
         List<String> listOfPDFs = new ArrayList<String>();
         String programType = null;
 
-        if(args.length == 1)
+        if(args.length >= 1)
         {
             programType = args[0];
+            if((programType.equals("amazon")||programType.equals("select")) && (args.length == 2)){
+                PdfToOfx.initialBalance = Double.parseDouble(args[1]);
+            }else{
+                logger.warning("Something isn't right, balance may be incorrect");
+            }
+
         }
         else
         {
+            //if these are amazon statements, we also need initial balance to be provided manually.
             logger.severe("Insufficient or Invalid Arguments");
-            logger.severe("Valid way to run - java PdfToOfx [amazon/tsb]");
+            logger.severe("Valid way to run - java PdfToOfx [amazon/tsb] [initial balance]");
             exit(1);
         }
 
@@ -94,7 +140,12 @@ public class PdfToOfx {
             File[] files = new File("C:/Users/ozara/IdeaProjects/PDFs").listFiles();
             for (File file : files) {
                 if (file.isFile()) {
-                    convertFile(file.getPath());
+                    //convertFile converts from PDF to OFX, this no longer works as they keep changing format of
+                    // of the PDF files.
+                    //convertFile(file.getPath());
+                    //convertFileAmazon - converts csv to OFX
+                    convertFileAmazon(file.getPath(),PdfToOfx.initialBalance);
+
                     //listOfPDFs.add(file.getName());
                 }
             }
@@ -110,6 +161,16 @@ public class PdfToOfx {
                         }
                     }
                 }
+            if (programType.equals("select")) {
+                File[] files = new File("C:/Users/ozara/IdeaProjects/RBSSelect").listFiles();
+                for (File file : files) {
+                    if (file.isFile()) {
+                        convertFileRBSSelect(file.getPath(),PdfToOfx.initialBalance);
+                        //listOfPDFs.add(file.getName());
+                    }
+                }
+            }
+
 
 
 
