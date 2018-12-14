@@ -9,19 +9,20 @@ import java.util.logging.Logger;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-/*import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;*/
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import static java.lang.System.exit;
 
-//@SpringBootApplication
+@SpringBootApplication
+@EnableWebMvc
 
-//@EnableWebMvc
 public class PdfToOfx {
 
     final static Logger logger = Logger.getLogger(PdfToOfx.class.getName());
@@ -135,7 +136,7 @@ public class PdfToOfx {
             exit(1);
         }
 
-
+        /*
         if(programType.equals("amazon")) {
             File[] files = new File("C:/Users/ozara/IdeaProjects/PDFs").listFiles();
             for (File file : files) {
@@ -169,18 +170,18 @@ public class PdfToOfx {
                         //listOfPDFs.add(file.getName());
                     }
                 }
-            }
+            } */
 
 
 
 
-        }
+       // }
 
-      // SpringApplication.run(PdfToOfx.class, args);
+      SpringApplication.run(PdfToOfx.class, args);
 
 
 
-        /*ApplicationContext ctx = SpringApplication.run(PdfToOfx.class, args);
+       /* ApplicationContext ctx = SpringApplication.run(PdfToOfx.class, args);
         System.out.println("Let's inspect the beans provided by Spring Boot:");
 
         String[] beanNames = ctx.getBeanDefinitionNames();
@@ -192,7 +193,8 @@ public class PdfToOfx {
 
     }
 
-   /* @Bean
+    /* Do not uncomment unless you have proceeded to use it else you will get storageservice error*/
+   /*@Bean
     CommandLineRunner init(StorageService storageService) {
         return (args) -> {
             storageService.deleteAll();
@@ -200,5 +202,12 @@ public class PdfToOfx {
         };
     }*/
 
-
+    @Bean
+    ServletContextTemplateResolver templateResolver(){
+        ServletContextTemplateResolver resolver=new ServletContextTemplateResolver();
+        resolver.setSuffix(".html");
+        resolver.setPrefix("/resources");
+        resolver.setTemplateMode("HTML5");
+        return resolver;
+    }
 }

@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 //import hello.storage.StorageFileNotFoundException;
 //import hello.storage.StorageService;
 
-@Controller
+//@Controller
 public class FileUploadController {
 
     private final StorageService storageService;

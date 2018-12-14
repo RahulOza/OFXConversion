@@ -10,20 +10,20 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-/*@Controller*/
+@Controller
 public class HomeController {
 
-   /* private final StorageService storageService;
+   /*private final StorageService storageService;
 
     @Autowired
     public void FileUploadController(StorageService storageService) {
         this.storageService = storageService;
-    }
+    }*/
 
     @RequestMapping(value = "/")
     public String index() {
 
-        public String listUploadedFiles(Model model) throws IOException {
+       /* public String listUploadedFiles(Model model) throws IOException {
 
             model.addAttribute("files", storageService.loadAll().map(
                     path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
@@ -31,11 +31,11 @@ public class HomeController {
                     .collect(Collectors.toList()));
 
             return "uploadForm";
-        }
+        }*/
 
+        //uploadForm is the default page !!
+        return "uploadForm";
 
-
-        return "index.html";
         //return "pdftoofx/tempIndex.html";
         //return "response.html";
 
@@ -57,7 +57,7 @@ public class HomeController {
        return "index.html";
 
     }
-   /*@RequestMapping(value = "/formsubmit", method = RequestMethod.GET)
+   @RequestMapping(value = "/formsubmit", method = RequestMethod.GET)
     public String mysubmitContentGet(){
 
         //return "index.html#ConvertComplete";
@@ -65,16 +65,16 @@ public class HomeController {
         return "response.html";
         //return "index.html";
 
-    }*/
+    }
 
-   /* @RequestMapping(value = "/error")
+    /*@RequestMapping(value = "/error")
     public String errorResponse() {
         //return "index.html";
         //return "pdftoofx/tempIndex.html";
         return "Error.html";
         //return "index.html#ConvertComplete";
-    } */
-    /*@PostMapping("/form")
+    }*/
+   /* @PostMapping("/form")
     public String formPost() {
 
         return "index.html";
