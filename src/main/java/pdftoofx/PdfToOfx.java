@@ -21,7 +21,8 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import static java.lang.System.exit;
 
 @SpringBootApplication
-@EnableWebMvc
+// do not enable MVC until its required. Thymeleaf
+//@EnableWebMvc
 
 public class PdfToOfx {
 
@@ -202,6 +203,7 @@ public class PdfToOfx {
         };
     }*/
 
+    //Thymeleaf
     @Bean
     ServletContextTemplateResolver templateResolver(){
         ServletContextTemplateResolver resolver=new ServletContextTemplateResolver();

@@ -34,8 +34,10 @@
 							<ul>
 								<!--li><a href="#intro">Intro</a></li-->
 
-								<form method="post" action="/formsubmit">
+								<form method="get" action="/formsubmit">
 								<input type="file" id="PDFDir" name="upload" style="visibility: hidden; width: 1px; height: 1px" multiple />
+								
+								<!-- input type="file" id="PDFDir" name="upload" style="visibility: hidden; width: 1px; height: 1px" multiple / -->
 								<li><a href="" onclick="document.getElementById('PDFDir').click(); return false">PDF Directory</a></li>
 								<!--input type="file" id="files1" name="pdffiles[]" multiple webkitdirectory="" directory=""/ -->
 
@@ -50,12 +52,12 @@
 
 							</ul>
 						</nav>
+
+						<!-- Intro -->
 					</header>
 
 				<!-- Main -->
 					<div id="main">
-
-						<!-- Intro -->
 							<article id="intro">
 								<h2 class="major">Intro</h2>
 								<span class="image main"><img src="images/pic01.jpg" alt="" /></span>

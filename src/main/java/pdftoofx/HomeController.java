@@ -10,6 +10,18 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+/*
+
+If you use thymeleaf ...request is serviced from templates. (as content is dynamic)
+
+
+TODO change this section once website is working
+
+Currently we are just working with uploadForm.html and trying to get back pages from static folder !!
+
+*/
+
+
 @Controller
 public class HomeController {
 
@@ -33,37 +45,34 @@ public class HomeController {
             return "uploadForm";
         }*/
 
-        //uploadForm is the default page !!
-        return "uploadForm";
 
-        //return "pdftoofx/tempIndex.html";
-        //return "response.html";
-
-        //return "form.html";
-        //return "index.html#ConvertComplete";
+        return "index";
     }
 
-   @RequestMapping(value = "/formsubmit", method = RequestMethod.POST)
-    public String mysubmitContentPost(ModelMap modelMap){
+ /*  @RequestMapping(value = "/formsubmit", method = RequestMethod.POST)
+   // public String mysubmitContentPost(ModelMap modelMap){
+   public String mysubmitContentPost(){
+        //if(modelMap.containsValue("PDFDir")){
+        //}
 
-        if(modelMap.containsValue("PDFDir")){
 
-
-   }
         //return "index.html#ConvertComplete";
 
        // return "response";
 
-       return "index.html";
+       return "Error.html";
 
-    }
-   @RequestMapping(value = "/formsubmit", method = RequestMethod.GET)
+    }*/
+
+
+    @RequestMapping(value = "/formsubmit" )
     public String mysubmitContentGet(){
 
         //return "index.html#ConvertComplete";
 
-        return "response.html";
-        //return "index.html";
+
+        return "response";
+
 
     }
 
