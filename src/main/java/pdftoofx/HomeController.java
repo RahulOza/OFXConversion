@@ -46,7 +46,8 @@ public class HomeController {
         }*/
 
 
-        return "index";
+       // return "index";
+        return "uploadForm";
     }
 
  /*  @RequestMapping(value = "/formsubmit", method = RequestMethod.POST)
@@ -60,15 +61,14 @@ public class HomeController {
 
        // return "response";
 
-       return "Error.html";
 
     }*/
 
 
     @RequestMapping(value = "/formsubmit" )
-    public String mysubmitContentGet(){
+    public String mysubmitContentPost(){
 
-        //return "index.html#ConvertComplete";
+
 
 
         return "response";
@@ -76,16 +76,13 @@ public class HomeController {
 
     }
 
-    /*@RequestMapping(value = "/error")
-    public String errorResponse() {
-        //return "index.html";
-        //return "pdftoofx/tempIndex.html";
-        return "Error.html";
-        //return "index.html#ConvertComplete";
-    }*/
-   /* @PostMapping("/form")
-    public String formPost() {
+    /*
+@RequestMapping(value = "/error")
+public String errorResponse() {
 
-        return "index.html";
-    }*/
+return "Error.html";
+
+}
+*/
+
 }

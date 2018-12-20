@@ -1,4 +1,4 @@
-package pdftoofx;
+package pdftoofx.storage;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -19,10 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-//import hello.storage.StorageFileNotFoundException;
-//import hello.storage.StorageService;
+import pdftoofx.storage.StorageFileNotFoundException;
+import pdftoofx.storage.StorageService;
 
-//@Controller
+@Controller
 public class FileUploadController {
 
     private final StorageService storageService;
@@ -63,9 +63,9 @@ public class FileUploadController {
         return "redirect:/";
     }
 
-    /*@ExceptionHandler(StorageFileNotFoundException.class)
+    @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
         return ResponseEntity.notFound().build();
-    }*/
+    }
 
 }

@@ -17,13 +17,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import pdftoofx.storage.StorageProperties;
+import pdftoofx.storage.StorageService;
+
 
 import static java.lang.System.exit;
 
 @SpringBootApplication
 // do not enable MVC until its required. Thymeleaf
 //@EnableWebMvc
-
+@EnableConfigurationProperties(StorageProperties.class)
 public class PdfToOfx {
 
     final static Logger logger = Logger.getLogger(PdfToOfx.class.getName());
@@ -195,21 +198,21 @@ public class PdfToOfx {
     }
 
     /* Do not uncomment unless you have proceeded to use it else you will get storageservice error*/
-   /*@Bean
+  @Bean
     CommandLineRunner init(StorageService storageService) {
-        return (args) -> {
-            storageService.deleteAll();
-            storageService.init();
-        };
-    }*/
+      return (args) -> {
+          storageService.deleteAll();
+          storageService.init();
+      };
+  }
 
     //Thymeleaf
-    @Bean
+    /*@Bean
     ServletContextTemplateResolver templateResolver(){
         ServletContextTemplateResolver resolver=new ServletContextTemplateResolver();
         resolver.setSuffix(".html");
         resolver.setPrefix("/resources");
         resolver.setTemplateMode("HTML5");
         return resolver;
-    }
+    }*/
 }
