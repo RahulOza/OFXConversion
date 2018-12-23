@@ -37,12 +37,20 @@
 							<ul>
 								<form method="POST" enctype="multipart/form-data" action="/formsubmit">
 									<div class="field">
-										<input type="radio" id="Select" name="statement" value="Select"  />
+										<input type="radio" id="Select" name="statement" value="Select" onClick="getResults(this)" />
 										<label for="Select">RBS Select</label>
-										<input type="radio" id="TSB" name="statement" value="TSB" checked="checked" />
+										<input type="radio" id="TSB" name="statement" value="TSB" onClick="getResults(this)" checked="checked" />
 										<label for="TSB">TSB</label>
-										<input type="radio" id="Amazon" name="statement" value="Amazon" />
+										<input type="radio" id="Amazon" name="statement" value="Amazon" onClick="getResults(this)" />
 										<label for="Amazon">Amazon</label>
+
+
+										<div class="balance" style="display:none;">
+												<label for="balance">Last Balance:£</label>
+												<input type="number" min="0"  max="9999" size="4"  step="0.01" name="balance" id="balance" />
+
+										</div>
+
 										<input type="file" id="PDFDir" name="file" style="visibility: hidden; width: 1px; height: 1px"  multiple="multiple" />
 										<li><a href="" onclick="document.getElementById('PDFDir').click(); return false">PDF Directory</a></li>
 									</div>
@@ -393,6 +401,6 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
+		    <script src="assets/js/textdisplay.js"></script>
 	</body>
 </html>

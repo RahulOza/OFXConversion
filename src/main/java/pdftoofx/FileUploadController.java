@@ -56,7 +56,8 @@ public class FileUploadController {
     @PostMapping("/formsubmit")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes,
-                                   @RequestParam("statement") String statement) {
+                                   @RequestParam("statement") String statement,
+                                   @RequestParam("balance") Double initBalance) {
 
         storageService.store(file);
         redirectAttributes.addFlashAttribute("message",
@@ -72,13 +73,13 @@ public class FileUploadController {
         }
         if(statement.equals("Select")) {
             try {
-                PdfToOfx.convertFileTSB(storageService.load(file.getOriginalFilename()).toString());
+                PdfToOfx.convertFileRBSSelect(storageService.load(file.getOriginalFilename()).toString(),initBalance);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }if(statement.equals("Amazon")) {
             try {
-                PdfToOfx.convertFileTSB(storageService.load(file.getOriginalFilename()).toString());
+                PdfToOfx.convertFileAmazon(storageService.load(file.getOriginalFilename()).toString(),initBalance);
             } catch (IOException e) {
                 e.printStackTrace();
             }

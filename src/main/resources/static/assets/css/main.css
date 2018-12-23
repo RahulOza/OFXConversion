@@ -119,12 +119,22 @@
 
 		}
 
-	body, input, select, textarea {
+	body, select, textarea {
 		color: #ffffff;
+		//color: #1b1f22;
 		font-family: "Source Sans Pro", sans-serif;
 		font-weight: 300;
 		font-size: 1rem;
 		line-height: 1.65;
+	}
+
+	input{
+	color: #1b1f22;
+		font-family: "Source Sans Pro", sans-serif;
+		font-weight: 300;
+		font-size: 1rem;
+		line-height: 1.65;
+
 	}
 
 	a {
@@ -1592,3 +1602,4 @@
 		body.is-loading #footer {
 			opacity: 0;
 		}
+
