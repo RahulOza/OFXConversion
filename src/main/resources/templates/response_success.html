@@ -20,6 +20,13 @@
 						<article id="ConvertComplete">
 
 								<!--li><a href="#ConvertComplete" class="button special icon fa-download">Convert</a></li-->
+							<div>
+								<ul>
+									<li th:each="file : ${files}">
+										<a th:href="${file}" th:text="${file}" />
+									</li>
+								</ul>
+							</div>
 
 
 							<h3 class="major">PFD to OFX Conversion now complete :) </h3>

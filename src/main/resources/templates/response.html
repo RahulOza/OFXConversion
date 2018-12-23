@@ -24,15 +24,42 @@
 						<div class="logo">
 							<span class="icon fa-diamond"></span>
 						</div>
+
+
+
 						<div class="content">
 							<div class="inner">
-								<h1>Success !!PDF to OFX Conversion now complete:)</h1>
+								<div th:if="${message}">
+									<h2 th:text="${message}"/>
+									<nav>
+										<ul th:each="file : ${files}">
+										<li> <a th:href="${file}" th:text="${file}" /> </li>
+
+									    </ul>
+									</nav>
+
+								</div>
+								<!-- h1>Happy Days, please click link below to download your file!</h1 -->
+
 								
 							</div>
 						</div>
-						
-							
 
+
+						<div class="content">
+							<nav>
+								<ul>
+									<form method="GET"  action="/clearform">
+										<div class="field">
+
+										</div>
+										<li><input type="submit" value="Clear and Go Back" class="special" /></li>
+
+									</form>
+
+								</ul>
+							</nav>
+						</div>
 
 							
 						

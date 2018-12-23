@@ -35,12 +35,13 @@ public class FileUploadController {
     @GetMapping("/")
     public String listUploadedFiles(Model model) throws IOException {
 
-        model.addAttribute("files", storageService.loadAll().map(
+        /*model.addAttribute("files", storageService.loadAll().map(
                 path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
                         "serveFile", path.getFileName().toString()).build().toString())
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList())); */
 
-        return "uploadForm";
+        //return "uploadForm";
+        return "index";
     }
 
     @GetMapping("/files/{filename:.+}")
@@ -52,15 +53,61 @@ public class FileUploadController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-    @PostMapping("/")
+    @PostMapping("/formsubmit")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+                                   RedirectAttributes redirectAttributes,
+                                   @RequestParam("statement") String statement) {
 
         storageService.store(file);
         redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
+                "Successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/";
+        // Now that file has been uploaded, convert it
+        if(statement.equals("TSB")) {
+            try {
+                PdfToOfx.convertFileTSB(storageService.load(file.getOriginalFilename()).toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(statement.equals("Select")) {
+            try {
+                PdfToOfx.convertFileTSB(storageService.load(file.getOriginalFilename()).toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }if(statement.equals("Amazon")) {
+            try {
+                PdfToOfx.convertFileTSB(storageService.load(file.getOriginalFilename()).toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            redirectAttributes.addFlashAttribute("message",
+                    "We are not yet ready for " + statement + "!");
+        }
+        // return "redirect:/";
+        return "redirect:/response";
+    }
+    @GetMapping("/response")
+    public String respondFileUpload(Model model) throws IOException {
+
+
+        model.addAttribute("files", storageService.loadAll().map(
+                path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
+                        "serveFile", path.getFileName().toString()).build().toString())
+                .collect(Collectors.toList()));
+
+
+        return "response";
+    }
+
+    @GetMapping("/clearform")
+    public String clearAndBack() throws IOException{
+        storageService.deleteAll();
+        storageService.init();
+        return "index";
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

@@ -6,7 +6,7 @@
 -->
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>PDF to OFX By Rahul Oza</title>
+		<title>OFX Converter By Rahul Oza</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -27,36 +27,32 @@
 						</div>
 						<div class="content">
 							<div class="inner">
-								<h1>PDF to OFX Converter</h1>
-								<p>Converts pdf statements from Amazon New Day cards to Microsoft Money OFX format.</p>
+								<h1>OFX Converter</h1>
+								<p>Converts csv statements from Amazon, RBS Select and TSB to Microsoft Money OFX format.</p>
 							</div>
 						</div>
-						
+
+						<div class="content">
 						<nav>
 							<ul>
-								<!--li><a href="#intro">Intro</a></li-->
-
-								<form method="post" action="/formsubmit">
-								<input type="file" id="PDFDir" name="upload" style="visibility: hidden; width: 1px; height: 1px" multiple="multiple" />
-								<li><a href="" onclick="document.getElementById('PDFDir').click(); return false">PDF Directory</a></li>
-								<!--input type="file" id="files1" name="pdffiles[]" multiple webkitdirectory="" directory=""/ -->
-
-								<input type="file" id="OFXDir" name="upload" style="visibility: hidden; width: 1px; height: 1px" multiple="multiple" />
-								<li><a href="" onclick="document.getElementById('OFXDir').click(); return false">OFX Directory</a></li>
-
-								<!--li><a href="#ConvertComplete" class="button special icon fa-download">Convert</a></li-->
-									<!-- li><a class="button special icon fa-download">Convert</a></li-->
+								<form method="POST" enctype="multipart/form-data" action="/formsubmit">
+									<div class="field">
+										<input type="radio" id="Select" name="statement" value="Select"  />
+										<label for="Select">RBS Select</label>
+										<input type="radio" id="TSB" name="statement" value="TSB" checked="checked" />
+										<label for="TSB">TSB</label>
+										<input type="radio" id="Amazon" name="statement" value="Amazon" />
+										<label for="Amazon">Amazon</label>
+										<input type="file" id="PDFDir" name="file" style="visibility: hidden; width: 1px; height: 1px"  multiple="multiple" />
+										<li><a href="" onclick="document.getElementById('PDFDir').click(); return false">PDF Directory</a></li>
+									</div>
 									<li><input type="submit" value="Convert" class="special" /></li>
-									
-									<script src="gallery.js"></script>
-
 
 								</form>
 
 							</ul>
 						</nav>
-
-						<!-- Intro -->
+						</div>
 					</header>
 
 				<!-- Main -->

@@ -24,8 +24,6 @@ import pdftoofx.storage.StorageService;
 import static java.lang.System.exit;
 
 @SpringBootApplication
-// do not enable MVC until its required. Thymeleaf
-//@EnableWebMvc
 @EnableConfigurationProperties(StorageProperties.class)
 public class PdfToOfx {
 
@@ -183,16 +181,6 @@ public class PdfToOfx {
 
       SpringApplication.run(PdfToOfx.class, args);
 
-
-
-       /* ApplicationContext ctx = SpringApplication.run(PdfToOfx.class, args);
-        System.out.println("Let's inspect the beans provided by Spring Boot:");
-
-        String[] beanNames = ctx.getBeanDefinitionNames();
-        Arrays.sort(beanNames);
-        for (String beanName : beanNames) {
-            System.out.println(beanName);
-        }*/
 
 
     }
