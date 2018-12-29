@@ -27,6 +27,9 @@ import static java.lang.System.exit;
 @EnableConfigurationProperties(StorageProperties.class)
 public class PdfToOfx {
 
+    //TODO Change project name from pdf to ofx to OFXConverter
+    //TODO Should we remove pdf conversion code ?
+    //TODO fix logging
     final static Logger logger = Logger.getLogger(PdfToOfx.class.getName());
     public static Double initialBalance = 0.0;
 
@@ -120,7 +123,7 @@ public class PdfToOfx {
         List<String> listOfPDFs = new ArrayList<String>();
         String programType = null;
 
-        if(args.length >= 1)
+        /*if(args.length >= 1)
         {
             programType = args[0];
             if((programType.equals("amazon")||programType.equals("select")) && (args.length == 2)){
@@ -136,7 +139,7 @@ public class PdfToOfx {
             logger.severe("Insufficient or Invalid Arguments");
             logger.severe("Valid way to run - java PdfToOfx [amazon/tsb] [initial balance]");
             exit(1);
-        }
+        }*/
 
         /*
         if(programType.equals("amazon")) {

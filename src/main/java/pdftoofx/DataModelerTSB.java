@@ -10,11 +10,12 @@ import java.util.logging.Logger;
 
 public class DataModelerTSB {
 
-
+//TODO - Create new package for modelers
     void convert(String sourceFileName) throws IOException{
         /* read all text from TSB statement, then convert Dyyyy-MM-DD to Ddd/MM/yyyy
         D2018-07-10 => D09/05/2017
          */
+        //TODO - target file name
         String destFileSuffix = "ConvertedbyRahulOza";
         String destFileNameParts[] = sourceFileName.split("\\.(?=[^\\.]+$)");
         String destFileName = "";

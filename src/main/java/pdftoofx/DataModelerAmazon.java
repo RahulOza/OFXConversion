@@ -142,21 +142,8 @@ class DataModelerAmazon {
 
                 if (tokens2.length > 1) { // if < 1 => then this is the last page
 
-                    // tokens2[0] = useful stuff - trsactions from page 1
-                    // token2[1] = needs work
 
 
-                    /*
-                    TODO - remove this section
-                    code below is old
-
-                    String delims3 = "Total Brought Forward From Previous Page";
-                    String[] tokens3 = tokens2[1].split(delims3);
-                    // token3[0] = useless stuff
-                    // token3[1] = useful stuff but it has the amount which needs to be stripped off - transactions from final page
-                    // bug - break if more than 2 pages..
-
-                    */
                     if (pageCounter >= 1) { //...for more than 1 page, we need to throw away the amount in first line.
 
                         Matcher tm1 = Pattern.compile("\\d+(\\.\\d{2})").matcher(tokens2[0]);

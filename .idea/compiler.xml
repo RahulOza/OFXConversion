@@ -9,7 +9,7 @@
         <module name="PdfToOfx" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="9">
+    <bytecodeTargetLevel target="1.8">
       <module name="PdfToOfx" target="1.8" />
     </bytecodeTargetLevel>
   </component>

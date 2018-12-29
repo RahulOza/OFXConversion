@@ -6,8 +6,9 @@ public class StorageProperties {
 
     /**
      * Folder location for storing files
+     * TODO - Read properties from a file
      */
-    private String location = "C:\\Users\\ozara\\IdeaProjects\\OFXs";
+    private String location = "tempconversionfiles";
 
     public String getLocation() {
         return location;

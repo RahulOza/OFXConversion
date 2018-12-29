@@ -18,7 +18,7 @@ class OfxGen {
     private static final String amazonAccountId = "44000000";
     private static final String rbsSelectAccountId = "139481331";
 
-    //TODO why not use this real account number - 7365 0100 0067 4567
+    //TODO why not use this real account number - 7365 0100 0067 4567, this account number however should match money
     private static final int nameLimit = 32;
 
 
