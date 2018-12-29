@@ -1,12 +1,11 @@
-package pdftoofx.storage;
+package OFXConversion.storage;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("storage")
 public class StorageProperties {
 
     /**
-     * Folder location for storing files
-     * TODO - Read properties from a file
+     * Folder location for storing files     *
      */
     private String location = "tempconversionfiles";
 

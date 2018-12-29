@@ -1,6 +1,5 @@
-package pdftoofx.storage;
+package OFXConversion.storage;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -76,8 +75,7 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public void deleteAll() throws IOException{
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
-
-          //  FileUtils.cleanDirectory(rootLocation.toFile());
+       //  FileUtils.cleanDirectory(rootLocation.toFile());
     }
 
     @Override

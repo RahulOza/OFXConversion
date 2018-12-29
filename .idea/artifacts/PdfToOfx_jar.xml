@@ -2,7 +2,7 @@
   <artifact type="jar" name="PdfToOfx:jar">
     <output-path>C:/testProg</output-path>
     <root id="archive" name="PdfToOfx.jar">
-      <element id="module-output" name="PdfToOfx" />
+      <element id="module-output" name="OFXConversion" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.8.3/jackson-core-2.8.3.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.3.3.RELEASE/spring-webmvc-4.3.3.RELEASE.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-autoconfigure/1.4.1.RELEASE/spring-boot-autoconfigure-1.4.1.RELEASE.jar" path-in-jar="/" />

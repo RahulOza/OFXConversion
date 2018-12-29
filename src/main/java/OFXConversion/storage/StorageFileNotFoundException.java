@@ -1,4 +1,4 @@
-package pdftoofx.storage;
+package OFXConversion.storage;
 
 public class StorageFileNotFoundException extends StorageException {
 

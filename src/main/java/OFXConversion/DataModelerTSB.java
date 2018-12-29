@@ -1,12 +1,9 @@
-package pdftoofx;
+package OFXConversion;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 public class DataModelerTSB {
 

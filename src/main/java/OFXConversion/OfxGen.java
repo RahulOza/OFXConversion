@@ -1,8 +1,7 @@
-package pdftoofx;
+package OFXConversion;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,7 +12,7 @@ import net.sf.ofx4j.io.v1.OFXV1Writer;
 
 class OfxGen {
 
-    Map<String, String> ofxHeader = new HashMap< >();
+    private Map<String, String> ofxHeader = new HashMap< >();
 
     private static final String amazonAccountId = "44000000";
     private static final String rbsSelectAccountId = "139481331";
@@ -25,8 +24,7 @@ class OfxGen {
    void ofxFileWriteAmazon (TransactionList transactionList, String fileName, String accountType){
 
        String ofxExtn=".ofx";
-       String fileSuffix = new SimpleDateFormat("_dd_MM_yyyy_hh_mm_ss").format(new Date());
-       String filePath = "C:/Users/ozara/IdeaProjects/OFXs/";
+       //String fileSuffix = new SimpleDateFormat("_dd_MM_yyyy_hh_mm_ss").format(new Date());
        DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("yyyyMMdd110000.000", Locale.ENGLISH);
        Integer fitid = 0001;
        String fitIdPart = new SimpleDateFormat("ddMMyyyyhhmmssS").format(new Date());
@@ -35,7 +33,7 @@ class OfxGen {
       // ofxFileName = filePath + ofxFileName + fileSuffix + ofxExtn;
        String ofxFileName = fileName.substring(0,fileName.length()-4) + ofxExtn;
 
-      // Create file name
+
         try {
             OFXV1Writer ofxv1Writer = new OFXV1Writer(new PrintWriter(ofxFileName));
 

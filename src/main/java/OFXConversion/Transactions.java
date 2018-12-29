@@ -1,4 +1,4 @@
-package pdftoofx;
+package OFXConversion;
 
 import java.time.LocalDate;
 

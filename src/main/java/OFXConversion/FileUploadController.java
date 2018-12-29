@@ -1,4 +1,4 @@
-package pdftoofx;
+package OFXConversion;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -19,8 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import pdftoofx.storage.StorageFileNotFoundException;
-import pdftoofx.storage.StorageService;
+import OFXConversion.storage.StorageFileNotFoundException;
+import OFXConversion.storage.StorageService;
 
 @Controller
 public class FileUploadController {
@@ -35,12 +35,6 @@ public class FileUploadController {
     @GetMapping("/")
     public String listUploadedFiles(Model model) throws IOException {
 
-        /*model.addAttribute("files", storageService.loadAll().map(
-                path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
-                        "serveFile", path.getFileName().toString()).build().toString())
-                .collect(Collectors.toList())); */
-
-        //return "uploadForm";
         return "index";
     }
 
@@ -66,20 +60,20 @@ public class FileUploadController {
         // Now that file has been uploaded, convert it
         if(statement.equals("TSB")) {
             try {
-                PdfToOfx.convertFileTSB(storageService.load(file.getOriginalFilename()).toString());
+                OFXConversion.convertFileTSB(storageService.load(file.getOriginalFilename()).toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         if(statement.equals("Select")) {
             try {
-                PdfToOfx.convertFileRBSSelect(storageService.load(file.getOriginalFilename()).toString(),initBalance);
+                OFXConversion.convertFileRBSSelect(storageService.load(file.getOriginalFilename()).toString(),initBalance);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }if(statement.equals("Amazon")) {
             try {
-                PdfToOfx.convertFileAmazon(storageService.load(file.getOriginalFilename()).toString(),initBalance);
+                OFXConversion.convertFileAmazon(storageService.load(file.getOriginalFilename()).toString(),initBalance);
             } catch (IOException e) {
                 e.printStackTrace();
             }

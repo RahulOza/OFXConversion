@@ -1,4 +1,4 @@
-package pdftoofx;
+package OFXConversion;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="OFXConversion" />
         <module name="PdfToOfx" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
+      <module name="OFXConversion" target="1.8" />
       <module name="PdfToOfx" target="1.8" />
     </bytecodeTargetLevel>
   </component>
