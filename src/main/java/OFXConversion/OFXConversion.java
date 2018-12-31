@@ -1,11 +1,11 @@
 package OFXConversion;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
+import OFXConversion.modelers.DataModelerAmazon;
+import OFXConversion.modelers.DataModelerRBSSelect;
+import OFXConversion.modelers.DataModelerTSB;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +13,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import OFXConversion.storage.StorageProperties;
 import OFXConversion.storage.StorageService;
+import OFXConversion.data.TransactionList;
+
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
@@ -29,7 +31,7 @@ public class OFXConversion {
     Rahul has taken a decision to use csv format instead as that will not change.
     That however requires the previous balance to be input.
      */
-    static void convertFileRBSSelect(String fileName, Double initialBalance) throws IOException{
+    public static void convertFileRBSSelect(String fileName, Double initialBalance) throws IOException{
         DataModelerRBSSelect DM = new DataModelerRBSSelect();
         OfxGen OfGen = new OfxGen();
 
@@ -47,7 +49,7 @@ public class OFXConversion {
         }
 
     }
-    static void convertFileAmazon(String fileName, Double initialBalance) throws IOException{
+    public static void convertFileAmazon(String fileName, Double initialBalance) throws IOException{
         DataModelerAmazon DM = new DataModelerAmazon();
         OfxGen OfGen = new OfxGen();
 
@@ -65,7 +67,7 @@ public class OFXConversion {
         }
 
     }
-    static void convertFileTSB(String fileName) throws IOException {
+    public static void convertFileTSB(String fileName) throws IOException {
         DataModelerTSB DMTsb = new DataModelerTSB();
 
         DMTsb.convert(fileName);
@@ -73,8 +75,6 @@ public class OFXConversion {
     }
 
     public static void main(String[] args) throws IOException {
-        List<String> listOfPDFs = new ArrayList<String>();
-        String programType = null;
 
         SpringApplication.run(OFXConversion.class, args);
 

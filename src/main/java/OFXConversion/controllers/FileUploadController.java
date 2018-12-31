@@ -1,4 +1,4 @@
-package OFXConversion;
+package OFXConversion.controllers;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -21,6 +21,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import OFXConversion.storage.StorageFileNotFoundException;
 import OFXConversion.storage.StorageService;
+
+import static OFXConversion.OFXConversion.convertFileAmazon;
+import static OFXConversion.OFXConversion.convertFileRBSSelect;
+import static OFXConversion.OFXConversion.convertFileTSB;
 
 @Controller
 public class FileUploadController {
@@ -60,20 +64,20 @@ public class FileUploadController {
         // Now that file has been uploaded, convert it
         if(statement.equals("TSB")) {
             try {
-                OFXConversion.convertFileTSB(storageService.load(file.getOriginalFilename()).toString());
+                convertFileTSB(storageService.load(file.getOriginalFilename()).toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         if(statement.equals("Select")) {
             try {
-                OFXConversion.convertFileRBSSelect(storageService.load(file.getOriginalFilename()).toString(),initBalance);
+                convertFileRBSSelect(storageService.load(file.getOriginalFilename()).toString(),initBalance);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }if(statement.equals("Amazon")) {
             try {
-                OFXConversion.convertFileAmazon(storageService.load(file.getOriginalFilename()).toString(),initBalance);
+                convertFileAmazon(storageService.load(file.getOriginalFilename()).toString(),initBalance);
             } catch (IOException e) {
                 e.printStackTrace();
             }

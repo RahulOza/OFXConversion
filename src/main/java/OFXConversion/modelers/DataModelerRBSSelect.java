@@ -1,4 +1,7 @@
-package OFXConversion;
+package OFXConversion.modelers;
+
+import OFXConversion.data.TransactionList;
+import OFXConversion.data.Transactions;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,14 +18,14 @@ public class DataModelerRBSSelect {
     List<String> transactionList = new ArrayList<String>();
     Double finalBalance = 0.0;
 
-    TransactionList createTransactionList(String sourceFileName,Double initialBalance) throws IOException {
+    public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
 
         TransactionList traslistFinal = new TransactionList();
         BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName));
         DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 
 
-        traslistFinal.initialBalance = initialBalance;
+        traslistFinal.setInitialBalance(initialBalance);
         String lineOfStatement;
         Boolean isHeader = true;
 
@@ -40,13 +43,13 @@ public class DataModelerRBSSelect {
                 if(tokens.length > 1) {
                     Transactions trans = new Transactions();
 
-                    trans.transactionDate = LocalDate.parse(tokens[0], myformatter);
-                    trans.transactionDetails = tokens[1];
+                    trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
+                    trans.setTransactionDetails(tokens[1]);
                     //This is specific to RBS Select, due to the way the statement is displayed and recorded.
-                    trans.transactionAmount = -(Double.parseDouble(tokens[2]));
+                    trans.setTransactionAmount(-(Double.parseDouble(tokens[2])));
 
-                    traslistFinal.transactionsListFinal.add(trans);
-                    finalBalance = finalBalance + trans.transactionAmount;
+                    traslistFinal.getTransactionsListFinal().add(trans);
+                    finalBalance = finalBalance + trans.getTransactionAmount();
                 }
             }
 
@@ -54,7 +57,7 @@ public class DataModelerRBSSelect {
             if(isHeader == true)
                 isHeader = false;
         }
-        traslistFinal.finalBalance = -(finalBalance);
+        traslistFinal.setFinalBalance(-(finalBalance));
 
         inputStream.close();
         return traslistFinal;

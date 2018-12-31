@@ -1,4 +1,7 @@
-package OFXConversion;
+package OFXConversion.modelers;
+
+import OFXConversion.data.TransactionList;
+import OFXConversion.data.Transactions;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,13 +9,10 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-class DataModelerAmazon {
+public class DataModelerAmazon {
 
 
     private List<String> transactionTokenList = new ArrayList<>();
@@ -20,14 +20,14 @@ class DataModelerAmazon {
     private Double finalBalance = 0.0;
 
 
-    TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
+    public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
 
-        TransactionList traslistFinal = new TransactionList();
+        TransactionList translistFinal = new TransactionList();
         try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
             DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 
 
-            traslistFinal.initialBalance = initialBalance;
+            translistFinal.setInitialBalance(initialBalance);
             String lineOfStatement;
             Boolean isHeader = true;
 
@@ -45,22 +45,22 @@ class DataModelerAmazon {
                     if (tokens.length > 1) {
                         Transactions trans = new Transactions();
 
-                        trans.transactionDate = LocalDate.parse(tokens[0], myformatter);
-                        trans.transactionDetails = tokens[1];
-                        trans.transactionAmount = Double.parseDouble(tokens[2]);
+                        trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
+                        trans.setTransactionDetails(tokens[1]);
+                        trans.setTransactionAmount(Double.parseDouble(tokens[2]));
 
-                        traslistFinal.transactionsListFinal.add(trans);
-                        finalBalance = finalBalance + trans.transactionAmount;
+                        translistFinal.getTransactionsListFinal().add(trans);
+                        finalBalance = finalBalance + trans.getTransactionAmount();
                     }
                 }
 
                 if (isHeader)
                     isHeader = false;
             }
-            traslistFinal.finalBalance = finalBalance;
+            translistFinal.setFinalBalance(finalBalance);
 
             inputStream.close();
         }
-        return traslistFinal;
+        return translistFinal;
     }
 }

@@ -1,4 +1,4 @@
-package OFXConversion;
+package OFXConversion.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +7,36 @@ import java.util.regex.Pattern;
 
 public class TransactionList {
 
+    public Double getInitialBalance() {
+        return initialBalance;
+    }
+
+    public void setInitialBalance(Double initialBalance) {
+        this.initialBalance = initialBalance;
+    }
+
+    public Double getFinalBalance() {
+        return finalBalance;
+    }
+
+    public void setFinalBalance(Double finalBalance) {
+        this.finalBalance = finalBalance;
+    }
+
     Double initialBalance = 0.0;
     Double finalBalance = 0.0;
 
+    public List<Transactions> getTransactionsListFinal() {
+        return transactionsListFinal;
+    }
+
+    public void setTransactionsListFinal(List<Transactions> transactionsListFinal) {
+        this.transactionsListFinal = transactionsListFinal;
+    }
+
     List<Transactions> transactionsListFinal = new ArrayList<Transactions>();
 
-    void printTransactionList(){
+    public void printTransactionList(){
 
         System.out.println(" *********************************************** ");
         System.out.println(" *********************************************** ");
@@ -27,7 +51,7 @@ public class TransactionList {
         System.out.println(" *********************************************** ");
     }
 
-    Boolean datesOutOfSequence(){
+    public Boolean datesOutOfSequence(){
 
         for (Transactions t: transactionsListFinal) {
 
