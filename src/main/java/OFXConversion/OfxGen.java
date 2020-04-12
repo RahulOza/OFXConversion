@@ -17,14 +17,10 @@ class OfxGen {
 
     private Map<String, String> ofxHeader = new HashMap< >();
 
-    private static final String amazonAccountId = "44000000";
-    private static final String rbsSelectAccountId = "139481331";
-
-    //TODO why not use this real account number - 7365 0100 0067 4567, this account number however should match money
     private static final int nameLimit = 32;
 
 
-   void ofxFileWriteAmazon (TransactionList transactionList, String fileName, String accountType){
+   void ofxFileWriter (TransactionList transactionList, String fileName, String accountId){
 
        String ofxExtn=".ofx";
        //String fileSuffix = new SimpleDateFormat("_dd_MM_yyyy_hh_mm_ss").format(new Date());
@@ -78,12 +74,17 @@ class OfxGen {
             ofxv1Writer.writeElement("CURDEF","GBP");
 
             ofxv1Writer.writeStartAggregate("CCACCTFROM");
-            if(accountType.equals("amazon")) {
+
+
+            ofxv1Writer.writeElement("ACCTID", accountId);
+           //TODO - remove old account mapping code which is hardcoded
+            /*if(accountType.equals("amazon")) {
                 ofxv1Writer.writeElement("ACCTID", amazonAccountId);
             }
             else{ //RBSSelect
                 ofxv1Writer.writeElement("ACCTID", rbsSelectAccountId);
-            }
+            }*/
+
             ofxv1Writer.writeEndAggregate("CCACCTFROM");
 
             // Bank transactions

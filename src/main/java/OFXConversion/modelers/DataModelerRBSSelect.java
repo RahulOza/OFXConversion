@@ -48,7 +48,7 @@ public class DataModelerRBSSelect {
                     //This is specific to RBS Select, due to the way the statement is displayed and recorded.
                     trans.setTransactionAmount(-(Double.parseDouble(tokens[2])));
 
-                    traslistFinal.getTransactionsListFinal().add(trans);
+                    traslistFinal.getTransactionsList().add(trans);
                     finalBalance = finalBalance + trans.getTransactionAmount();
                 }
             }

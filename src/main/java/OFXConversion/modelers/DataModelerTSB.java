@@ -7,7 +7,7 @@ import java.util.Locale;
 
 public class DataModelerTSB {
 
-//TODO - Create new package for modelers
+
     public void convert(String sourceFileName) throws IOException{
         /* read all text from TSB statement, then convert Dyyyy-MM-DD to Ddd/MM/yyyy
         D2018-07-10 => D09/05/2017

@@ -10,4 +10,7 @@ $('#TSB').on('click', function() {
   $(".balance").hide();
 });
 
+$('#Marcus').on('click', function() {
+  $(".balance").show();
+});
 

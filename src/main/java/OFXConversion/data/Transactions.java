@@ -5,6 +5,10 @@ import java.time.LocalDate;
 
 public class Transactions {
 
+    LocalDate transactionDate = null;
+    String transactionDetails;
+    Double transactionAmount;
+
     public LocalDate getTransactionDate() {
         return transactionDate;
     }
@@ -28,10 +32,6 @@ public class Transactions {
     public void setTransactionAmount(Double transactionAmount) {
         this.transactionAmount = transactionAmount;
     }
-
-    LocalDate transactionDate = null;
-    String transactionDetails;
-    Double transactionAmount;
 
     public void Transactions() {
         transactionDetails = "";

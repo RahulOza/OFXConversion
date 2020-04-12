@@ -3,28 +3,22 @@ package OFXConversion.modelers;
 import OFXConversion.data.TransactionList;
 import OFXConversion.data.Transactions;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class DataModelerAmazon {
-
-
+public class DataModelerMarcus {
     private List<String> transactionTokenList = new ArrayList<>();
     private List<String> transactionList = new ArrayList<>();
     private Double finalBalance = 0.0;
-
-
     public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
 
         TransactionList translistFinal = new TransactionList();
         try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
-            DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+            DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("yyyyMMdd", Locale.ENGLISH);
 
 
             translistFinal.setInitialBalance(initialBalance);
@@ -38,20 +32,19 @@ public class DataModelerAmazon {
 
                 // first line is the header so ignore it
                 if (!isHeader) {
+                    // Marcus seem to insert a lot of " double quotes before string hence need to remove them all
 
-                    String tokens[] = lineOfStatement.split(",");
+                    String cleanLineOfStatement = lineOfStatement.replace("\"","");
+
+                    String tokens[] = cleanLineOfStatement.split(",");
                     // we know the tokens are
                     // Date	Description	Amount(GBP)
                     if (tokens.length > 1) {
                         Transactions trans = new Transactions();
 
                         trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
-                        // TODO - Purge transaction data as follows, currently a manual process
-                        // remove commas and Fin: /Auth:  words (note space after :)
-                        // open in npp - remove £ symbol
-
                         trans.setTransactionDetails(tokens[1]);
-                        trans.setTransactionAmount(Double.parseDouble(tokens[2]));
+                        trans.setTransactionAmount(-(Double.parseDouble(tokens[2])));
 
                         translistFinal.getTransactionsList().add(trans);
                         finalBalance = finalBalance + trans.getTransactionAmount();

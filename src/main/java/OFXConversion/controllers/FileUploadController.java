@@ -25,6 +25,7 @@ import OFXConversion.storage.StorageService;
 import static OFXConversion.OFXConversion.convertFileAmazon;
 import static OFXConversion.OFXConversion.convertFileRBSSelect;
 import static OFXConversion.OFXConversion.convertFileTSB;
+import static OFXConversion.OFXConversion.convertFileMarcus;
 
 @Controller
 public class FileUploadController {
@@ -69,15 +70,23 @@ public class FileUploadController {
                 e.printStackTrace();
             }
         }
-        if(statement.equals("Select")) {
+        else if(statement.equals("Select")) {
             try {
                 convertFileRBSSelect(storageService.load(file.getOriginalFilename()).toString(),initBalance);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }if(statement.equals("Amazon")) {
+        }
+        else if(statement.equals("Amazon")) {
             try {
                 convertFileAmazon(storageService.load(file.getOriginalFilename()).toString(),initBalance);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(statement.equals("Marcus")) {
+            try {
+                convertFileMarcus(storageService.load(file.getOriginalFilename()).toString(),initBalance);
             } catch (IOException e) {
                 e.printStackTrace();
             }

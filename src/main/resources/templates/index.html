@@ -28,7 +28,7 @@
 						<div class="content">
 							<div class="inner">
 								<h1>OFX Converter</h1>
-								<p>Converts csv statements from Amazon, RBS Select and TSB to Microsoft Money OFX format.</p>
+								<p>Converts csv statements from Amazon, RBS Select, TSB and Marcus to Microsoft Money OFX format.</p>
 							</div>
 						</div>
 
@@ -43,6 +43,11 @@
 										<label for="TSB">TSB</label>
 										<input type="radio" id="Amazon" name="statement" value="Amazon" onClick="getResults(this)" />
 										<label for="Amazon">Amazon</label>
+										<!-- New addition for Marcus 1. add a new option here
+										2. edit textdisplay.js to update the input options.
+										-->
+										<input type="radio" id="Marcus" name="statement" value="Marcus" onClick="getResults(this)" />
+										<label for="Marcus">Marcus</label>
 
 
 										<div class="balance" style="display:none;">

@@ -7,6 +7,10 @@ import java.util.regex.Pattern;
 
 public class TransactionList {
 
+    List<Transactions> transactionsList = new ArrayList<Transactions>();
+    private Double initialBalance = 0.0;
+    private Double finalBalance = 0.0;
+
     public Double getInitialBalance() {
         return initialBalance;
     }
@@ -23,18 +27,9 @@ public class TransactionList {
         this.finalBalance = finalBalance;
     }
 
-    Double initialBalance = 0.0;
-    Double finalBalance = 0.0;
-
-    public List<Transactions> getTransactionsListFinal() {
-        return transactionsListFinal;
+    public List<Transactions> getTransactionsList() {
+        return transactionsList;
     }
-
-    public void setTransactionsListFinal(List<Transactions> transactionsListFinal) {
-        this.transactionsListFinal = transactionsListFinal;
-    }
-
-    List<Transactions> transactionsListFinal = new ArrayList<Transactions>();
 
     public void printTransactionList(){
 
@@ -42,7 +37,7 @@ public class TransactionList {
         System.out.println(" *********************************************** ");
         System.out.println(" Transaction List Printing, Initial Bal = "+initialBalance+" Final Bal = " + finalBalance);
         int ctr = 1;
-        for (Transactions t: transactionsListFinal) {
+        for (Transactions t: transactionsList) {
             System.out.println(" Item : " + ctr++);
             System.out.println(" Date : " + t.transactionDate.toString());
             System.out.println(" Details : " + t.transactionDetails);
@@ -51,9 +46,20 @@ public class TransactionList {
         System.out.println(" *********************************************** ");
     }
 
+    public void oldDatesOnTopSort(){
+        // Old dates on top, new dates at the bottom
+        // 02/06/2019
+        // 05/07/2019
+        // 23/01/2020
+        // TODO - Add sorting function as statement come in various formats.
+
+
+
+    }
+
     public Boolean datesOutOfSequence(){
 
-        for (Transactions t: transactionsListFinal) {
+        for (Transactions t: transactionsList) {
 
             // This is due to a bug in Amazon statements wherein dates are messed up
             // if transaction details contains a date, we have a problem
