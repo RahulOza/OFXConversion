@@ -1,13 +1,14 @@
 package OFXConversion.data;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TransactionList {
+public class TransactionList implements Comparator<Transactions> {
 
-    List<Transactions> transactionsList = new ArrayList<Transactions>();
+    private List<Transactions> transactionsList = new ArrayList<>();
     private Double initialBalance = 0.0;
     private Double finalBalance = 0.0;
 
@@ -46,15 +47,16 @@ public class TransactionList {
         System.out.println(" *********************************************** ");
     }
 
-    public void oldDatesOnTopSort(){
+    public int compare(Transactions t1, Transactions t2){
         // Old dates on top, new dates at the bottom
         // 02/06/2019
         // 05/07/2019
         // 23/01/2020
         // TODO - Add sorting function as statement come in various formats.
 
+        //which is greater
 
-
+        return t1.getTransactionDate().compareTo(t2.transactionDate);
     }
 
     public Boolean datesOutOfSequence(){
