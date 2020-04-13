@@ -1,8 +1,11 @@
 package OFXConversion;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
+import OFXConversion.data.Transactions;
 import OFXConversion.modelers.DataModelerAmazon;
 import OFXConversion.modelers.DataModelerMarcus;
 import OFXConversion.modelers.DataModelerRBSSelect;
@@ -24,7 +27,7 @@ public class OFXConversion {
 
     //TODO remove one of the manifext files
     //TODO fix logging
-    final static Logger logger = Logger.getLogger(OFXConversion.class.getName());
+    private final static Logger logger = Logger.getLogger(OFXConversion.class.getName());
     public static Double initialBalance = 0.0;
 
 
@@ -42,6 +45,8 @@ public class OFXConversion {
         OfxGen OfGen = new OfxGen();
 
         TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
+
+        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
 
         transactionList.printTransactionList();
         OfGen.ofxFileWriter(transactionList,fileName, rbsSelectAccountId);
@@ -86,8 +91,10 @@ public class OFXConversion {
 
         TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
 
+        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
 
         transactionList.printTransactionList();
+
         OfGen.ofxFileWriter(transactionList,fileName, marcusAccountId);
 
         if(!transactionList.datesOutOfSequence()){
@@ -99,7 +106,7 @@ public class OFXConversion {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         SpringApplication.run(OFXConversion.class, args);
 

@@ -33,7 +33,6 @@ public class DataModelerMarcus {
                 // first line is the header so ignore it
                 if (!isHeader) {
                     // Marcus seem to insert a lot of " double quotes before string hence need to remove them all
-
                     String cleanLineOfStatement = lineOfStatement.replace("\"","");
 
                     String tokens[] = cleanLineOfStatement.split(",");
@@ -54,7 +53,7 @@ public class DataModelerMarcus {
                 if (isHeader)
                     isHeader = false;
             }
-            translistFinal.setFinalBalance(finalBalance);
+            translistFinal.setFinalBalance(-finalBalance);
 
             inputStream.close();
         }

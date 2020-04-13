@@ -14,9 +14,9 @@ import java.util.Locale;
 
 public class DataModelerRBSSelect {
 
-    List<String> transactionTokenList = new ArrayList<String>();
-    List<String> transactionList = new ArrayList<String>();
-    Double finalBalance = 0.0;
+    List<String> transactionTokenList = new ArrayList<>();
+    List<String> transactionList = new ArrayList<>();
+    private Double finalBalance = 0.0;
 
     public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
 
@@ -27,17 +27,23 @@ public class DataModelerRBSSelect {
 
         traslistFinal.setInitialBalance(initialBalance);
         String lineOfStatement;
-        Boolean isHeader = true;
+        //Boolean isHeader = true;
 
         //initialise final balance.
         finalBalance = -(initialBalance);
 
         while((lineOfStatement = inputStream.readLine()) != null) {
 
-            // first line is the header so ignore it
-            if(!isHeader){
+            // No header for RBS Select ?
+            //if(!isHeader){
+                // Manual steps - remove Fin: and Auth: words
+                String cleanLineOfStatement1 = lineOfStatement.replace("Fin: ","");
+                String cleanLineOfStatement2 = cleanLineOfStatement1.replace("Auth: ","");
+                // also remove £ symbol
+                String cleanLineOfStatement3 = cleanLineOfStatement2.replace("£","");
 
-                String tokens[] = lineOfStatement.split(",");
+                String tokens[] = cleanLineOfStatement3.split(",");
+
                 // we know the tokens are
                 // Date	Description	Amount(GBP)
                 if(tokens.length > 1) {
@@ -51,11 +57,11 @@ public class DataModelerRBSSelect {
                     traslistFinal.getTransactionsList().add(trans);
                     finalBalance = finalBalance + trans.getTransactionAmount();
                 }
-            }
+            //} //header
 
 
-            if(isHeader == true)
-                isHeader = false;
+            //if(isHeader == true)
+              //  isHeader = false;
         }
         traslistFinal.setFinalBalance(-(finalBalance));
 

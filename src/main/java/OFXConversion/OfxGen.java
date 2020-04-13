@@ -23,9 +23,9 @@ class OfxGen {
    void ofxFileWriter (TransactionList transactionList, String fileName, String accountId){
 
        String ofxExtn=".ofx";
-       //String fileSuffix = new SimpleDateFormat("_dd_MM_yyyy_hh_mm_ss").format(new Date());
+
        DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("yyyyMMdd110000.000", Locale.ENGLISH);
-       Integer fitid = 0001;
+       Integer fitid = 1;
        String fitIdPart = new SimpleDateFormat("ddMMyyyyhhmmssS").format(new Date());
        String fitIdPref = "R";
 
@@ -51,7 +51,7 @@ class OfxGen {
 
             ofxv1Writer.writeEndAggregate("STATUS");
 
-            ofxv1Writer.writeElement("DTSERVER",transactionList.getTransactionsListFinal().get(0).getTransactionDate().format( myformatter) + "[0]");
+            ofxv1Writer.writeElement("DTSERVER",transactionList.getTransactionsList().get(0).getTransactionDate().format( myformatter) + "[0]");
             ofxv1Writer.writeElement("LANGUAGE","ENG");
 
             ofxv1Writer.writeEndAggregate("SONRS");
@@ -77,23 +77,16 @@ class OfxGen {
 
 
             ofxv1Writer.writeElement("ACCTID", accountId);
-           //TODO - remove old account mapping code which is hardcoded
-            /*if(accountType.equals("amazon")) {
-                ofxv1Writer.writeElement("ACCTID", amazonAccountId);
-            }
-            else{ //RBSSelect
-                ofxv1Writer.writeElement("ACCTID", rbsSelectAccountId);
-            }*/
 
             ofxv1Writer.writeEndAggregate("CCACCTFROM");
 
             // Bank transactions
             ofxv1Writer.writeStartAggregate("BANKTRANLIST");
 
-            ofxv1Writer.writeElement("DTSTART",transactionList.getTransactionsListFinal().get(0).getTransactionDate().format(myformatter) + "[0]");
-            ofxv1Writer.writeElement("DTEND",transactionList.getTransactionsListFinal().get(transactionList.getTransactionsListFinal().size()-1).getTransactionDate().format(myformatter) + "[0]");
+            ofxv1Writer.writeElement("DTSTART",transactionList.getTransactionsList().get(0).getTransactionDate().format(myformatter) + "[0]");
+            ofxv1Writer.writeElement("DTEND",transactionList.getTransactionsList().get(transactionList.getTransactionsList().size()-1).getTransactionDate().format(myformatter) + "[0]");
 
-            for (Transactions t: transactionList.getTransactionsListFinal() ) {
+            for (Transactions t: transactionList.getTransactionsList() ) {
                 ofxv1Writer.writeStartAggregate("STMTTRN");
                 if(t.getTransactionAmount() > 0) {
                     ofxv1Writer.writeElement("TRNTYPE", "DEBIT");
@@ -116,7 +109,7 @@ class OfxGen {
             ofxv1Writer.writeStartAggregate("LEDGERBAL");
 
             ofxv1Writer.writeElement("BALAMT", transactionList.getFinalBalance().toString());
-            ofxv1Writer.writeElement("DTASOF",transactionList.getTransactionsListFinal().get(transactionList.getTransactionsListFinal().size()-1).getTransactionDate().format(myformatter) + "[0]");
+            ofxv1Writer.writeElement("DTASOF",transactionList.getTransactionsList().get(transactionList.getTransactionsList().size()-1).getTransactionDate().format(myformatter) + "[0]");
 
             ofxv1Writer.writeEndAggregate("LEDGERBAL");
             ofxv1Writer.writeEndAggregate("CCSTMTRS");

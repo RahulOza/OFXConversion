@@ -38,8 +38,10 @@ public class DataModelerAmazon {
 
                 // first line is the header so ignore it
                 if (!isHeader) {
+                    // Amazon sometimes seem to insert " double quotes before string hence need to remove them all
+                    String cleanLineOfStatement = lineOfStatement.replace("\"","");
 
-                    String tokens[] = lineOfStatement.split(",");
+                    String tokens[] = cleanLineOfStatement.split(",");
                     // we know the tokens are
                     // Date	Description	Amount(GBP)
                     if (tokens.length > 1) {
