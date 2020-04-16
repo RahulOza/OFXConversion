@@ -2,10 +2,8 @@ package OFXConversion;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 import java.util.logging.Logger;
 
-import OFXConversion.data.Transactions;
 import OFXConversion.modelers.DataModelerAmazon;
 import OFXConversion.modelers.DataModelerMarcus;
 import OFXConversion.modelers.DataModelerRBSSelect;
