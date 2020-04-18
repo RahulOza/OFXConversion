@@ -1,6 +1,8 @@
 package OFXConversion;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.logging.Logger;
 
@@ -106,8 +108,19 @@ public class OFXConversion {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(OFXConversion.class, args);
-
+        //Run directory monitor if local
+        for (String arg:args){
+            if(arg.equals("Local")){
+                Path dir = Paths.get(args[1]);
+                try {
+                    BackGroundCoversionProcess bckProcess = new BackGroundCoversionProcess(dir);
+                    bckProcess.run();
+                }catch (IOException exception){
+                    logger.severe(exception.toString());
+                }
+            }
+        }
+        //SpringApplication.run(OFXConversion.class, args);
     }
 
   @Bean

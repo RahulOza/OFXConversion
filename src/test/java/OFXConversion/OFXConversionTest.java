@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
 
 public class OFXConversionTest {
 
+    // TODO : read paths from a config file
     private String testFilePathMarcus ="C:\\Users\\ozara\\IdeaProjects\\OFXConversion\\tests\\Marcus\\MarcusTest.csv";
     private String testFilePathSelect ="C:\\Users\\ozara\\IdeaProjects\\OFXConversion\\tests\\RBS\\RBSSelect.csv";
     private String testFilePathAmazon ="C:\\Users\\ozara\\IdeaProjects\\OFXConversion\\tests\\Amazon\\AmazonTest.csv";
