@@ -7,11 +7,13 @@ Run this process in a separate thread.
  */
 
 
+import OFXConversion.data.OfxgenGetPropertyValues;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.IOException;
 import java.util.logging.Logger;
 import java.nio.file.*;
 
-import static OFXConversion.OFXConversion.convertFileMarcus;
 import static java.nio.file.StandardWatchEventKinds.*;
 
 public class BackGroundCoversionProcess implements Runnable{
@@ -19,12 +21,6 @@ public class BackGroundCoversionProcess implements Runnable{
     private final Path pollDirPath;
     private final WatchService watcher;
     private final static Logger logger = Logger.getLogger(OFXConversion.class.getName());
-    // TODO read these values from application.properties file
-    /*
-     String path = System.getProperty("user.home");
-     */
-    private final String prefMarcus = "Transactions 50952493";
-
 
     /**
      * Creates a WatchService and registers the given directory
@@ -64,29 +60,16 @@ public class BackGroundCoversionProcess implements Runnable{
                 //The filename is the context of the event.
                 WatchEvent<Path> ev = (WatchEvent<Path>)event;
                 Path filename = ev.context();
-                /*
-                //Verify that the new file is a text file.
-                try {
-                    Path child = pollDirPath.resolve(filename);
-                    if (!Files.probeContentType(child).equals("text/plain")) {
-                        System.err.format("New file '%s' is not a plain text file.%n", filename);
-                        continue;
-                    }
-                } catch (IOException x) {
-                    logger.severe(x.toString());
-                    continue;
-                }
-                */
+
                 logger.info("New File found :" + filename);
 
                 // We are only interested in .csv files and .ofx files ignore other files
                if(filename.toString().endsWith(".csv")){
-                    if(filename.toString().startsWith(prefMarcus)){
+                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixMarcusFilename)){
                         try {
-                            // TODO what to do re intial balance
-                            convertFileMarcus(pollDirPath + "\\" + filename.toString(),0.0);
+                            OFXConversion.convertFileMarcus(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.intialBalanceMarcus);
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            logger.severe(e.toString());
                         }
                     }
                 } // .csv

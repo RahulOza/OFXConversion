@@ -6,10 +6,12 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.logging.Logger;
 
+import OFXConversion.data.OfxgenGetPropertyValues;
 import OFXConversion.modelers.DataModelerAmazon;
 import OFXConversion.modelers.DataModelerMarcus;
 import OFXConversion.modelers.DataModelerRBSSelect;
 import OFXConversion.modelers.DataModelerTSB;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,22 +21,19 @@ import OFXConversion.storage.StorageProperties;
 import OFXConversion.storage.StorageService;
 import OFXConversion.data.TransactionList;
 
+import static OFXConversion.data.OfxgenGetPropertyValues.pollingDirPath;
+
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
 public class OFXConversion {
-
 
     //TODO remove one of the manifext files
     //TODO fix logging
     private final static Logger logger = Logger.getLogger(OFXConversion.class.getName());
     public static Double initialBalance = 0.0;
 
-
     //TODO why not use this real account number - 7365 0100 0067 4567, this account number however should match money
-    private static final String amazonAccountId = "44000000";
-    private static final String rbsSelectAccountId = "139481331";
-    private static final String marcusAccountId = "44000001";
 
     /* 5 Dec 2018 - Unfortunately they keep changing pdf format, which is a pain !!!
     Rahul has taken a decision to use csv format instead as that will not change.
@@ -49,7 +48,7 @@ public class OFXConversion {
         Collections.sort(transactionList.getTransactionsList(), new TransactionList());
 
         transactionList.printTransactionList();
-        OfGen.ofxFileWriter(transactionList,fileName, rbsSelectAccountId);
+        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.rbsSelectAccountId);
 
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");
@@ -67,7 +66,7 @@ public class OFXConversion {
         TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
 
         transactionList.printTransactionList();
-        OfGen.ofxFileWriter(transactionList,fileName, amazonAccountId);
+        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.amazonAccountId);
 
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");
@@ -95,7 +94,7 @@ public class OFXConversion {
 
         transactionList.printTransactionList();
 
-        OfGen.ofxFileWriter(transactionList,fileName, marcusAccountId);
+        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.marcusAccountId);
 
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");
@@ -106,21 +105,26 @@ public class OFXConversion {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        //Run directory monitor if local
-        for (String arg:args){
-            if(arg.equals("Local")){
-                Path dir = Paths.get(args[1]);
-                try {
-                    BackGroundCoversionProcess bckProcess = new BackGroundCoversionProcess(dir);
-                    bckProcess.run();
-                }catch (IOException exception){
-                    logger.severe(exception.toString());
-                }
-            }
+        if(args.length < 1){
+            logger.severe("Missing ofxgen.properites file as parameter");
         }
-        //SpringApplication.run(OFXConversion.class, args);
+        for (String arg:args){
+            // if we have a parameter, its the properties file for running local background processing.
+            try {
+                OfxgenGetPropertyValues.getPropValues(arg);
+
+            } catch (IOException exception) {
+                logger.severe(exception.toString());
+            }
+            if(OfxgenGetPropertyValues.backgroundProcessingRequired.equalsIgnoreCase("True")) {
+                Path dir = Paths.get(OfxgenGetPropertyValues.pollingDirPath);
+                BackGroundCoversionProcess bckProcess = new BackGroundCoversionProcess(dir);
+                bckProcess.run();
+            }
+            //SpringApplication.run(OFXConversion.class, args);
+        }
     }
 
   @Bean
