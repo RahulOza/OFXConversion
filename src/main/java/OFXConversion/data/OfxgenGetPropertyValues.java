@@ -28,6 +28,14 @@ public class OfxgenGetPropertyValues {
     public static String amazonAccountId = "";
     public static String rbsSelectAccountId = "";
     public static String marcusAccountId = "";
+    public static String testFilePathMarcus ="";
+    public static String testFilePathSelect ="";
+    public static String testFilePathAmazon ="";
+    public static String testFilePathTSB ="";
+    public static Double testinitialBalanceMarcus =0.0;
+    public static Double testinitialBalanceSelect =0.0;
+    public static Double testinitialBalanceAmazon =0.0;
+    public static Double testinitialBalanceTSB =0.0;
 
     //local variables
     private static String result = "";
@@ -56,6 +64,16 @@ public class OfxgenGetPropertyValues {
             amazonAccountId = prop.getProperty("ofxgenprops.amazonAccountId");
             rbsSelectAccountId = prop.getProperty("ofxgenprops.rbsSelectAccountId");
             marcusAccountId = prop.getProperty("ofxgenprops.marcusAccountId");
+            testFilePathMarcus = prop.getProperty("ofxgenprops.testing.testFilePathMarcus");
+            testFilePathSelect = prop.getProperty("ofxgenprops.testing.testFilePathSelect");
+            testFilePathAmazon = prop.getProperty("ofxgenprops.testing.testFilePathAmazon");
+            testFilePathTSB = prop.getProperty("ofxgenprops.testing.testFilePathTSB");
+            testinitialBalanceMarcus = Double.parseDouble(prop.getProperty("ofxgenprops.testing.intialBalanceMarcus"));
+            testinitialBalanceSelect = Double.parseDouble(prop.getProperty("ofxgenprops.testing.intialBalanceSelect"));
+            testinitialBalanceAmazon = Double.parseDouble(prop.getProperty("ofxgenprops.testing.intialBalanceAmazon"));
+            testinitialBalanceTSB = Double.parseDouble(prop.getProperty("ofxgenprops.testing.intialBalanceTSB"));
+
+
 
             result = "Loaded property = pollingDirPath = " + pollingDirPath;
 

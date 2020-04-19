@@ -1,5 +1,6 @@
 package OFXConversion;
 
+import OFXConversion.data.OfxgenGetPropertyValues;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,26 +13,31 @@ import static OFXConversion.OFXConversion.convertFileRBSSelect;
 import static OFXConversion.OFXConversion.convertFileAmazon;
 import static OFXConversion.OFXConversion.convertFileTSB;
 
+import static OFXConversion.data.OfxgenGetPropertyValues.*;
 import static org.junit.Assert.*;
 
 public class OFXConversionTest {
 
-    // TODO : read paths from a config file
-    private String testFilePathMarcus ="C:\\Users\\ozara\\IdeaProjects\\OFXConversion\\tests\\Marcus\\MarcusTest.csv";
-    private String testFilePathSelect ="C:\\Users\\ozara\\IdeaProjects\\OFXConversion\\tests\\RBS\\RBSSelect.csv";
-    private String testFilePathAmazon ="C:\\Users\\ozara\\IdeaProjects\\OFXConversion\\tests\\Amazon\\AmazonTest.csv";
-    private String testFilePathTSB ="C:\\Users\\ozara\\IdeaProjects\\OFXConversion\\tests\\Marcus\\MarcusTest.csv";
     private final static Logger logger = Logger.getLogger(OFXConversion.class.getName());
 
     @Before
     public void setUp() throws Exception {
+
+        try {
+            OfxgenGetPropertyValues.getPropValues("ofxgen.properties");
+
+        } catch (IOException exception) {
+            logger.severe(exception.toString());
+        }
+
     }
 
     @Test
     public void testMarcus() throws IOException {
         // check if balance is correct ?
         //logger.info("testMarcus Started");
-        convertFileMarcus(testFilePathMarcus,0.0);
+
+        convertFileMarcus(OfxgenGetPropertyValues.testFilePathMarcus, OfxgenGetPropertyValues.intialBalanceMarcus);
         //logger.info("testMarcus Competed Successfully");
     }
 
@@ -39,7 +45,8 @@ public class OFXConversionTest {
     public void testSelect() throws IOException {
         // check if balance is correct ?
         //logger.info("testSelect Started");
-        convertFileRBSSelect(testFilePathSelect,0.0);
+
+        convertFileRBSSelect(OfxgenGetPropertyValues.testFilePathSelect, OfxgenGetPropertyValues.testinitialBalanceSelect);
         //logger.info("testSelect Competed Successfully");
     }
 
@@ -47,14 +54,16 @@ public class OFXConversionTest {
     public void testAmazon() throws IOException {
         // check if balance is correct ?
         //logger.info("testAmazon Started");
-        convertFileAmazon(testFilePathAmazon,0.0);
+
+        convertFileAmazon(OfxgenGetPropertyValues.testFilePathAmazon, OfxgenGetPropertyValues.testinitialBalanceAmazon);
        // logger.info("testAmazon Competed Successfully");
     }
 
     @Test
     public void testTSB() throws IOException {
         //logger.info("testTSB Started");
-        convertFileTSB(testFilePathTSB);
+
+        convertFileTSB(OfxgenGetPropertyValues.testFilePathTSB);
         //logger.info("testTSB Competed Successfully");
     }
 
