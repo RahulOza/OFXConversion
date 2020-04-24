@@ -40,6 +40,7 @@ public class BackGroundCoversionProcess implements Runnable{
         OVERFLOW – Indicates that events might have been lost or discarded. You do not have to register for the OVERFLOW event to receive it.
      */
     void processEvents() {
+        Boolean processed = false;
         for (;;) {
 
             // wait for key to be signaled
@@ -68,12 +69,33 @@ public class BackGroundCoversionProcess implements Runnable{
                     if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixMarcusFilename)){
                         try {
                             OFXConversion.convertFileMarcus(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.intialBalanceMarcus);
+                            processed = true;
                         } catch (IOException e) {
                             logger.severe(e.toString());
                         }
                     }
-                } // .csv
-                
+                   if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixSelectFileName)){
+                       try {
+                           OFXConversion.convertFileRBSSelect(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.intialBalanceSelect);
+                           processed = true;
+                       } catch (IOException e) {
+                           logger.severe(e.toString());
+                       }
+                   }
+               } // .csv
+                if(filename.toString().endsWith(".qif")){
+                    if(filename.toString().endsWith(OfxgenGetPropertyValues.suffixTSB)) {
+                        try {
+                            OFXConversion.convertFileTSB(pollDirPath + "\\" + filename.toString());
+                            processed = true;
+                        } catch (IOException e) {
+                            logger.severe(e.toString());
+                        }
+                    }
+                } // .qif
+                if(!processed){
+                    logger.info("I have done nothing with file:"+filename.toString());
+                }
 
             }
 

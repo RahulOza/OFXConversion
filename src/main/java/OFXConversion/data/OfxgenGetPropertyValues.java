@@ -36,6 +36,10 @@ public class OfxgenGetPropertyValues {
     public static Double testinitialBalanceSelect =0.0;
     public static Double testinitialBalanceAmazon =0.0;
     public static Double testinitialBalanceTSB =0.0;
+    public static String suffixTSB="";
+    public static Double intialBalanceSelect =0.0;
+    public static String prefixSelectFileName ="";
+    public static String rbsSelectCreditPrefix ="";
 
     //local variables
     private static String result = "";
@@ -72,6 +76,10 @@ public class OfxgenGetPropertyValues {
             testinitialBalanceSelect = Double.parseDouble(prop.getProperty("ofxgenprops.testing.intialBalanceSelect"));
             testinitialBalanceAmazon = Double.parseDouble(prop.getProperty("ofxgenprops.testing.intialBalanceAmazon"));
             testinitialBalanceTSB = Double.parseDouble(prop.getProperty("ofxgenprops.testing.intialBalanceTSB"));
+            suffixTSB = prop.getProperty("ofxgenprops.backgroundprocessing.suffixTSB");
+            intialBalanceSelect = Double.parseDouble(prop.getProperty("ofxgenprops.backgroundprocessing.intialBalanceSelect"));
+            prefixSelectFileName = prop.getProperty("ofxgenprops.backgroundprocessing.prefixSelectFileName");
+            rbsSelectCreditPrefix = prop.getProperty("ofxgenprops.rbsSelect.creditPrefix");
 
 
 

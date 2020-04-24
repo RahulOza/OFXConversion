@@ -35,25 +35,27 @@ public class OFXConversionTest {
     @Test
     public void testMarcus() throws IOException {
         // check if balance is correct ?
-        //logger.info("testMarcus Started");
+        logger.finer("testMarcus Started");
+
+
 
         convertFileMarcus(OfxgenGetPropertyValues.testFilePathMarcus, OfxgenGetPropertyValues.intialBalanceMarcus);
-        //logger.info("testMarcus Competed Successfully");
+        logger.finer("testMarcus Competed Successfully");
     }
 
     @Test
     public void testSelect() throws IOException {
         // check if balance is correct ?
-        //logger.info("testSelect Started");
+        logger.finer("testSelect Started");
 
         convertFileRBSSelect(OfxgenGetPropertyValues.testFilePathSelect, OfxgenGetPropertyValues.testinitialBalanceSelect);
-        //logger.info("testSelect Competed Successfully");
+        logger.finer("testSelect Competed Successfully");
     }
 
     @Test
     public void testAmazon() throws IOException {
         // check if balance is correct ?
-        //logger.info("testAmazon Started");
+        logger.finer("testAmazon Started");
 
         convertFileAmazon(OfxgenGetPropertyValues.testFilePathAmazon, OfxgenGetPropertyValues.testinitialBalanceAmazon);
        // logger.info("testAmazon Competed Successfully");
@@ -61,10 +63,10 @@ public class OFXConversionTest {
 
     @Test
     public void testTSB() throws IOException {
-        //logger.info("testTSB Started");
+        logger.finer("testTSB Started");
 
         convertFileTSB(OfxgenGetPropertyValues.testFilePathTSB);
-        //logger.info("testTSB Competed Successfully");
+        logger.finer("testTSB Competed Successfully");
     }
 
 

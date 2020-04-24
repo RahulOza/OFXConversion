@@ -1,5 +1,6 @@
 package OFXConversion.modelers;
 
+import OFXConversion.data.OfxgenGetPropertyValues;
 import OFXConversion.data.TransactionList;
 import OFXConversion.data.Transactions;
 
@@ -14,35 +15,39 @@ import java.util.Locale;
 
 public class DataModelerRBSSelect {
 
-    List<String> transactionTokenList = new ArrayList<>();
-    List<String> transactionList = new ArrayList<>();
+    //List<String> transactionTokenList = new ArrayList<>();
+    //List<String> transactionList = new ArrayList<>();
+    // TODO remove the above if no issues
+
     private Double finalBalance = 0.0;
 
     public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
 
         TransactionList traslistFinal = new TransactionList();
         BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName));
-        DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+        DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yy", Locale.ENGLISH);
 
 
         traslistFinal.setInitialBalance(initialBalance);
         String lineOfStatement;
-        //Boolean isHeader = true;
+        Boolean isHeader = true;
 
         //initialise final balance.
-        finalBalance = -(initialBalance);
+        finalBalance = initialBalance;
 
         while((lineOfStatement = inputStream.readLine()) != null) {
 
-            // No header for RBS Select ?
-            //if(!isHeader){
+
+            if(!isHeader){
                 // Manual steps - remove Fin: and Auth: words
                 String cleanLineOfStatement1 = lineOfStatement.replace("Fin: ","");
                 String cleanLineOfStatement2 = cleanLineOfStatement1.replace("Auth: ","");
                 // also remove £ symbol
                 String cleanLineOfStatement3 = cleanLineOfStatement2.replace("£","");
 
-                String tokens[] = cleanLineOfStatement3.split(",");
+                //String tokens[] = cleanLineOfStatement3.split(",");
+
+                String tokens[] = cleanLineOfStatement3.split("\\t");
 
                 // we know the tokens are
                 // Date	Description	Amount(GBP)
@@ -51,19 +56,17 @@ public class DataModelerRBSSelect {
 
                     trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
                     trans.setTransactionDetails(tokens[1]);
-                    //This is specific to RBS Select, due to the way the statement is displayed and recorded.
-                    trans.setTransactionAmount(-(Double.parseDouble(tokens[2])));
-
+                    trans.setTransactionAmount(Double.parseDouble(tokens[2]));
                     traslistFinal.getTransactionsList().add(trans);
                     finalBalance = finalBalance + trans.getTransactionAmount();
                 }
-            //} //header
+            } //header
 
 
-            //if(isHeader == true)
-              //  isHeader = false;
+            if(isHeader == true)
+                isHeader = false;
         }
-        traslistFinal.setFinalBalance(-(finalBalance));
+        traslistFinal.setFinalBalance(finalBalance);
 
         inputStream.close();
         return traslistFinal;
