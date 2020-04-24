@@ -47,6 +47,7 @@ public class OFXConversionTest {
     public void testSelect() throws IOException {
         // check if balance is correct ?
         logger.finer("testSelect Started");
+        //TODO - add functinal test and asset statements
 
         convertFileRBSSelect(OfxgenGetPropertyValues.testFilePathSelect, OfxgenGetPropertyValues.testinitialBalanceSelect);
         logger.finer("testSelect Competed Successfully");

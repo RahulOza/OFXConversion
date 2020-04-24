@@ -12,6 +12,8 @@ import OFXConversion.data.TransactionList;
 import OFXConversion.data.Transactions;
 import net.sf.ofx4j.io.v1.OFXV1Writer;
 
+import static java.lang.System.exit;
+
 
 class OfxGen {
 
@@ -20,7 +22,7 @@ class OfxGen {
     private static final int nameLimit = 32;
 
 
-   void ofxFileWriter (TransactionList transactionList, String fileName, String accountId){
+   void ofxFileWriter (TransactionList transactionList, String fileName, String accountId, String accounType){
 
        String ofxExtn=".ofx";
 
@@ -95,7 +97,18 @@ class OfxGen {
                     ofxv1Writer.writeElement("TRNTYPE", "CREDIT");
                 }
                 ofxv1Writer.writeElement("DTPOSTED",t.getTransactionDate().format(myformatter) + "[0]");
-                t.setTransactionAmount(-t.getTransactionAmount());
+                if(accounType.equalsIgnoreCase("Debit")){
+                    t.setTransactionAmount(t.getTransactionAmount());
+                }
+                else if(accounType.equalsIgnoreCase("Credit")){
+                    // reverse values if its a credit account
+                    // balance and each transaction amounts become negative
+                    t.setTransactionAmount(-t.getTransactionAmount());
+                }
+                else{
+                    throw new Exception("Unknow Account Type - Account needs to be either a Credit or Debit account");
+
+                }
                 ofxv1Writer.writeElement("TRNAMT",t.getTransactionAmount().toString());
                 ofxv1Writer.writeElement("FITID",fitIdPref + fitIdPart + fitid++);
                 ofxv1Writer.writeElement("NAME",t.getTransactionDetails().substring(0,Math.min(t.getTransactionDetails().length(),nameLimit)));

@@ -48,7 +48,7 @@ public class OFXConversion {
         Collections.sort(transactionList.getTransactionsList(), new TransactionList());
 
         transactionList.printTransactionList();
-        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.rbsSelectAccountId);
+        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.rbsSelectAccountId,OfxgenGetPropertyValues.selectAccountType);
 
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");
@@ -66,7 +66,7 @@ public class OFXConversion {
         TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
 
         transactionList.printTransactionList();
-        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.amazonAccountId);
+        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.amazonAccountId,OfxgenGetPropertyValues.amazonAccountType);
 
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");
@@ -94,7 +94,7 @@ public class OFXConversion {
 
         transactionList.printTransactionList();
 
-        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.marcusAccountId);
+        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.marcusAccountId,OfxgenGetPropertyValues.marcusAccountType);
 
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");

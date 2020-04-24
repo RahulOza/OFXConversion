@@ -39,7 +39,9 @@ public class OfxgenGetPropertyValues {
     public static String suffixTSB="";
     public static Double intialBalanceSelect =0.0;
     public static String prefixSelectFileName ="";
-    public static String rbsSelectCreditPrefix ="";
+    public static String amazonAccountType="";
+    public static String selectAccountType="";
+    public static String marcusAccountType="";
 
     //local variables
     private static String result = "";
@@ -65,9 +67,9 @@ public class OfxgenGetPropertyValues {
             backgroundProcessingRequired = prop.getProperty("ofxgenprops.backgroundprocessing");
             prefixMarcusFilename = prop.getProperty("ofxgenprops.backgroundprocessing.prefixMarcusFilename");
             intialBalanceMarcus = Double.parseDouble(prop.getProperty("ofxgenprops.backgroundprocessing.intialBalanceMarcus"));
-            amazonAccountId = prop.getProperty("ofxgenprops.amazonAccountId");
-            rbsSelectAccountId = prop.getProperty("ofxgenprops.rbsSelectAccountId");
-            marcusAccountId = prop.getProperty("ofxgenprops.marcusAccountId");
+            amazonAccountId = prop.getProperty("ofxgenprops.amazon.amazonAccountId");
+            rbsSelectAccountId = prop.getProperty("ofxgenprops.rbsSelect.rbsSelectAccountId");
+            marcusAccountId = prop.getProperty("ofxgenprops.marcus.marcusAccountId");
             testFilePathMarcus = prop.getProperty("ofxgenprops.testing.testFilePathMarcus");
             testFilePathSelect = prop.getProperty("ofxgenprops.testing.testFilePathSelect");
             testFilePathAmazon = prop.getProperty("ofxgenprops.testing.testFilePathAmazon");
@@ -79,8 +81,9 @@ public class OfxgenGetPropertyValues {
             suffixTSB = prop.getProperty("ofxgenprops.backgroundprocessing.suffixTSB");
             intialBalanceSelect = Double.parseDouble(prop.getProperty("ofxgenprops.backgroundprocessing.intialBalanceSelect"));
             prefixSelectFileName = prop.getProperty("ofxgenprops.backgroundprocessing.prefixSelectFileName");
-            rbsSelectCreditPrefix = prop.getProperty("ofxgenprops.rbsSelect.creditPrefix");
-
+            amazonAccountType = prop.getProperty("ofxgenprops.amazon.accountype");
+            marcusAccountType = prop.getProperty("ofxgenprops.marcus.accountype");
+            selectAccountType = prop.getProperty("ofxgenprops.rbsSelect.accountype");
 
 
             result = "Loaded property = pollingDirPath = " + pollingDirPath;
