@@ -82,6 +82,15 @@ public class BackGroundCoversionProcess implements Runnable{
                            logger.severe(e.toString());
                        }
                    }
+                   if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixAmazonFileName)){
+                       try {
+                           OFXConversion.convertFileAmazon(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.initialBalanceAmazon);
+                           processed = true;
+                       } catch (IOException e) {
+                           logger.severe(e.toString());
+                       }
+                   }
+
                } // .csv
                 if(filename.toString().endsWith(".qif")){
                     if(filename.toString().endsWith(OfxgenGetPropertyValues.suffixTSB)) {

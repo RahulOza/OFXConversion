@@ -97,6 +97,7 @@ class OfxGen {
                     ofxv1Writer.writeElement("TRNTYPE", "CREDIT");
                 }
                 ofxv1Writer.writeElement("DTPOSTED",t.getTransactionDate().format(myformatter) + "[0]");
+
                 if(accounType.equalsIgnoreCase("Debit")){
                     t.setTransactionAmount(t.getTransactionAmount());
                 }

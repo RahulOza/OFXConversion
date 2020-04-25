@@ -43,7 +43,7 @@ public class DataModelerMarcus {
 
                         trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
                         trans.setTransactionDetails(tokens[1]);
-                        trans.setTransactionAmount(-(Double.parseDouble(tokens[2])));
+                        trans.setTransactionAmount((Double.parseDouble(tokens[2])));
 
                         translistFinal.getTransactionsList().add(trans);
                         finalBalance = finalBalance + trans.getTransactionAmount();
@@ -53,7 +53,7 @@ public class DataModelerMarcus {
                 if (isHeader)
                     isHeader = false;
             }
-            translistFinal.setFinalBalance(-finalBalance);
+            translistFinal.setFinalBalance(finalBalance);
 
             inputStream.close();
         }

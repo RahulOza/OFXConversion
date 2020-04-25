@@ -15,10 +15,6 @@ import java.util.Locale;
 
 public class DataModelerRBSSelect {
 
-    //List<String> transactionTokenList = new ArrayList<>();
-    //List<String> transactionList = new ArrayList<>();
-    // TODO remove the above if no issues
-
     private Double finalBalance = 0.0;
 
     public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
@@ -44,8 +40,6 @@ public class DataModelerRBSSelect {
                 String cleanLineOfStatement2 = cleanLineOfStatement1.replace("Auth: ","");
                 // also remove £ symbol
                 String cleanLineOfStatement3 = cleanLineOfStatement2.replace("£","");
-
-                //String tokens[] = cleanLineOfStatement3.split(",");
 
                 String tokens[] = cleanLineOfStatement3.split("\\t");
 

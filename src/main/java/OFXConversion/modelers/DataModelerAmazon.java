@@ -48,9 +48,6 @@ public class DataModelerAmazon {
                         Transactions trans = new Transactions();
 
                         trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
-                        // TODO - Purge transaction data as follows, currently a manual process
-                        // remove commas and Fin: /Auth:  words (note space after :)
-                        // open in npp - remove £ symbol
 
                         trans.setTransactionDetails(tokens[1]);
                         trans.setTransactionAmount(Double.parseDouble(tokens[2]));
@@ -65,7 +62,7 @@ public class DataModelerAmazon {
             }
             translistFinal.setFinalBalance(finalBalance);
 
-            inputStream.close();
+
         }
         return translistFinal;
     }
