@@ -51,7 +51,6 @@ public class OFXConversionTest {
         assertEquals(transactionList.getInitialBalance(), testinitialBalanceMarcus);
         assertEquals(transactionList.getFinalBalance(), testFinalBalanceMarcus);
 
-
         convertFileMarcus(OfxgenGetPropertyValues.testFilePathMarcus, OfxgenGetPropertyValues.intialBalanceMarcus);
         logger.finer("testMarcus Competed Successfully");
     }

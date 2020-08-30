@@ -47,7 +47,12 @@ public class DataModelerAmazon {
                     if (tokens.length > 1) {
                         Transactions trans = new Transactions();
 
-                        trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
+                        if(tokens[0].equalsIgnoreCase("Pending")) {
+                            trans.setTransactionDate(LocalDate.now());
+                        }
+                        else{
+                            trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
+                        }
 
                         trans.setTransactionDetails(tokens[1]);
                         trans.setTransactionAmount(Double.parseDouble(tokens[2]));
