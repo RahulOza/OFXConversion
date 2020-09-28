@@ -12,8 +12,9 @@ public class DataModelerTSB {
         /* read all text from TSB statement, then convert Dyyyy-MM-DD to Ddd/MM/yyyy
         D2018-07-10 => D09/05/2017
          */
-        //TODO - target file name
-        String destFileSuffix = "ConvertedbyRahulOza";
+
+        //TODO - Dest file suffix should be GV
+        String destFileSuffix = "ConvertedTSBQIF";
         String destFileNameParts[] = sourceFileName.split("\\.(?=[^\\.]+$)");
         String destFileName = "";
         DateTimeFormatter myInputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);

@@ -45,14 +45,14 @@ public class OFXConversionTest {
         DataModelerMarcus DM = new DataModelerMarcus();
 
         // check if balance is correct ?
-        logger.finer("testMarcus Started");
+        logger.info("testMarcus Started");
         TransactionList transactionList = DM.createTransactionList(testFilePathMarcus, testinitialBalanceMarcus);
 
         assertEquals(transactionList.getInitialBalance(), testinitialBalanceMarcus);
         assertEquals(transactionList.getFinalBalance(), testFinalBalanceMarcus);
 
         convertFileMarcus(OfxgenGetPropertyValues.testFilePathMarcus, OfxgenGetPropertyValues.intialBalanceMarcus);
-        logger.finer("testMarcus Competed Successfully");
+        logger.info("testMarcus Competed Successfully");
     }
 
     @Test

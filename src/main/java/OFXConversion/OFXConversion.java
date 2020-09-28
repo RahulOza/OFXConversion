@@ -7,10 +7,7 @@ import java.util.Collections;
 import java.util.logging.Logger;
 
 import OFXConversion.data.OfxgenGetPropertyValues;
-import OFXConversion.modelers.DataModelerAmazon;
-import OFXConversion.modelers.DataModelerMarcus;
-import OFXConversion.modelers.DataModelerRBSSelect;
-import OFXConversion.modelers.DataModelerTSB;
+import OFXConversion.modelers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -81,6 +78,13 @@ public class OFXConversion {
         DataModelerTSB DMTsb = new DataModelerTSB();
 
         DMTsb.convert(fileName);
+        logger.info("Process Competed Successfully");
+    }
+
+    public static void convertFileSantander(String fileName) throws IOException {
+        DataModelerSantander DMTSan = new DataModelerSantander();
+
+        DMTSan.convert(fileName);
         logger.info("Process Competed Successfully");
     }
 

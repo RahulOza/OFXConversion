@@ -54,8 +54,6 @@ public class TransactionList implements Comparator<Transactions> {
         // 23/01/2020
         // TODO - Add sorting function as statement come in various formats.
 
-        //which is greater
-
         return t1.getTransactionDate().compareTo(t2.transactionDate);
     }
 

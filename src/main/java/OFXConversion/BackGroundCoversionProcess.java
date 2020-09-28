@@ -93,14 +93,26 @@ public class BackGroundCoversionProcess implements Runnable{
 
                } // .csv
                 if(filename.toString().endsWith(".qif")){
-                    if(filename.toString().endsWith(OfxgenGetPropertyValues.suffixTSB)) {
-                        try {
-                            OFXConversion.convertFileTSB(pollDirPath + "\\" + filename.toString());
-                            processed = true;
-                        } catch (IOException e) {
-                            logger.severe(e.toString());
+                    //.qif can be TSB OR Santander ...
+                   if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixSantanderFileName)){
+                       try {
+                           OFXConversion.convertFileSantander(pollDirPath + "\\" + filename.toString());
+                           processed = true;
+                       } catch (IOException e) {
+                           logger.severe(e.toString());
+                       }
+
+                    }//Santander
+                    else {
+                        if (filename.toString().endsWith(OfxgenGetPropertyValues.suffixTSB)) {
+                            try {
+                                OFXConversion.convertFileTSB(pollDirPath + "\\" + filename.toString());
+                                processed = true;
+                            } catch (IOException e) {
+                                logger.severe(e.toString());
+                            }
                         }
-                    }
+                    }//TSB
                 } // .qif
                 if(!processed){
                     logger.info("I have done nothing with file:"+filename.toString());
