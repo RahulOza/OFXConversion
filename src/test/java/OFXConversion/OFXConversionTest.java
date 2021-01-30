@@ -14,11 +14,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.logging.Logger;
 
-import static OFXConversion.OFXConversion.convertFileMarcus;
-import static OFXConversion.OFXConversion.convertFileRBSSelect;
-import static OFXConversion.OFXConversion.convertFileAmazon;
-import static OFXConversion.OFXConversion.convertFileTSB;
-
+import static OFXConversion.OFXConversion.*;
 import static OFXConversion.data.OfxgenGetPropertyValues.*;
 import static org.junit.Assert.*;
 
@@ -61,7 +57,7 @@ public class OFXConversionTest {
         DataModelerRBSSelect DM = new DataModelerRBSSelect();
 
         // check if balance is correct ?
-        logger.finer("testSelect Started");
+        logger.info("testSelect Started");
 
         TransactionList transactionList = DM.createTransactionList(OfxgenGetPropertyValues.testFilePathSelect, OfxgenGetPropertyValues.testinitialBalanceSelect);
 
@@ -69,7 +65,7 @@ public class OFXConversionTest {
         assertEquals(transactionList.getFinalBalance(), OfxgenGetPropertyValues.testFinalBalanceSelect);
 
         convertFileRBSSelect(OfxgenGetPropertyValues.testFilePathSelect, OfxgenGetPropertyValues.testinitialBalanceSelect);
-        logger.finer("testSelect Competed Successfully");
+        logger.info("testSelect Competed Successfully");
     }
 
     @Test
@@ -77,7 +73,7 @@ public class OFXConversionTest {
         DataModelerAmazon DM = new DataModelerAmazon();
 
         // check if balance is correct ?
-        logger.finer("testAmazon Started");
+        logger.info("testAmazon Started");
 
         TransactionList transactionList = DM.createTransactionList(testFilePathAmazon, testinitialBalanceAmazon);
 
@@ -88,15 +84,23 @@ public class OFXConversionTest {
         assertEquals(finalBalanceRounded, testFinalBalanceAmazon);
 
         convertFileAmazon(OfxgenGetPropertyValues.testFilePathAmazon, OfxgenGetPropertyValues.testinitialBalanceAmazon);
-        logger.finer("testAmazon Competed Successfully");
+        logger.info("testAmazon Competed Successfully");
     }
 
     @Test
     public void testTSB() throws IOException {
-        logger.finer("testTSB Started");
+        logger.info("testTSB Started");
 
         convertFileTSB(OfxgenGetPropertyValues.testFilePathTSB);
-        logger.finer("testTSB Competed Successfully");
+        logger.info("testTSB Competed Successfully");
+    }
+
+    @Test
+    public void testSantander() throws IOException{
+        logger.info("testSantander Started");
+        convertFileSantander(OfxgenGetPropertyValues.testFilePathSantander);
+
+        logger.info("testSantander Competed Successfully");
     }
 
 

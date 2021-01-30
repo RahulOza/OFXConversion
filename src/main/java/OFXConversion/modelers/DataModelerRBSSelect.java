@@ -23,7 +23,6 @@ public class DataModelerRBSSelect {
         BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName));
         DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yy", Locale.ENGLISH);
 
-
         traslistFinal.setInitialBalance(initialBalance);
         String lineOfStatement;
         Boolean isHeader = true;

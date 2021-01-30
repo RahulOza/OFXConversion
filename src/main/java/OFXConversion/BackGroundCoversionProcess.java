@@ -74,14 +74,6 @@ public class BackGroundCoversionProcess implements Runnable{
                             logger.severe(e.toString());
                         }
                     }
-                   if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixSelectFileName)){
-                       try {
-                           OFXConversion.convertFileRBSSelect(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.intialBalanceSelect);
-                           processed = true;
-                       } catch (IOException e) {
-                           logger.severe(e.toString());
-                       }
-                   }
                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixAmazonFileName)){
                        try {
                            OFXConversion.convertFileAmazon(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.initialBalanceAmazon);
@@ -92,9 +84,19 @@ public class BackGroundCoversionProcess implements Runnable{
                    }
 
                } // .csv
+                if(filename.toString().endsWith(".txt")){
+                    //If its a text file, then its RBS Select no need of a prefix.
+                    try {
+                        OFXConversion.convertFileRBSSelect(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.intialBalanceSelect);
+                        processed = true;
+                    } catch (IOException e) {
+                        logger.severe(e.toString());
+                    }
+
+                }// .txt RBS Select
                 if(filename.toString().endsWith(".qif")){
                     //.qif can be TSB OR Santander ...
-                   if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixSantanderFileName)){
+                   if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixSantanderFileName) && !(filename.toString().contains(OfxgenGetPropertyValues.convertedSantanderFileName)) ){
                        try {
                            OFXConversion.convertFileSantander(pollDirPath + "\\" + filename.toString());
                            processed = true;
