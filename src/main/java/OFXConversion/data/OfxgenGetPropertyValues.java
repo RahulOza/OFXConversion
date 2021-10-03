@@ -51,6 +51,7 @@ public class OfxgenGetPropertyValues {
     public static String convertedSantanderFileName ="";
     public static int maxQifCommentsChars =0;
     public static String testFilePathSantander ="";
+    public static String tsbDestFileName ="";
 
     //local variables
     private static String result = "";
@@ -102,7 +103,7 @@ public class OfxgenGetPropertyValues {
             convertedSantanderFileName = prop.getProperty("ofxgenprops.backgroundprocessing.santander.convertedSantanderFileName");
             maxQifCommentsChars= Integer.parseInt(prop.getProperty("ofxgenprops.backgroundprocessing.santander.maxQifCommentsChars"));
             testFilePathSantander = prop.getProperty("ofxgenprops.testing.tsb.testFilePathSantander");
-
+            tsbDestFileName = prop.getProperty("ofxgenprops.tbs.destFileName");
 
             result = "Loaded property = pollingDirPath = " + pollingDirPath;
 

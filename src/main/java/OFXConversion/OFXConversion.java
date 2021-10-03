@@ -45,7 +45,9 @@ public class OFXConversion {
         Collections.sort(transactionList.getTransactionsList(), new TransactionList());
 
         transactionList.printTransactionList();
-        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.rbsSelectAccountId,OfxgenGetPropertyValues.selectAccountType);
+
+        if(transactionList.getLength() > 0)
+            OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.rbsSelectAccountId,OfxgenGetPropertyValues.selectAccountType);
 
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");
@@ -112,7 +114,8 @@ public class OFXConversion {
     public static void main(String[] args) throws IOException {
 
         if(args.length < 1){
-            logger.severe("Missing ofxgen.properites file as parameter");
+            SpringApplication.run(OFXConversion.class, args);
+            //logger.severe("Missing ofxgen.properites file as parameter");
         }
         for (String arg:args){
             // if we have a parameter, its the properties file for running local background processing.

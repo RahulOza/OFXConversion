@@ -1,5 +1,7 @@
 package OFXConversion.modelers;
 
+import OFXConversion.data.OfxgenGetPropertyValues;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,8 +15,7 @@ public class DataModelerTSB {
         D2018-07-10 => D09/05/2017
          */
 
-        //TODO - Dest file suffix should be GV
-        String destFileSuffix = "ConvertedTSBQIF";
+        String destFileSuffix = OfxgenGetPropertyValues.tsbDestFileName;
         String destFileNameParts[] = sourceFileName.split("\\.(?=[^\\.]+$)");
         String destFileName = "";
         DateTimeFormatter myInputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
@@ -55,6 +56,8 @@ public class DataModelerTSB {
         outputStream.flush();
         outputStream.close();
         inputStream.close();
+
+
 
     }
 }

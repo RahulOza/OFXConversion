@@ -47,6 +47,8 @@ public class TransactionList implements Comparator<Transactions> {
         System.out.println(" *********************************************** ");
     }
 
+    public int getLength() { return transactionsList.size(); }
+
     public int compare(Transactions t1, Transactions t2){
         // Old dates on top, new dates at the bottom
         // 02/06/2019
