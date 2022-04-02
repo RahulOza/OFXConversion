@@ -55,7 +55,7 @@ public class OFXConversionTest {
     public void testSelect() throws IOException {
 
         DataModelerRBSSelect DM = new DataModelerRBSSelect();
-
+        //TODO FIX select test data
         // check if balance is correct ?
         logger.info("testSelect Started");
 
@@ -103,7 +103,13 @@ public class OFXConversionTest {
         logger.info("testSantander Competed Successfully");
     }
 
+    @Test
+    public void testVanguard() throws IOException{
+        logger.info("testVanguard Started");
+        convertFileVanguard(OfxgenGetPropertyValues.testFilePathSantander,0.0);
 
+        logger.info("testVanguard Competed Successfully");
+    }
     @After
     public void tearDown() throws Exception {
     }

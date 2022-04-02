@@ -53,6 +53,17 @@ public class OfxgenGetPropertyValues {
     public static String testFilePathSantander ="";
     public static String tsbDestFileName ="";
 
+    //Vanguard
+    public static String vanguardAccountType = "";
+    public static String vanguardAccountId = "";
+    public static int vanguardDateChars=0;
+    public static String prefixVanguardFileName ="";
+    public static String testFilePathVanguard ="";
+    public static Double intialBalanceVanguard =0.0;
+    public static String convertedVanguardFileName ="";
+
+
+
     //local variables
     private static String result = "";
     private static InputStream inputStream;
@@ -104,6 +115,16 @@ public class OfxgenGetPropertyValues {
             maxQifCommentsChars= Integer.parseInt(prop.getProperty("ofxgenprops.backgroundprocessing.santander.maxQifCommentsChars"));
             testFilePathSantander = prop.getProperty("ofxgenprops.testing.tsb.testFilePathSantander");
             tsbDestFileName = prop.getProperty("ofxgenprops.tbs.destFileName");
+
+            //Vanguard
+            vanguardAccountType = prop.getProperty("ofxgenprops.vanguard.accountype");
+            vanguardAccountId = prop.getProperty("ofxgenprops.vanguard.vanguardAccountId");
+            vanguardDateChars= Integer.parseInt(prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.dateChars"));
+            prefixVanguardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.prefixVanguardFileName");
+            testFilePathVanguard = prop.getProperty("ofxgenprops.testing.vanguard.testFilePathVanguard");
+            intialBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.intialBalanceVanguard"));
+            convertedVanguardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.convertedVanguardFileName");
+
 
             result = "Loaded property = pollingDirPath = " + pollingDirPath;
 

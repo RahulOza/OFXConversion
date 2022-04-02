@@ -85,12 +85,25 @@ public class BackGroundCoversionProcess implements Runnable{
 
                } // .csv
                 if(filename.toString().endsWith(".txt")){
-                    //If its a text file, then its RBS Select no need of a prefix.
-                    try {
-                        OFXConversion.convertFileRBSSelect(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.intialBalanceSelect);
-                        processed = true;
-                    } catch (IOException e) {
-                        logger.severe(e.toString());
+                    //if .txt file can be vanguard or RBS Select
+
+                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixVanguardFileName) && !(filename.toString().contains(OfxgenGetPropertyValues.convertedVanguardFileName)) ){
+                        try {
+                            OFXConversion.convertFileVanguard(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.intialBalanceVanguard);
+                            processed = true;
+                        } catch (IOException e) {
+                            logger.severe(e.toString());
+                        }
+
+                    }//Santander
+                    else {
+                        //If its a text file, not Vanguard then its RBS Select or Byond
+                        try {
+                            OFXConversion.convertFileRBSSelect(pollDirPath + "\\" + filename.toString(), OfxgenGetPropertyValues.intialBalanceSelect);
+                            processed = true;
+                        } catch (IOException e) {
+                            logger.severe(e.toString());
+                        }
                     }
 
                 }// .txt RBS Select

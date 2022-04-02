@@ -111,6 +111,27 @@ public class OFXConversion {
         }
     }
 
+    public static void convertFileVanguard(String fileName, Double initialBalance) throws IOException {
+        DataModelerVanguard DM = new DataModelerVanguard();
+        OfxGen OfGen = new OfxGen();
+
+        TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
+
+        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
+
+        transactionList.printTransactionList();
+
+        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
+
+        if(!transactionList.datesOutOfSequence()){
+            logger.info("Process Competed Successfully");
+        }
+        else{
+            logger.info("Dates are out of Sequence, output may be WRONG!!");
+
+        }
+    }
+
     public static void main(String[] args) throws IOException {
 
         if(args.length < 1){
