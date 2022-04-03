@@ -105,8 +105,10 @@ public class OFXConversionTest {
 
     @Test
     public void testVanguard() throws IOException{
+        //TODO select inital and final balance
+        //Initial Bal = 0.0 Final Bal = 249.00999999999988
         logger.info("testVanguard Started");
-        convertFileVanguard(OfxgenGetPropertyValues.testFilePathSantander,0.0);
+        convertFileVanguard(OfxgenGetPropertyValues.testFilePathVanguard,0.0);
 
         logger.info("testVanguard Competed Successfully");
     }

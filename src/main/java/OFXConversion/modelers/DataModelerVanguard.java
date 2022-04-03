@@ -10,69 +10,74 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+
+
 
 public class DataModelerVanguard {
 
+
+    private List<String> transactionTokenList = new ArrayList<>();
+    private List<String> transactionList = new ArrayList<>();
     private Double finalBalance = 0.0;
+
 
     public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
 
-        TransactionList traslistFinal = new TransactionList();
-        BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName));
-        DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
-
-        traslistFinal.setInitialBalance(initialBalance);
-        String lineOfStatement;
-
-        String transDetails = "";
-        String transDate = "";
-        String transAmount = "";
-
-        //initialise final balance.
-        finalBalance = initialBalance;
-
-        while ((lineOfStatement = inputStream.readLine()) != null) {
+        TransactionList translistFinal = new TransactionList();
+        try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
+            DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
 
 
-            // empty lines need to be skipped and mark begining of new transactions
-            while (!lineOfStatement.isEmpty()) {
+            translistFinal.setInitialBalance(initialBalance);
+            String lineOfStatement;
+            Boolean isHeader = true;
+
+            //initialise final balance.
+            finalBalance = initialBalance;
+
+            while ((lineOfStatement = inputStream.readLine()) != null) {
+
+                // first line is the header so ignore it
+                if (!isHeader) {
+                    //replace consecutive tabs by single
+                    String newLineOfStatement = lineOfStatement.replaceAll("\t(?=\t)","");
+
+                    String tokens[] = newLineOfStatement.split("\\t");
+                    // we know the tokens are
+                    // Date	Description	Amount(GBP)
+                    //    17 May 2021\tBought 8 S&P 500 UCITS ETF Distributing (VUSA)\t\t−£448.79\t£1,555.59
 
 
-                // first 11 chars are date
-                transDate = lineOfStatement.substring(0, OfxgenGetPropertyValues.vanguardDateChars);
+                    if (tokens.length > 1) {
+                        Transactions trans = new Transactions();
 
-                // find index of £
-                // sbtract 1 ..text between 12 to index(above) -1 = transaction details.
+                        trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
+                        trans.setTransactionDetails(tokens[1]);
+                        //2 is empty
+                        String transAmountWithComma = tokens[2].replace("£","");
+                        String transAmount = transAmountWithComma.replace(",","");
+                        trans.setTransactionAmount(Double.parseDouble(transAmount));
+                        //TODO balance ??
+                        translistFinal.getTransactionsList().add(trans);
+                        finalBalance = finalBalance + trans.getTransactionAmount();
+                    }
+                }
 
-                int poundIndex = lineOfStatement.indexOf("£");
-                transDetails = lineOfStatement.substring(12, poundIndex - 1);
 
-                //index+ 1 until space is amount
-                //we are not considering balance for now.
-
-                String transAmountTemp = lineOfStatement.substring(poundIndex + 1, lineOfStatement.length() - 1);
-                transAmount = transAmountTemp.substring(0, transAmount.indexOf(" "));
-
-                //TODO balance ??
-
-                Transactions trans = new Transactions();
-
-                trans.setTransactionDate(LocalDate.parse(transDate, myformatter));
-                trans.setTransactionDetails(transDetails);
-                trans.setTransactionAmount(Double.parseDouble(transAmount));
-                traslistFinal.getTransactionsList().add(trans);
-                finalBalance = finalBalance + trans.getTransactionAmount();
-
+                if (isHeader)
+                    isHeader = false;
             }
-        }//while
+            translistFinal.setFinalBalance(finalBalance);
 
-        traslistFinal.setFinalBalance(finalBalance);
 
-        inputStream.close();
-        return traslistFinal;
+        }
+        return translistFinal;
     }
 }
+
 
 
 
