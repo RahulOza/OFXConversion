@@ -5,6 +5,7 @@ import OFXConversion.data.TransactionList;
 import OFXConversion.modelers.DataModelerAmazon;
 import OFXConversion.modelers.DataModelerMarcus;
 import OFXConversion.modelers.DataModelerRBSSelect;
+import OFXConversion.modelers.DataModelerVanguard;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,8 +56,7 @@ public class OFXConversionTest {
     public void testSelect() throws IOException {
 
         DataModelerRBSSelect DM = new DataModelerRBSSelect();
-        //TODO FIX select test data
-        // check if balance is correct ?
+
         logger.info("testSelect Started");
 
         TransactionList transactionList = DM.createTransactionList(OfxgenGetPropertyValues.testFilePathSelect, OfxgenGetPropertyValues.testinitialBalanceSelect);
@@ -105,10 +105,21 @@ public class OFXConversionTest {
 
     @Test
     public void testVanguard() throws IOException{
+
+        DataModelerVanguard DM = new DataModelerVanguard();
         //TODO select inital and final balance
         //Initial Bal = 0.0 Final Bal = 249.00999999999988
         logger.info("testVanguard Started");
-        convertFileVanguard(OfxgenGetPropertyValues.testFilePathVanguard,0.0);
+
+        TransactionList transactionList = DM.createTransactionList(testFilePathVanguard, testintialBalanceVanguard);
+
+        assertEquals(transactionList.getInitialBalance(), testintialBalanceVanguard);
+
+        Double finalBalanceRounded = Double.parseDouble(df.format(transactionList.getFinalBalance()));
+
+        assertEquals(finalBalanceRounded, testfinalBalanceVanguard);
+
+        convertFileVanguard(OfxgenGetPropertyValues.testFilePathVanguard, OfxgenGetPropertyValues.testintialBalanceVanguard);
 
         logger.info("testVanguard Competed Successfully");
     }

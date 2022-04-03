@@ -59,7 +59,8 @@ public class OfxgenGetPropertyValues {
     public static int vanguardDateChars=0;
     public static String prefixVanguardFileName ="";
     public static String testFilePathVanguard ="";
-    public static Double intialBalanceVanguard =0.0;
+    public static Double testintialBalanceVanguard =0.0;
+    public static Double testfinalBalanceVanguard =0.0;
     public static String convertedVanguardFileName ="";
 
 
@@ -122,9 +123,9 @@ public class OfxgenGetPropertyValues {
             vanguardDateChars= Integer.parseInt(prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.dateChars"));
             prefixVanguardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.prefixVanguardFileName");
             testFilePathVanguard = prop.getProperty("ofxgenprops.testing.vanguard.testFilePathVanguard");
-            intialBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.intialBalanceVanguard"));
+            testintialBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.intialBalanceVanguard"));
             convertedVanguardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.convertedVanguardFileName");
-
+            testfinalBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.finalBalanceVanguard"));
 
             result = "Loaded property = pollingDirPath = " + pollingDirPath;
 
