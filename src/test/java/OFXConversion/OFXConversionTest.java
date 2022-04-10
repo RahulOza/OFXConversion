@@ -107,8 +107,7 @@ public class OFXConversionTest {
     public void testVanguard() throws IOException{
 
         DataModelerVanguard DM = new DataModelerVanguard();
-        //TODO select inital and final balance
-        //Initial Bal = 0.0 Final Bal = 249.00999999999988
+
         logger.info("testVanguard Started");
 
         TransactionList transactionList = DM.createTransactionList(testFilePathVanguard, testintialBalanceVanguard);

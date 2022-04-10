@@ -61,7 +61,8 @@ public class DataModelerRBSSelect {
                     // third line is the amount
                     transAmount = lineOfStatement.replace("£","");
                 }
-                if (lineNum == 4) {
+                if (lineNum == 4 || lineNum == 5) {
+                    // 4th and 5th lines are cashback and/or balances, ignore for now
                     break;
                 }
 
@@ -86,38 +87,3 @@ public class DataModelerRBSSelect {
     }
 }
 
-/* old logic
-       while((lineOfStatement = inputStream.readLine()) != null) {
-
-
-            if(!isHeader){
-                // Manual steps - remove Fin: and Auth: words
-                String cleanLineOfStatement1 = lineOfStatement.replace("Fin: ","");
-                String cleanLineOfStatement2 = cleanLineOfStatement1.replace("Auth: ","");
-                // also remove £ symbol
-                String cleanLineOfStatement3 = cleanLineOfStatement2.replace("£","");
-
-                String tokens[] = cleanLineOfStatement3.split("\\t");
-
-                // we know the tokens are
-                // Date	Description	Amount(GBP)
-                if(tokens.length > 1) {
-                    Transactions trans = new Transactions();
-
-                    trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
-                    trans.setTransactionDetails(tokens[1]);
-                    trans.setTransactionAmount(Double.parseDouble(tokens[2]));
-                    traslistFinal.getTransactionsList().add(trans);
-                    finalBalance = finalBalance + trans.getTransactionAmount();
-                }
-            } //header
-
-
-            if(isHeader == true)
-                isHeader = false;
-        }
-        traslistFinal.setFinalBalance(finalBalance);
-
-
-
- */

@@ -13,13 +13,6 @@ public class OfxgenGetPropertyValues {
 
     private final static Logger logger = Logger.getLogger(OFXConversion.class.getName());
 
-    //TODO - properties should be enums ...
-    /*
-    enum ofxgenprops {
-        POLLING_DIR("ofxgenprops.pollingDirPath"),
-    }
-
-     */
     //properties
     public static String pollingDirPath ="";
     public static String backgroundProcessingRequired = "";
