@@ -55,7 +55,7 @@ public class OfxgenGetPropertyValues {
     public static Double testintialBalanceVanguard =0.0;
     public static Double testfinalBalanceVanguard =0.0;
     public static String convertedVanguardFileName ="";
-
+    public static Double intialBalanceVanguard =0.0;
 
 
     //local variables
@@ -119,7 +119,7 @@ public class OfxgenGetPropertyValues {
             testintialBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.intialBalanceVanguard"));
             convertedVanguardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.convertedVanguardFileName");
             testfinalBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.finalBalanceVanguard"));
-
+            intialBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.initialBalanceVanguard"));
             result = "Loaded property = pollingDirPath = " + pollingDirPath;
 
             logger.info(result);
