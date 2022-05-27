@@ -1,6 +1,5 @@
 package OFXConversion.modelers;
 
-import OFXConversion.data.OfxgenGetPropertyValues;
 import OFXConversion.data.TransactionList;
 import OFXConversion.data.Transactions;
 
@@ -8,6 +7,7 @@ import OFXConversion.data.Transactions;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,7 +23,11 @@ public class DataModelerVanguard {
     private List<String> transactionList = new ArrayList<>();
     private Double finalBalance = 0.0;
 
-
+    public static boolean isPureAscii(String v) {
+        return Charset.forName("US-ASCII").newEncoder().canEncode(v);
+        // or "ISO-8859-1" for ISO Latin 1
+        // or StandardCharsets.US_ASCII with JDK1.7+
+    }
     public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
 
         TransactionList translistFinal = new TransactionList();
@@ -59,8 +63,19 @@ public class DataModelerVanguard {
                         //2 is empty
                         String transAmountWithComma = tokens[2].replace("£","");
                         String transAmount = transAmountWithComma.replace(",","");
-                        trans.setTransactionAmount(Double.parseDouble(transAmount));
-                        //TODO balance ??
+
+                        // It was found non ascii characters creep in so check if that is the case
+                        //
+                        if(!isPureAscii(transAmount)){
+                         String transAmountNew = transAmount.replaceAll("[^\\x00-\\x7F]", "");
+                            trans.setTransactionAmount(Double.parseDouble(transAmountNew));
+                            //the non ascii character is the negative sign hence revert sign.
+                            trans.setTransactionAmount(-trans.getTransactionAmount());
+                        }
+                        else {
+                            trans.setTransactionAmount(Double.parseDouble(transAmount));
+                        }
+                        //TODO what to do with balance maybe double check it??
                         translistFinal.getTransactionsList().add(trans);
                         finalBalance = finalBalance + trans.getTransactionAmount();
                     }

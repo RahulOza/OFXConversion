@@ -1,5 +1,6 @@
 Date	Details	What's gone in	What's gone out	Balance
 17 May 2021	Bought 8 S&P 500 UCITS ETF Distributing (VUSA)		-£448.79	£1,555.59
+18 May 2021		Bought 3.4841 LifeStrategy 100% Equity Fund - Accumulation		−£35.12	£7.50
 16 May 2021	Deposit for investment purchases	£2,000.00		£2,004.38
 11 May 2021	Bought .0479 FTSE Developed Europe ex-U.K. Equity Index Fund - Accumulation		-£15.00	£4.38
 10 May 2021	Bought 4 FTSE Developed Europe UCITS ETF Distributing (VEUR)		-£119.61	£19.38
@@ -23,7 +24,6 @@ Date	Details	What's gone in	What's gone out	Balance
 01 June 2021	Bought 35 S&P 500 UCITS ETF Distributing (VUSA)		-£1,978.98	£228.52
 01 June 2021	Regular Deposit	£200.00		£2,207.50
 28 May 2021	Deposit for investment purchases	£2,000.00		£2,007.50
-18 May 2021	Bought 1 FTSE 250 UCITS ETF Distributing (VMID)		-£35.12	£7.50
 18 May 2021	Bought 1 S&P 500 UCITS ETF Distributing (VUSA)		-£55.77	£42.62
 17 May 2021	Bought 8 FTSE Developed World UCITS ETF Distributing (VEVE)		-£489.63	£98.39
 17 May 2021	Bought 14 FTSE 250 UCITS ETF Distributing (VMID)		-£491.33	£588.02
