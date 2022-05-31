@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import OFXConversion.data.OfxgenGetPropertyValues;
 import OFXConversion.modelers.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,8 +16,6 @@ import org.springframework.context.annotation.Bean;
 import OFXConversion.storage.StorageProperties;
 import OFXConversion.storage.StorageService;
 import OFXConversion.data.TransactionList;
-
-import static OFXConversion.data.OfxgenGetPropertyValues.pollingDirPath;
 
 
 @SpringBootApplication
@@ -37,7 +34,7 @@ public class OFXConversion {
     That however requires the previous balance to be input.
      */
     public static void convertFileRBSSelect(String fileName, Double initialBalance) throws IOException{
-        DataModelerRBSSelect DM = new DataModelerRBSSelect();
+        DataModelerByond DM = new DataModelerByond();
         OfxGen OfGen = new OfxGen();
 
         TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
@@ -47,7 +44,7 @@ public class OFXConversion {
         transactionList.printTransactionList();
 
         if(transactionList.getLength() > 0)
-            OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.rbsSelectAccountId,OfxgenGetPropertyValues.selectAccountType);
+            OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.byondAccountId,OfxgenGetPropertyValues.byondAccountType);
 
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");

@@ -4,7 +4,7 @@ import OFXConversion.data.OfxgenGetPropertyValues;
 import OFXConversion.data.TransactionList;
 import OFXConversion.modelers.DataModelerAmazon;
 import OFXConversion.modelers.DataModelerMarcus;
-import OFXConversion.modelers.DataModelerRBSSelect;
+import OFXConversion.modelers.DataModelerByond;
 import OFXConversion.modelers.DataModelerVanguard;
 import org.junit.After;
 import org.junit.Before;
@@ -55,16 +55,16 @@ public class OFXConversionTest {
     @Test
     public void testSelect() throws IOException {
 
-        DataModelerRBSSelect DM = new DataModelerRBSSelect();
+        DataModelerByond DM = new DataModelerByond();
 
         logger.info("testSelect Started");
 
-        TransactionList transactionList = DM.createTransactionList(OfxgenGetPropertyValues.testFilePathSelect, OfxgenGetPropertyValues.testinitialBalanceSelect);
+        TransactionList transactionList = DM.createTransactionList(OfxgenGetPropertyValues.testFilePathByond, OfxgenGetPropertyValues.testinitialBalanceByond);
 
-        assertEquals(transactionList.getInitialBalance(), OfxgenGetPropertyValues.testinitialBalanceSelect);
-        assertEquals(transactionList.getFinalBalance(), OfxgenGetPropertyValues.testFinalBalanceSelect);
+        assertEquals(transactionList.getInitialBalance(), OfxgenGetPropertyValues.testinitialBalanceByond);
+        assertEquals(transactionList.getFinalBalance(), OfxgenGetPropertyValues.testFinalBalanceByond);
 
-        convertFileRBSSelect(OfxgenGetPropertyValues.testFilePathSelect, OfxgenGetPropertyValues.testinitialBalanceSelect);
+        convertFileRBSSelect(OfxgenGetPropertyValues.testFilePathByond, OfxgenGetPropertyValues.testinitialBalanceByond);
         logger.info("testSelect Competed Successfully");
     }
 

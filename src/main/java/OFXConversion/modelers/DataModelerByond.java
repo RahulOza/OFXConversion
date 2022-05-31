@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class DataModelerRBSSelect {
+public class DataModelerByond {
 
     private Double finalBalance = 0.0;
 
