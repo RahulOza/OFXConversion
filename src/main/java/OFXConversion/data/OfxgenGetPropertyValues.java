@@ -98,7 +98,7 @@ public class OfxgenGetPropertyValues {
             prefixByondFileName = prop.getProperty("ofxgenprops.backgroundprocessing.byond.prefixByondFileName");
             amazonAccountType = prop.getProperty("ofxgenprops.amazon.accountype");
             marcusAccountType = prop.getProperty("ofxgenprops.marcus.accountype");
-            byondAccountId = prop.getProperty("ofxgenprops.byond.accountype");
+            byondAccountType = prop.getProperty("ofxgenprops.byond.accountype");
             testFinalBalanceByond = Double.parseDouble(prop.getProperty("ofxgenprops.testing.byond.finalBalanceByond"));
             testFinalBalanceMarcus = Double.parseDouble(prop.getProperty("ofxgenprops.testing.marcus.finalBalanceMarcus"));
             testFinalBalanceAmazon = Double.parseDouble(prop.getProperty("ofxgenprops.testing.amazon.finalBalanceAmazon"));

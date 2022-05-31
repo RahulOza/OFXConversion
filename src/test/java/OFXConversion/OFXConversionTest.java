@@ -33,6 +33,7 @@ public class OFXConversionTest {
 
         } catch (IOException exception) {
             logger.severe(exception.toString());
+            throw new Exception(exception.toString());
         }
 
     }
@@ -53,7 +54,7 @@ public class OFXConversionTest {
     }
 
     @Test
-    public void testSelect() throws IOException {
+    public void testByond() throws IOException {
 
         DataModelerByond DM = new DataModelerByond();
 
@@ -64,7 +65,7 @@ public class OFXConversionTest {
         assertEquals(transactionList.getInitialBalance(), OfxgenGetPropertyValues.testinitialBalanceByond);
         assertEquals(transactionList.getFinalBalance(), OfxgenGetPropertyValues.testFinalBalanceByond);
 
-        convertFileRBSSelect(OfxgenGetPropertyValues.testFilePathByond, OfxgenGetPropertyValues.testinitialBalanceByond);
+        convertFileByond(OfxgenGetPropertyValues.testFilePathByond, OfxgenGetPropertyValues.testinitialBalanceByond);
         logger.info("testSelect Competed Successfully");
     }
 
@@ -123,7 +124,7 @@ public class OFXConversionTest {
         logger.info("testVanguard Competed Successfully");
     }
     @After
-    public void tearDown() throws Exception {
+    public void tearDown()  {
     }
 
 }

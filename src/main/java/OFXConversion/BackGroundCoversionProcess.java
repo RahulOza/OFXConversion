@@ -40,7 +40,7 @@ public class BackGroundCoversionProcess implements Runnable{
         OVERFLOW – Indicates that events might have been lost or discarded. You do not have to register for the OVERFLOW event to receive it.
      */
     void processEvents() {
-        Boolean processed = false;
+        boolean processed = false;
         for (;;) {
 
             // wait for key to be signaled
@@ -99,7 +99,7 @@ public class BackGroundCoversionProcess implements Runnable{
                     else {
                         //If its a text file, not Vanguard then its RBS Select or Byond
                         try {
-                            OFXConversion.convertFileRBSSelect(pollDirPath + "\\" + filename.toString(), OfxgenGetPropertyValues.intialBalanceByond);
+                            OFXConversion.convertFileByond(pollDirPath + "\\" + filename.toString(), OfxgenGetPropertyValues.intialBalanceByond);
                             processed = true;
                         } catch (IOException e) {
                             logger.severe(e.toString());

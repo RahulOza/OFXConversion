@@ -27,7 +27,7 @@ class OfxGen {
        String ofxExtn=".ofx";
 
        DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("yyyyMMdd110000.000", Locale.ENGLISH);
-       Integer fitid = 1;
+       int fitid = 1;
        String fitIdPart = new SimpleDateFormat("ddMMyyyyhhmmssS").format(new Date());
        String fitIdPref = "R";
 
@@ -109,7 +109,6 @@ class OfxGen {
                 }
                 else{
                     throw new Exception("Unknow Account Type - Account needs to be either a Credit or Debit account");
-
                 }
                 ofxv1Writer.writeElement("TRNAMT",t.getTransactionAmount().toString());
                 ofxv1Writer.writeElement("FITID",fitIdPref + fitIdPart + fitid++);

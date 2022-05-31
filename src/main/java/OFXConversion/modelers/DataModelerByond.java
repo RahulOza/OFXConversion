@@ -1,6 +1,5 @@
 package OFXConversion.modelers;
 
-import OFXConversion.data.OfxgenGetPropertyValues;
 import OFXConversion.data.TransactionList;
 import OFXConversion.data.Transactions;
 
@@ -9,8 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class DataModelerByond {

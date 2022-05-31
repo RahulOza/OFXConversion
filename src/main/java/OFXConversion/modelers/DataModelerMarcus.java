@@ -23,7 +23,7 @@ public class DataModelerMarcus {
 
             translistFinal.setInitialBalance(initialBalance);
             String lineOfStatement;
-            Boolean isHeader = true;
+            boolean isHeader = true;
 
             //initialise final balance.
             finalBalance = initialBalance;
@@ -35,7 +35,7 @@ public class DataModelerMarcus {
                     // Marcus seem to insert a lot of " double quotes before string hence need to remove them all
                     String cleanLineOfStatement = lineOfStatement.replace("\"","");
 
-                    String tokens[] = cleanLineOfStatement.split(",");
+                    String[] tokens = cleanLineOfStatement.split(",");
                     // we know the tokens are
                     // Date	Description	Amount(GBP)
                     if (tokens.length > 1) {
@@ -55,8 +55,8 @@ public class DataModelerMarcus {
             }
             translistFinal.setFinalBalance(finalBalance);
 
-            inputStream.close();
         }
+
         return translistFinal;
     }
 }

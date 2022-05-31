@@ -5,11 +5,12 @@ import OFXConversion.data.OfxgenGetPropertyValues;
 import java.io.*;
 
 public class DataModelerSantander {
-    //TODO - Create unit tests for this class
+
     public void convert(String sourceFileName) throws IOException {
 
-        String destFileName = "";
-        String destFileNameParts[] = sourceFileName.split("\\.(?=[^\\.]+$)");
+        String destFileName;
+        String[] destFileNameParts;
+        destFileNameParts = sourceFileName.split("\\.(?=[^.]+$)");
 
         if(destFileNameParts.length == 2){
             destFileName = destFileNameParts[0] + OfxgenGetPropertyValues.convertedSantanderFileName + "." + destFileNameParts[1];
@@ -24,7 +25,7 @@ public class DataModelerSantander {
         File UIFile = new File(destFileName);
         // if File doesnt exists, then create it
         if (!UIFile.exists()) {
-            UIFile.createNewFile();
+            UIFile.createNewFile()
         }
         FileWriter filewriter = new FileWriter(UIFile.getAbsoluteFile());
         BufferedWriter outputStream= new BufferedWriter(filewriter);

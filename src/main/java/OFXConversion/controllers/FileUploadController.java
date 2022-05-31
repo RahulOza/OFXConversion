@@ -23,7 +23,7 @@ import OFXConversion.storage.StorageFileNotFoundException;
 import OFXConversion.storage.StorageService;
 
 import static OFXConversion.OFXConversion.convertFileAmazon;
-import static OFXConversion.OFXConversion.convertFileRBSSelect;
+import static OFXConversion.OFXConversion.convertFileByond;
 import static OFXConversion.OFXConversion.convertFileTSB;
 import static OFXConversion.OFXConversion.convertFileMarcus;
 
@@ -38,7 +38,7 @@ public class FileUploadController {
     }
 
     @GetMapping("/")
-    public String listUploadedFiles(Model model) throws IOException {
+    public String listUploadedFiles(Model model) {
 
         return "index";
     }
@@ -72,7 +72,7 @@ public class FileUploadController {
         }
         else if(statement.equals("Select")) {
             try {
-                convertFileRBSSelect(storageService.load(file.getOriginalFilename()).toString(),initBalance);
+                convertFileByond(storageService.load(file.getOriginalFilename()).toString(),initBalance);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -99,7 +99,7 @@ public class FileUploadController {
         return "redirect:/response";
     }
     @GetMapping("/response")
-    public String respondFileUpload(Model model) throws IOException {
+    public String respondFileUpload(Model model)  {
 
 
         model.addAttribute("files", storageService.loadAll().map(
