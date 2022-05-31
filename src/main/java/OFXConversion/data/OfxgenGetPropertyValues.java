@@ -98,7 +98,7 @@ public class OfxgenGetPropertyValues {
             prefixByondFileName = prop.getProperty("ofxgenprops.backgroundprocessing.byond.prefixByondFileName");
             amazonAccountType = prop.getProperty("ofxgenprops.amazon.accountype");
             marcusAccountType = prop.getProperty("ofxgenprops.marcus.accountype");
-            byondAccountId = prop.getProperty("ofxgenprops.rbsByond.accountype");
+            byondAccountId = prop.getProperty("ofxgenprops.byond.accountype");
             testFinalBalanceByond = Double.parseDouble(prop.getProperty("ofxgenprops.testing.byond.finalBalanceByond"));
             testFinalBalanceMarcus = Double.parseDouble(prop.getProperty("ofxgenprops.testing.marcus.finalBalanceMarcus"));
             testFinalBalanceAmazon = Double.parseDouble(prop.getProperty("ofxgenprops.testing.amazon.finalBalanceAmazon"));
@@ -108,7 +108,7 @@ public class OfxgenGetPropertyValues {
             convertedSantanderFileName = prop.getProperty("ofxgenprops.backgroundprocessing.santander.convertedSantanderFileName");
             maxQifCommentsChars= Integer.parseInt(prop.getProperty("ofxgenprops.backgroundprocessing.santander.maxQifCommentsChars"));
             testFilePathSantander = prop.getProperty("ofxgenprops.testing.santander.testFilePathSantander");
-            tsbDestFileName = prop.getProperty("ofxgenprops.tbs.destFileName");
+            tsbDestFileName = prop.getProperty("ofxgenprops.tsb.destFileName");
 
             //Vanguard
             vanguardAccountType = prop.getProperty("ofxgenprops.vanguard.accountype");
