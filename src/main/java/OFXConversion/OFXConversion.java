@@ -131,9 +131,9 @@ public class OFXConversion {
 
     public static void main(String[] args) throws IOException {
 
+
         if(args.length < 1){
-            SpringApplication.run(OFXConversion.class, args);
-            //logger.severe("Missing ofxgen.properites file as parameter");
+            logger.severe("Missing ofxgen.properites file as parameter");
         }
         for (String arg:args){
             // if we have a parameter, its the properties file for running local background processing.
@@ -148,7 +148,10 @@ public class OFXConversion {
                 BackGroundCoversionProcess bckProcess = new BackGroundCoversionProcess(dir);
                 bckProcess.run();
             }
-            //SpringApplication.run(OFXConversion.class, args);
+            else {
+                //If background processing required = false
+                SpringApplication.run(OFXConversion.class, args);
+            }
         }
     }
 
