@@ -14,73 +14,55 @@ public class DataModelerByond {
 
     private Double finalBalance = 0.0;
 
-    public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
 
-        TransactionList traslistFinal = new TransactionList();
-        BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName));
-        DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
+    public TransactionList createTransactionList(String sourceFileName) throws IOException {
 
-        traslistFinal.setInitialBalance(initialBalance);
-        String lineOfStatement;
-        int lineNum = 0;
-        String transDetails ="";
-        String transDate = "";
-        String transAmount = "";
+        TransactionList translistFinal = new TransactionList();
+        try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
+            DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss", Locale.ENGLISH);
 
-        //initialise final balance.
-        finalBalance = initialBalance;
 
-        while((lineOfStatement = inputStream.readLine()) != null) {
 
-            if(lineOfStatement.isEmpty()){
-                lineNum = 0;
-                transDetails ="";
-                transDate = "";
-                transAmount = "";
+            String lineOfStatement;
+            Boolean isHeader = true;
+            Boolean firstRec = true;
 
+            while ((lineOfStatement = inputStream.readLine()) != null) {
+
+                // first line is the header so ignore it
+                if (!isHeader) {
+
+                    String tokens[] = lineOfStatement.split(",");
+                    // we know the tokens are
+                    // RetailerName,Date,Spend,Earned,CardBalance,Category
+                    //      0         1    2     3        4         5
+                    if (tokens.length > 1) {
+                        Transactions trans = new Transactions();
+                        trans.setTransactionDetails(tokens[0]);
+                        trans.setTransactionDate(LocalDate.parse(tokens[1], myformatter));
+                        trans.setTransactionAmount(Double.parseDouble(tokens[2]));
+                        translistFinal.getTransactionsList().add(trans);
+
+                        String credit = tokens[5];
+
+                        //The final balance is in very first row
+                        if(firstRec) {
+                            finalBalance = Double.parseDouble(tokens[4]);
+                            firstRec = false;
+                        }
+                        //Initial balance is towards the end so keep overwriting
+                        // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
+                        translistFinal.setInitialBalance(Double.parseDouble(tokens[4])+trans.getTransactionAmount());
+                    }
+                }
+
+                if (isHeader)
+                    isHeader = false;
             }
-
-            // empty lines need to be skipped and mark begining of new transactions
-            while(!lineOfStatement.isEmpty()) {
-                lineNum++;
-
-                if (lineNum == 1) {
-                    //1st line contains the transaction details
-                    transDetails = lineOfStatement;
-                    break;
-                }
-                if (lineNum == 2) {
-                    // second line contains date
-                    transDate = lineOfStatement;
-                    break;
-                }
-                if (lineNum == 3) {
-                    // third line is the amount
-                    transAmount = lineOfStatement.replace("£","");
-                }
-                if (lineNum == 4 || lineNum == 5) {
-                    // 4th and 5th lines are cashback and/or balances, ignore for now
-                    break;
-                }
-
-                if( lineNum >= 3) {
-                    // if we have 3 valid lines of details that make up a trasaction
-                    Transactions trans = new Transactions();
-
-                    trans.setTransactionDate(LocalDate.parse(transDate, myformatter));
-                    trans.setTransactionDetails(transDetails);
-                    trans.setTransactionAmount(Double.parseDouble(transAmount));
-                    traslistFinal.getTransactionsList().add(trans);
-                    finalBalance = finalBalance + trans.getTransactionAmount();
-                    break;
-                }
-            }//while
+            translistFinal.setFinalBalance(finalBalance);
         }
-
-        traslistFinal.setFinalBalance(finalBalance);
-
-        inputStream.close();
-        return traslistFinal;
+        return translistFinal;
     }
+
 }
 

@@ -70,9 +70,10 @@ public class FileUploadController {
                 e.printStackTrace();
             }
         }
-        else if(statement.equals("Select")) {
+        //TODO account type parameter to be added to all covert funtions.
+        else if(statement.equals("Byond")) {
             try {
-                convertFileByond(storageService.load(file.getOriginalFilename()).toString(),initBalance);
+                convertFileByond(storageService.load(file.getOriginalFilename()).toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -106,8 +107,6 @@ public class FileUploadController {
                 path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
                         "serveFile", path.getFileName().toString()).build().toString())
                 .collect(Collectors.toList()));
-
-
         return "response";
     }
 

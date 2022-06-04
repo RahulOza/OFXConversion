@@ -97,9 +97,10 @@ public class BackGroundCoversionProcess implements Runnable{
 
                     }//Vanguard
                     else {
-                        //If its a text file, not Vanguard then its RBS Select or Byond
+                        //If its a text file, not Vanguard then it is Byond
+                        //TODO Byond is now a CSV file
                         try {
-                            OFXConversion.convertFileByond(pollDirPath + "\\" + filename.toString(), OfxgenGetPropertyValues.intialBalanceByond);
+                            OFXConversion.convertFileByond(pollDirPath + "\\" + filename.toString());
                             processed = true;
                         } catch (IOException e) {
                             logger.severe(e.toString());

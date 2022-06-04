@@ -33,11 +33,11 @@ public class OFXConversion {
     Rahul has taken a decision to use csv format instead as that will not change.
     That however requires the previous balance to be input.
      */
-    public static void convertFileByond(String fileName, Double initialBalance) throws IOException{
+    public static void convertFileByond(String fileName) throws IOException{
         DataModelerByond DM = new DataModelerByond();
         OfxGen OfGen = new OfxGen();
 
-        TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
+        TransactionList transactionList = DM.createTransactionList(fileName);
 
         Collections.sort(transactionList.getTransactionsList(), new TransactionList());
 

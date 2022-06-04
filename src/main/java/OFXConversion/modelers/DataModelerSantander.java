@@ -25,7 +25,7 @@ public class DataModelerSantander {
         File UIFile = new File(destFileName);
         // if File doesnt exists, then create it
         if (!UIFile.exists()) {
-            UIFile.createNewFile()
+            UIFile.createNewFile();
         }
         FileWriter filewriter = new FileWriter(UIFile.getAbsoluteFile());
         BufferedWriter outputStream= new BufferedWriter(filewriter);

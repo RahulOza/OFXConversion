@@ -58,15 +58,19 @@ public class OFXConversionTest {
 
         DataModelerByond DM = new DataModelerByond();
 
-        logger.info("testSelect Started");
+        logger.info("testByond Started");
 
-        TransactionList transactionList = DM.createTransactionList(OfxgenGetPropertyValues.testFilePathByond, OfxgenGetPropertyValues.testinitialBalanceByond);
+        TransactionList transactionList = DM.createTransactionList(OfxgenGetPropertyValues.testFilePathByond);
 
         assertEquals(transactionList.getInitialBalance(), OfxgenGetPropertyValues.testinitialBalanceByond);
-        assertEquals(transactionList.getFinalBalance(), OfxgenGetPropertyValues.testFinalBalanceByond);
 
-        convertFileByond(OfxgenGetPropertyValues.testFilePathByond, OfxgenGetPropertyValues.testinitialBalanceByond);
-        logger.info("testSelect Competed Successfully");
+        df.setRoundingMode(RoundingMode.DOWN);
+        Double finalBalanceRounded = Double.parseDouble(df.format(transactionList.getFinalBalance()));
+
+        assertEquals(finalBalanceRounded, OfxgenGetPropertyValues.testFinalBalanceByond);
+
+        convertFileByond(OfxgenGetPropertyValues.testFilePathByond);
+        logger.info("testByond Competed Successfully");
     }
 
     @Test

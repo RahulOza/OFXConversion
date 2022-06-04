@@ -30,7 +30,6 @@ public class OfxgenGetPropertyValues {
     public static Double testinitialBalanceAmazon =0.0;
     public static Double testinitialBalanceTSB =0.0;
     public static String suffixTSB="";
-    public static Double intialBalanceByond =0.0;
     public static String prefixByondFileName ="";
     public static String prefixAmazonFileName ="";
     public static String amazonAccountType="";
@@ -94,7 +93,7 @@ public class OfxgenGetPropertyValues {
             testinitialBalanceAmazon = Double.parseDouble(prop.getProperty("ofxgenprops.testing.amazon.intialBalanceAmazon"));
             testinitialBalanceTSB = Double.parseDouble(prop.getProperty("ofxgenprops.testing.tsb.intialBalanceTSB"));
             suffixTSB = prop.getProperty("ofxgenprops.backgroundprocessing.tsb.suffixTSB");
-            intialBalanceByond = Double.parseDouble(prop.getProperty("ofxgenprops.backgroundprocessing.byond.intialBalanceByond"));
+
             prefixByondFileName = prop.getProperty("ofxgenprops.backgroundprocessing.byond.prefixByondFileName");
             amazonAccountType = prop.getProperty("ofxgenprops.amazon.accountype");
             marcusAccountType = prop.getProperty("ofxgenprops.marcus.accountype");

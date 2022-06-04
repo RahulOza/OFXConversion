@@ -1,7 +1,3 @@
-$('#Select').on('click', function() {
-  $(".balance").show();
-});
-
 $('#Amazon').on('click', function() {
   $(".balance").show();
 });
