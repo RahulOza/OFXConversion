@@ -46,13 +46,16 @@ public class DataModelerByond {
                         String credit = tokens[5];
 
                         //The final balance is in very first row
-                        if(firstRec) {
-                            finalBalance = Double.parseDouble(tokens[4]);
-                            firstRec = false;
+                        if(!tokens[4].isEmpty()) {
+
+                            if (firstRec) {
+                                finalBalance = Double.parseDouble(tokens[4]);
+                                firstRec = false;
+                            }
+                            //Initial balance is towards the end so keep overwriting
+                            // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
+                            translistFinal.setInitialBalance(Double.parseDouble(tokens[4]) + trans.getTransactionAmount());
                         }
-                        //Initial balance is towards the end so keep overwriting
-                        // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
-                        translistFinal.setInitialBalance(Double.parseDouble(tokens[4])+trans.getTransactionAmount());
                     }
                 }
 

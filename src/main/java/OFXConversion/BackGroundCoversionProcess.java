@@ -73,7 +73,7 @@ public class BackGroundCoversionProcess implements Runnable{
                         } catch (IOException e) {
                             logger.severe(e.toString());
                         }
-                    }
+                    }//Marcus
                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixAmazonFileName)){
                        try {
                            OFXConversion.convertFileAmazon(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.initialBalanceAmazon);
@@ -81,8 +81,15 @@ public class BackGroundCoversionProcess implements Runnable{
                        } catch (IOException e) {
                            logger.severe(e.toString());
                        }
-                   }
-
+                   }//Amazon
+                   if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixByondFileName)) {
+                       try {
+                           OFXConversion.convertFileByond(pollDirPath + "\\" + filename.toString());
+                           processed = true;
+                       } catch (IOException e) {
+                           logger.severe(e.toString());
+                       }
+                   }//Byond
                } // .csv
                 if(filename.toString().endsWith(".txt")){
                     //if .txt file can be vanguard or RBS Select
@@ -94,20 +101,9 @@ public class BackGroundCoversionProcess implements Runnable{
                         } catch (IOException e) {
                             logger.severe(e.toString());
                         }
-
                     }//Vanguard
-                    else {
-                        //If its a text file, not Vanguard then it is Byond
-                        //TODO Byond is now a CSV file
-                        try {
-                            OFXConversion.convertFileByond(pollDirPath + "\\" + filename.toString());
-                            processed = true;
-                        } catch (IOException e) {
-                            logger.severe(e.toString());
-                        }
-                    }
 
-                }// .txt RBS Select
+                }
                 if(filename.toString().endsWith(".qif")){
                     //.qif can be TSB OR Santander ...
                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixSantanderFileName) && !(filename.toString().contains(OfxgenGetPropertyValues.convertedSantanderFileName)) ){
@@ -117,7 +113,6 @@ public class BackGroundCoversionProcess implements Runnable{
                        } catch (IOException e) {
                            logger.severe(e.toString());
                        }
-
                     }//Santander
                     else {
                         if (filename.toString().endsWith(OfxgenGetPropertyValues.suffixTSB)) {

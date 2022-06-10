@@ -12,9 +12,6 @@ import OFXConversion.data.TransactionList;
 import OFXConversion.data.Transactions;
 import net.sf.ofx4j.io.v1.OFXV1Writer;
 
-import static java.lang.System.exit;
-
-
 class OfxGen {
 
     private Map<String, String> ofxHeader = new HashMap< >();

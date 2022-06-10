@@ -135,6 +135,8 @@ public class OFXConversion {
         if(args.length < 1){
             logger.severe("Missing ofxgen.properites file as parameter");
         }
+        //TODO make it easy to run as background or foreground process using args instead of config file.
+        //
         for (String arg:args){
             // if we have a parameter, its the properties file for running local background processing.
             try {
