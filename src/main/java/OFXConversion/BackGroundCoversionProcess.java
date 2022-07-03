@@ -96,7 +96,7 @@ public class BackGroundCoversionProcess implements Runnable{
 
                     if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixVanguardFileName) && !(filename.toString().contains(OfxgenGetPropertyValues.convertedVanguardFileName)) ){
                         try {
-                            OFXConversion.convertFileVanguard(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.intialBalanceVanguard);
+                            OFXConversion.convertFileVanguard(pollDirPath + "\\" + filename.toString());
                             processed = true;
                         } catch (IOException e) {
                             logger.severe(e.toString());

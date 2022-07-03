@@ -21,8 +21,6 @@ public class DataModelerByond {
         try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
             DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss", Locale.ENGLISH);
 
-
-
             String lineOfStatement;
             Boolean isHeader = true;
             Boolean firstRec = true;
@@ -36,26 +34,36 @@ public class DataModelerByond {
                     // we know the tokens are
                     // RetailerName,Date,Spend,Earned,CardBalance,Category
                     //      0         1    2     3        4         5
-                    if (tokens.length > 1) {
+                    // ignore the record where balance is empty, it is still not final
+                    if (tokens.length > 1 && !tokens[4].isEmpty()) {
                         Transactions trans = new Transactions();
                         trans.setTransactionDetails(tokens[0]);
                         trans.setTransactionDate(LocalDate.parse(tokens[1], myformatter));
-                        trans.setTransactionAmount(Double.parseDouble(tokens[2]));
+                        //There is no credit/debit indicator in the statement, all values are positive.
+                        // if Category 'Fund in' is positive then it is a credit else a debit.
+                        if(tokens[5].equals("Fund in")){
+                            //This is credit
+                            trans.setTransactionAmount(-Double.parseDouble(tokens[2]));
+                        }
+                        else {
+                            //This amount is going out hence debit/negative
+                            trans.setTransactionAmount(Double.parseDouble(tokens[2]));
+                        }
+
                         translistFinal.getTransactionsList().add(trans);
 
                         String credit = tokens[5];
 
                         //The final balance is in very first row
-                        if(!tokens[4].isEmpty()) {
 
-                            if (firstRec) {
-                                finalBalance = Double.parseDouble(tokens[4]);
+                       if (firstRec) {
+                        finalBalance = Double.parseDouble(tokens[4]);
                                 firstRec = false;
-                            }
-                            //Initial balance is towards the end so keep overwriting
-                            // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
-                            translistFinal.setInitialBalance(Double.parseDouble(tokens[4]) + trans.getTransactionAmount());
                         }
+                        //Initial balance is towards the end so keep overwriting
+                        // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
+                        translistFinal.setInitialBalance(Double.parseDouble(tokens[4]) + trans.getTransactionAmount());
+
                     }
                 }
 

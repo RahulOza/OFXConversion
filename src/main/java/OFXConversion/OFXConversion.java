@@ -22,10 +22,9 @@ import OFXConversion.data.TransactionList;
 @EnableConfigurationProperties(StorageProperties.class)
 public class OFXConversion {
 
-    //TODO remove one of the manifext files
     //TODO fix logging
     private final static Logger logger = Logger.getLogger(OFXConversion.class.getName());
-    public static Double initialBalance = 0.0;
+
 
     //TODO why not use this real account number - 7365 0100 0067 4567, this account number however should match money
 
@@ -46,13 +45,14 @@ public class OFXConversion {
         if(transactionList.getLength() > 0)
             OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.byondAccountId,OfxgenGetPropertyValues.byondAccountType);
 
+        /*
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");
         }
         else{
             logger.info("Dates are out of Sequence, output may be WRONG!!");
 
-        }
+        }*/
 
     }
     public static void convertFileAmazon(String fileName, Double initialBalance) throws IOException{
@@ -64,13 +64,14 @@ public class OFXConversion {
         transactionList.printTransactionList();
         OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.amazonAccountId,OfxgenGetPropertyValues.amazonAccountType);
 
+        /*
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");
         }
         else{
             logger.info("Dates are out of Sequence, output may be WRONG!!");
 
-        }
+        }*/
 
     }
     public static void convertFileTSB(String fileName) throws IOException {
@@ -99,20 +100,21 @@ public class OFXConversion {
 
         OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.marcusAccountId,OfxgenGetPropertyValues.marcusAccountType);
 
+        /*
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");
         }
         else{
             logger.info("Dates are out of Sequence, output may be WRONG!!");
 
-        }
+        }*/
     }
 
-    public static void convertFileVanguard(String fileName, Double initialBalance) throws IOException {
+    public static void convertFileVanguard(String fileName) throws IOException {
         DataModelerVanguard DM = new DataModelerVanguard();
         OfxGen OfGen = new OfxGen();
 
-        TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
+        TransactionList transactionList = DM.createTransactionList(fileName);
 
         Collections.sort(transactionList.getTransactionsList(), new TransactionList());
 
@@ -120,25 +122,25 @@ public class OFXConversion {
 
         OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
 
+        /*
         if(!transactionList.datesOutOfSequence()){
             logger.info("Process Competed Successfully");
         }
         else{
             logger.info("Dates are out of Sequence, output may be WRONG!!");
 
-        }
+        }*/
     }
 
     public static void main(String[] args) throws IOException {
 
 
         if(args.length < 1){
-            logger.severe("Missing ofxgen.properites file as parameter");
+            logger.severe("Missing ofxgen.properties file as parameter");
         }
-        //TODO make it easy to run as background or foreground process using args instead of config file.
-        //
+
         for (String arg:args){
-            // if we have a parameter, its the properties file for running local background processing.
+            // if we have a parameter, it's the properties file for running local background processing.
             try {
                 OfxgenGetPropertyValues.getPropValues(arg);
 

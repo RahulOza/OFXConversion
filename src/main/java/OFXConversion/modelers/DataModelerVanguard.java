@@ -28,19 +28,16 @@ public class DataModelerVanguard {
         // or "ISO-8859-1" for ISO Latin 1
         // or StandardCharsets.US_ASCII with JDK1.7+
     }
-    public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
+    public TransactionList createTransactionList(String sourceFileName) throws IOException {
 
         TransactionList translistFinal = new TransactionList();
         try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
             DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
 
 
-            translistFinal.setInitialBalance(initialBalance);
             String lineOfStatement;
             Boolean isHeader = true;
-
-            //initialise final balance.
-            finalBalance = initialBalance;
+            Boolean firstRec = true;
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
 
@@ -51,9 +48,10 @@ public class DataModelerVanguard {
 
                     String tokens[] = newLineOfStatement.split("\\t");
                     // we know the tokens are
+                    //Date |	Details	| What's gone in |	What's gone out | 	Balance
+                    // 0          1           2                                  3
                     // Date	Description	Amount(GBP)
                     //    17 May 2021\tBought 8 S&P 500 UCITS ETF Distributing (VUSA)\t\t−£448.79\t£1,555.59
-
 
                     if (tokens.length > 1) {
                         Transactions trans = new Transactions();
@@ -65,7 +63,6 @@ public class DataModelerVanguard {
                         String transAmount = transAmountWithComma.replace(",","");
 
                         // It was found non ascii characters creep in so check if that is the case
-                        //
                         if(!isPureAscii(transAmount)){
                          String transAmountNew = transAmount.replaceAll("[^\\x00-\\x7F]", "");
                             trans.setTransactionAmount(Double.parseDouble(transAmountNew));
@@ -75,12 +72,22 @@ public class DataModelerVanguard {
                         else {
                             trans.setTransactionAmount(Double.parseDouble(transAmount));
                         }
-                        //TODO what to do with balance maybe double check it??
+
                         translistFinal.getTransactionsList().add(trans);
-                        finalBalance = finalBalance + trans.getTransactionAmount();
+
+                        transAmountWithComma = tokens[3].replace("£","");
+                        transAmount = transAmountWithComma.replace(",","");
+
+                        if (firstRec) {
+                            //Initial balance is in the very first line
+                            // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
+                            finalBalance = Double.parseDouble(transAmount);
+                            firstRec = false;
+                        }
+                        translistFinal.setInitialBalance(Double.parseDouble(transAmount) - trans.getTransactionAmount());
+
                     }
                 }
-
 
                 if (isHeader)
                     isHeader = false;

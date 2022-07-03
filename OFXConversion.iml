@@ -13,7 +13,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="Maven: net.sf.ofx4j:ofx4j:1.5" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.ofx4j:ofx4j:1.5" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: be.cyberelf.nanoxml:nanoxml:2.2.3" level="project" />
     <orderEntry type="library" name="Maven: net.sf.apt-jelly:apt-jelly-freemarker:2.4" level="project" />

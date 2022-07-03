@@ -59,22 +59,4 @@ public class TransactionList implements Comparator<Transactions> {
         return t1.getTransactionDate().compareTo(t2.transactionDate);
     }
 
-    public Boolean datesOutOfSequence(){
-
-        for (Transactions t: transactionsList) {
-
-            // This is due to a bug in Amazon statements wherein dates are messed up
-            // if transaction details contains a date, we have a problem
-            // TODO we need to fix this
-
-            Matcher m = Pattern.compile("\\d\\d-\\d\\d-\\d\\d").matcher(t.transactionDetails);
-
-            if(m.find()){
-                return true;
-
-            }
-        }
-        return false;
-    }
-
 }

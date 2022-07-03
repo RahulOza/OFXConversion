@@ -115,15 +115,15 @@ public class OFXConversionTest {
 
         logger.info("testVanguard Started");
 
-        TransactionList transactionList = DM.createTransactionList(testFilePathVanguard, testintialBalanceVanguard);
+        TransactionList transactionList = DM.createTransactionList(testFilePathVanguard);
 
-        assertEquals(transactionList.getInitialBalance(), testintialBalanceVanguard);
+        Double initialBalanceRounded = Double.parseDouble(df.format(transactionList.getInitialBalance()));
+        assertEquals(initialBalanceRounded, testintialBalanceVanguard);
 
         Double finalBalanceRounded = Double.parseDouble(df.format(transactionList.getFinalBalance()));
-
         assertEquals(finalBalanceRounded, testfinalBalanceVanguard);
 
-        convertFileVanguard(OfxgenGetPropertyValues.testFilePathVanguard, OfxgenGetPropertyValues.testintialBalanceVanguard);
+        convertFileVanguard(OfxgenGetPropertyValues.testFilePathVanguard);
 
         logger.info("testVanguard Competed Successfully");
     }
