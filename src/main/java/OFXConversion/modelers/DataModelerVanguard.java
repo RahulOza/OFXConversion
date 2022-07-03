@@ -22,6 +22,7 @@ public class DataModelerVanguard {
     private List<String> transactionTokenList = new ArrayList<>();
     private List<String> transactionList = new ArrayList<>();
     private Double finalBalance = 0.0;
+    private Double intialBalance = 0.0;
 
     public static boolean isPureAscii(String v) {
         return Charset.forName("US-ASCII").newEncoder().canEncode(v);
@@ -58,6 +59,7 @@ public class DataModelerVanguard {
 
                         trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
                         trans.setTransactionDetails(tokens[1]);
+                        String transactionDetails = tokens[1];
                         //2 is empty
                         String transAmountWithComma = tokens[2].replace("£","");
                         String transAmount = transAmountWithComma.replace(",","");
@@ -67,24 +69,34 @@ public class DataModelerVanguard {
                          String transAmountNew = transAmount.replaceAll("[^\\x00-\\x7F]", "");
                             trans.setTransactionAmount(Double.parseDouble(transAmountNew));
                             //the non ascii character is the negative sign hence revert sign.
-                            trans.setTransactionAmount(-trans.getTransactionAmount());
                         }
-                        else {
+                        else{
                             trans.setTransactionAmount(Double.parseDouble(transAmount));
                         }
-
-                        translistFinal.getTransactionsList().add(trans);
+                        //if something is 'Bought' then it is a debit
+                        if(transactionDetails.startsWith("Bought")) {
+                            trans.setTransactionAmount(-trans.getTransactionAmount());
+                        }
 
                         transAmountWithComma = tokens[3].replace("£","");
                         transAmount = transAmountWithComma.replace(",","");
 
+                        String transAmountNew ="";
+                        if(!isPureAscii(transAmount)) {
+                            transAmountNew = transAmount.replaceAll("[^\\x00-\\x7F]", "");
+                        }
+                        else{
+                            transAmountNew = transAmount;
+                        }
+
                         if (firstRec) {
                             //Initial balance is in the very first line
                             // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
-                            finalBalance = Double.parseDouble(transAmount);
+                            finalBalance = Double.parseDouble(transAmountNew);
                             firstRec = false;
                         }
-                        translistFinal.setInitialBalance(Double.parseDouble(transAmount) - trans.getTransactionAmount());
+                        intialBalance = Double.parseDouble(transAmountNew) - trans.getTransactionAmount();
+                        translistFinal.getTransactionsList().add(trans);
 
                     }
                 }
@@ -93,7 +105,7 @@ public class DataModelerVanguard {
                     isHeader = false;
             }
             translistFinal.setFinalBalance(finalBalance);
-
+            translistFinal.setInitialBalance(intialBalance);
 
         }
         return translistFinal;

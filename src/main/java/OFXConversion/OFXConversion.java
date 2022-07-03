@@ -135,6 +135,7 @@ public class OFXConversion {
     public static void main(String[] args) throws IOException {
 
 
+        logger.info(" ######### OfxGen v1.3 ##########");
         if(args.length < 1){
             logger.severe("Missing ofxgen.properties file as parameter");
         }
