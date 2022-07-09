@@ -14,7 +14,6 @@ public class DataModelerByond {
 
     private Double finalBalance = 0.0;
 
-
     public TransactionList createTransactionList(String sourceFileName) throws IOException {
 
         TransactionList translistFinal = new TransactionList();
@@ -22,15 +21,15 @@ public class DataModelerByond {
             DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss", Locale.ENGLISH);
 
             String lineOfStatement;
-            Boolean isHeader = true;
-            Boolean firstRec = true;
+            boolean isHeader = true;
+            boolean firstRec = true;
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
 
                 // first line is the header so ignore it
                 if (!isHeader) {
 
-                    String tokens[] = lineOfStatement.split(",");
+                    String[] tokens = lineOfStatement.split(",");
                     // we know the tokens are
                     // RetailerName,Date,Spend,Earned,CardBalance,Category
                     //      0         1    2     3        4         5
@@ -52,9 +51,7 @@ public class DataModelerByond {
 
                         translistFinal.getTransactionsList().add(trans);
 
-                        String credit = tokens[5];
-
-                        //The final balance is in very first row
+                       //The final balance is in very first row
 
                        if (firstRec) {
                         finalBalance = Double.parseDouble(tokens[4]);

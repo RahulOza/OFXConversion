@@ -45,15 +45,6 @@ public class OFXConversion {
         if(transactionList.getLength() > 0)
             OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.byondAccountId,OfxgenGetPropertyValues.byondAccountType);
 
-        /*
-        if(!transactionList.datesOutOfSequence()){
-            logger.info("Process Competed Successfully");
-        }
-        else{
-            logger.info("Dates are out of Sequence, output may be WRONG!!");
-
-        }*/
-
     }
     public static void convertFileAmazon(String fileName, Double initialBalance) throws IOException{
         DataModelerAmazon DM = new DataModelerAmazon();
@@ -64,14 +55,6 @@ public class OFXConversion {
         transactionList.printTransactionList();
         OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.amazonAccountId,OfxgenGetPropertyValues.amazonAccountType);
 
-        /*
-        if(!transactionList.datesOutOfSequence()){
-            logger.info("Process Competed Successfully");
-        }
-        else{
-            logger.info("Dates are out of Sequence, output may be WRONG!!");
-
-        }*/
 
     }
     public static void convertFileTSB(String fileName) throws IOException {
@@ -100,14 +83,6 @@ public class OFXConversion {
 
         OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.marcusAccountId,OfxgenGetPropertyValues.marcusAccountType);
 
-        /*
-        if(!transactionList.datesOutOfSequence()){
-            logger.info("Process Competed Successfully");
-        }
-        else{
-            logger.info("Dates are out of Sequence, output may be WRONG!!");
-
-        }*/
     }
 
     public static void convertFileVanguard(String fileName) throws IOException {
@@ -122,14 +97,6 @@ public class OFXConversion {
 
         OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
 
-        /*
-        if(!transactionList.datesOutOfSequence()){
-            logger.info("Process Competed Successfully");
-        }
-        else{
-            logger.info("Dates are out of Sequence, output may be WRONG!!");
-
-        }*/
     }
 
     public static void main(String[] args) throws IOException {
