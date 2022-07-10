@@ -20,7 +20,7 @@ public class DataModelerVanguard {
     private Double intialBalance = 0.0;
 
     public static boolean isNotPureAscii(String v) {
-        return StandardCharsets.US_ASCII.newEncoder().canEncode(v);
+        return !(StandardCharsets.US_ASCII.newEncoder().canEncode(v));
         // or "ISO-8859-1" for ISO Latin 1
         // or StandardCharsets.US_ASCII with JDK1.7+
     }
@@ -62,8 +62,8 @@ public class DataModelerVanguard {
                         // It was found non ascii characters creep in so check if that is the case
                         if(isNotPureAscii(transAmount)){
                          String transAmountNew = transAmount.replaceAll("[^\\x00-\\x7F]", "");
-                            trans.setTransactionAmount(Double.parseDouble(transAmountNew));
                             //the non ascii character is the negative sign hence revert sign.
+                            trans.setTransactionAmount(Double.parseDouble(transAmountNew));
                         }
                         else{
                             trans.setTransactionAmount(Double.parseDouble(transAmount));
