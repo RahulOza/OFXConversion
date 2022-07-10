@@ -16,8 +16,8 @@ public class DataModelerTSB {
          */
 
         String destFileSuffix = OfxgenGetPropertyValues.tsbDestFileName;
-        String destFileNameParts[] = sourceFileName.split("\\.(?=[^\\.]+$)");
-        String destFileName = "";
+        String[] destFileNameParts = sourceFileName.split("\\.(?=[^\\.]+$)");
+        String destFileName;
         DateTimeFormatter myInputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
         DateTimeFormatter myOutputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 

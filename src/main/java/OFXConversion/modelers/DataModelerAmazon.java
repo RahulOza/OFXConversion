@@ -8,16 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class DataModelerAmazon {
-
-
-    private List<String> transactionTokenList = new ArrayList<>();
-    private List<String> transactionList = new ArrayList<>();
-    private Double finalBalance = 0.0;
 
 
     public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
@@ -29,10 +22,10 @@ public class DataModelerAmazon {
 
             translistFinal.setInitialBalance(initialBalance);
             String lineOfStatement;
-            Boolean isHeader = true;
+            boolean isHeader = true;
 
             //initialise final balance.
-            finalBalance = initialBalance;
+            Double finalBalance = initialBalance;
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
 
@@ -41,7 +34,7 @@ public class DataModelerAmazon {
                     // Amazon sometimes seem to insert " double quotes before string hence need to remove them all
                     String cleanLineOfStatement = lineOfStatement.replace("\"","");
 
-                    String tokens[] = cleanLineOfStatement.split(",");
+                    String[] tokens = cleanLineOfStatement.split(",");
                     // we know the tokens are
                     // Date	Description	Amount(GBP)
                     if (tokens.length > 1) {

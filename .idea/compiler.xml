@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
-      <module name="OFXConversion" target="1.8" />
+      <module name="OFXConversion" target="9" />
       <module name="PdfToOfx" target="1.8" />
     </bytecodeTargetLevel>
   </component>

@@ -3,91 +3,105 @@ package OFXConversion.modelers;
 import OFXConversion.data.TransactionList;
 import OFXConversion.data.Transactions;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
 import java.util.Locale;
 
 
 
 public class DataModelerVanguard {
 
-
-    //private List<String> transactionTokenList = new ArrayList<>();
-    //private List<String> transactionList = new ArrayList<>();
     private Double finalBalance = 0.0;
-    private Double initialBalance = 0.0;
+    private Double intialBalance = 0.0;
 
+    public static boolean isNotPureAscii(String v) {
+        return StandardCharsets.US_ASCII.newEncoder().canEncode(v);
+        // or "ISO-8859-1" for ISO Latin 1
+        // or StandardCharsets.US_ASCII with JDK1.7+
+    }
     public TransactionList createTransactionList(String sourceFileName) throws IOException {
 
         TransactionList translistFinal = new TransactionList();
-        try (FileInputStream inputStream = new FileInputStream(sourceFileName)) {
+        try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
             DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
 
+
+            String lineOfStatement;
+            boolean isHeader = true;
             boolean firstRec = true;
 
-            //Get the workbook instance for XLS file
-            HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
+            while ((lineOfStatement = inputStream.readLine()) != null) {
 
-            //Get first sheet from the workbook
-            HSSFSheet sheet = workbook.getSheetAt(1);
+                // first line is the header so ignore it
+                if (!isHeader) {
+                    //replace consecutive tabs by single
+                    String newLineOfStatement = lineOfStatement.replaceAll("\t(?=\t)","");
 
-            //Get iterator to all the rows in current sheet
-            Iterator<Row> rowIterator = sheet.iterator();
+                    String[] tokens = newLineOfStatement.split("\\t");
+                    // we know the tokens are
+                    //Date |	Details	| What's gone in |	What's gone out | 	Balance
+                    // 0          1           2                                  3
+                    // Date	Description	Amount(GBP)
+                    //    17 May 2021\tBought 8 S&P 500 UCITS ETF Distributing (VUSA)\t\t−£448.79\t£1,555.59
 
-            while (rowIterator.hasNext()) {
-                Row row = rowIterator.next();
-                    if(row.getCell(0).getStringCellValue().equals("Investment Transactions")){
-                        //we only want cash transactions
-                        break;
+                    if (tokens.length > 1) {
+                        Transactions trans = new Transactions();
+
+                        trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
+                        trans.setTransactionDetails(tokens[1]);
+                        String transactionDetails = tokens[1];
+                        //2 is empty
+                        String transAmountWithComma = tokens[2].replace("£","");
+                        String transAmount = transAmountWithComma.replace(",","");
+
+                        // It was found non ascii characters creep in so check if that is the case
+                        if(isNotPureAscii(transAmount)){
+                         String transAmountNew = transAmount.replaceAll("[^\\x00-\\x7F]", "");
+                            trans.setTransactionAmount(Double.parseDouble(transAmountNew));
+                            //the non ascii character is the negative sign hence revert sign.
+                        }
+                        else{
+                            trans.setTransactionAmount(Double.parseDouble(transAmount));
+                        }
+                        //if something is 'Bought' then it is a debit
+                        if(transactionDetails.startsWith("Bought")) {
+                            trans.setTransactionAmount(-trans.getTransactionAmount());
+                        }
+
+                        transAmountWithComma = tokens[3].replace("£","");
+                        transAmount = transAmountWithComma.replace(",","");
+
+                        String transAmountNew;
+                        if(isNotPureAscii(transAmount)) {
+                            transAmountNew = transAmount.replaceAll("[^\\x00-\\x7F]", "");
+                        }
+                        else{
+                            transAmountNew = transAmount;
+                        }
+
+                        if (firstRec) {
+                            //Initial balance is in the very first line
+                            // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
+                            finalBalance = Double.parseDouble(transAmountNew);
+                            firstRec = false;
+                        }
+                        intialBalance = Double.parseDouble(transAmountNew) - trans.getTransactionAmount();
+                        translistFinal.getTransactionsList().add(trans);
+
                     }
-                    //For each row, iterate through each column
-                    if(row.getCell(0).getStringCellValue().equals("Date")){
-                        //first row of cash transactions has started so get next row
-                        row = rowIterator.next();
-                        Iterator <Cell> cellIterator = row.cellIterator();
-                        /*
-                            Date	Details	Amount	Balance
-                            06/07/2021	Bought 1 S&P 500 UCITS ETF Distributing (VUSA)	-59.54	157.20
-                         */
-                        while(cellIterator.hasNext()) {
-                            //cell has date
-                            Cell cell = cellIterator.next();
+                }
 
-                            /*if(cell.getStringCellValue().equals("Balance")){
-                                break;
-                            }*/
-                            Transactions trans = new Transactions();
-                            trans.setTransactionDate(LocalDate.parse(cell.getStringCellValue(),myformatter));
-                            //cell now has trans details
-                            cell = cellIterator.next();
-                            trans.setTransactionDetails(cell.getStringCellValue());
-                            //cell now has amount
-                            cell = cellIterator.next();
-                            trans.setTransactionAmount(Double.parseDouble(cell.getStringCellValue()));
-                            //cell has balance
-                            cell = cellIterator.next();
-
-                            if (firstRec) {
-                                //Initial balance is in the very first line
-                                // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
-                                initialBalance = Double.parseDouble(cell.getStringCellValue()) - trans.getTransactionAmount();
-                                firstRec = false;
-                            }
-                            finalBalance = Double.parseDouble(cell.getStringCellValue());
-                            translistFinal.getTransactionsList().add(trans);
-                            break;
-                        }//Cell Iterator
-                    }
-             }
+                if (isHeader)
+                    isHeader = false;
+            }
             translistFinal.setFinalBalance(finalBalance);
-            translistFinal.setInitialBalance(initialBalance);
+            translistFinal.setInitialBalance(intialBalance);
+
         }
         return translistFinal;
     }
