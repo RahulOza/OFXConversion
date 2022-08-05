@@ -57,6 +57,10 @@
       <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter:1.4.1.RELEASE" />
       <element id="library" level="project" name="Maven: org.hibernate:hibernate-validator:5.2.4.Final" />
       <element id="library" level="project" name="Maven: net.sf.apt-jelly:apt-jelly-freemarker:2.4" />
+      <element id="library" level="project" name="Maven: net.sf.ofx4j:ofx4j:1.6" />
+      <element id="library" level="project" name="Maven: javax.xml.bind:jaxb-api:2.3.1" />
+      <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-api:2.17.2" />
+      <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-core:2.17.2" />
     </root>
   </artifact>
 </component>
