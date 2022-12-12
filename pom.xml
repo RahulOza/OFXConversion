@@ -60,6 +60,11 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.27</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -99,6 +104,7 @@
                     <target>9</target>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 

@@ -99,10 +99,24 @@ public class OFXConversion {
 
     }
 
+    public static void convertFileChase(String fileName) throws IOException {
+        DataModelerChase DM = new DataModelerChase();
+        OfxGen OfGen = new OfxGen();
+
+        TransactionList transactionList = DM.createTransactionList(fileName);
+
+        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
+
+        transactionList.printTransactionList();
+
+        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.chaseAccountId,OfxgenGetPropertyValues.chaseAccountType);
+
+    }
+
     public static void main(String[] args) throws IOException {
 
 
-        logger.info(" ######### OfxGen v1.5 ##########");
+        logger.info(" ######### OfxGen v1.6 (chase) ##########");
         if(args.length < 1){
             logger.severe("Missing ofxgen.properties file as parameter");
         }
