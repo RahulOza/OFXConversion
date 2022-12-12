@@ -6,14 +6,10 @@ import OFXConversion.data.Transactions;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class DataModelerMarcus {
-    private List<String> transactionTokenList = new ArrayList<>();
-    private List<String> transactionList = new ArrayList<>();
-    private Double finalBalance = 0.0;
+
     public TransactionList createTransactionList(String sourceFileName, Double initialBalance) throws IOException {
 
         TransactionList translistFinal = new TransactionList();
@@ -26,7 +22,7 @@ public class DataModelerMarcus {
             boolean isHeader = true;
 
             //initialise final balance.
-            finalBalance = initialBalance;
+            Double finalBalance = initialBalance;
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
 

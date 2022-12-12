@@ -2,10 +2,7 @@ package OFXConversion;
 
 import OFXConversion.data.OfxgenGetPropertyValues;
 import OFXConversion.data.TransactionList;
-import OFXConversion.modelers.DataModelerAmazon;
-import OFXConversion.modelers.DataModelerMarcus;
-import OFXConversion.modelers.DataModelerByond;
-import OFXConversion.modelers.DataModelerVanguard;
+import OFXConversion.modelers.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -127,6 +124,28 @@ public class OFXConversionTest {
 
         logger.info("testVanguard Competed Successfully");
     }
+
+
+    @Test
+    public void testChase() throws IOException{
+
+        DataModelerChase DM = new DataModelerChase();
+
+        logger.info("testChase Started");
+
+        TransactionList transactionList = DM.createTransactionList(testFilePathChase);
+
+        Double initialBalanceRounded = Double.parseDouble(df.format(transactionList.getInitialBalance()));
+        assertEquals(initialBalanceRounded, testintialBalanceChase);
+
+        Double finalBalanceRounded = Double.parseDouble(df.format(transactionList.getFinalBalance()));
+        assertEquals(finalBalanceRounded, testfinalBalanceChase);
+
+       convertFileChase(OfxgenGetPropertyValues.testFilePathChase);
+
+        logger.info("testChase Competed Successfully");
+    }
+
     @After
     public void tearDown()  {
     }

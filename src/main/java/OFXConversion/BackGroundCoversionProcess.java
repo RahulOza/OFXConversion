@@ -8,7 +8,6 @@ Run this process in a separate thread.
 
 
 import OFXConversion.data.OfxgenGetPropertyValues;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -125,6 +124,15 @@ public class BackGroundCoversionProcess implements Runnable{
                         }
                     }//TSB
                 } // .qif
+                if(filename.toString().endsWith(".pdf")) {
+                    try {
+                        OFXConversion.convertFileChase(pollDirPath + "\\" + filename.toString());
+                        processed = true;
+                    } catch (IOException e) {
+                        logger.severe(e.toString());
+                    }
+                }//chase
+
                 if(!processed){
                     logger.info("I have done nothing with file:"+filename.toString());
                 }

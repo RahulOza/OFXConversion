@@ -7,25 +7,20 @@ import OFXConversion.data.Transactions;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 
 
 public class DataModelerVanguard {
 
-
-    private List<String> transactionTokenList = new ArrayList<>();
-    private List<String> transactionList = new ArrayList<>();
     private Double finalBalance = 0.0;
     private Double intialBalance = 0.0;
 
-    public static boolean isPureAscii(String v) {
-        return Charset.forName("US-ASCII").newEncoder().canEncode(v);
+    public static boolean isNotPureAscii(String v) {
+        return !(StandardCharsets.US_ASCII.newEncoder().canEncode(v));
         // or "ISO-8859-1" for ISO Latin 1
         // or StandardCharsets.US_ASCII with JDK1.7+
     }
@@ -37,8 +32,8 @@ public class DataModelerVanguard {
 
 
             String lineOfStatement;
-            Boolean isHeader = true;
-            Boolean firstRec = true;
+            boolean isHeader = true;
+            boolean firstRec = true;
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
 
@@ -47,7 +42,7 @@ public class DataModelerVanguard {
                     //replace consecutive tabs by single
                     String newLineOfStatement = lineOfStatement.replaceAll("\t(?=\t)","");
 
-                    String tokens[] = newLineOfStatement.split("\\t");
+                    String[] tokens = newLineOfStatement.split("\\t");
                     // we know the tokens are
                     //Date |	Details	| What's gone in |	What's gone out | 	Balance
                     // 0          1           2                                  3
@@ -65,10 +60,10 @@ public class DataModelerVanguard {
                         String transAmount = transAmountWithComma.replace(",","");
 
                         // It was found non ascii characters creep in so check if that is the case
-                        if(!isPureAscii(transAmount)){
+                        if(isNotPureAscii(transAmount)){
                          String transAmountNew = transAmount.replaceAll("[^\\x00-\\x7F]", "");
-                            trans.setTransactionAmount(Double.parseDouble(transAmountNew));
                             //the non ascii character is the negative sign hence revert sign.
+                            trans.setTransactionAmount(Double.parseDouble(transAmountNew));
                         }
                         else{
                             trans.setTransactionAmount(Double.parseDouble(transAmount));
@@ -81,8 +76,8 @@ public class DataModelerVanguard {
                         transAmountWithComma = tokens[3].replace("£","");
                         transAmount = transAmountWithComma.replace(",","");
 
-                        String transAmountNew ="";
-                        if(!isPureAscii(transAmount)) {
+                        String transAmountNew;
+                        if(isNotPureAscii(transAmount)) {
                             transAmountNew = transAmount.replaceAll("[^\\x00-\\x7F]", "");
                         }
                         else{
