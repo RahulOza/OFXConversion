@@ -112,14 +112,17 @@ public class DataModelerChase {
 
                 String[] tokens = line.split(" ");
                 String transAmount = tokens[0].replace("£","");
-                String newTransAmount;
+                String noSignTransAmount;
+                String noCommaTransAmount;
+
+                noCommaTransAmount = transAmount.replace(",","");
                               
                 if(tranOperation.equals("Purchase") || tranOperation.equals("Transfer")){
-                    newTransAmount = transAmount.replace("-","");
-                    trans.setTransactionAmount(-(parseDouble(newTransAmount)));
+                    noSignTransAmount = noCommaTransAmount.replace("-","");
+                    trans.setTransactionAmount(-(parseDouble(noSignTransAmount)));
                 } else {
-                    newTransAmount = transAmount.replace("+","");
-                    trans.setTransactionAmount((parseDouble(newTransAmount)));
+                    noSignTransAmount = noCommaTransAmount.replace("+","");
+                    trans.setTransactionAmount((parseDouble(noSignTransAmount)));
                 }
                 finalBalance = finalBalance +  trans.getTransactionAmount();
                 transactionList.getTransactionsList().add(trans);
