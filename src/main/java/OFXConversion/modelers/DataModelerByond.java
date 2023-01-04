@@ -23,6 +23,7 @@ public class DataModelerByond {
             String lineOfStatement;
             boolean isHeader = true;
             boolean firstRec = true;
+            Double adjBalance = 0.0;
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
 
@@ -34,13 +35,13 @@ public class DataModelerByond {
                     // RetailerName,Date,Spend,Earned,CardBalance,Category
                     //      0         1    2     3        4         5
                     // ignore the record where balance is empty, it is still not final
-                    if (tokens.length > 1 && !tokens[4].isEmpty()) {
+                    if (tokens.length > 3) {
                         Transactions trans = new Transactions();
                         trans.setTransactionDetails(tokens[0]);
                         trans.setTransactionDate(LocalDate.parse(tokens[1], myformatter));
                         //There is no credit/debit indicator in the statement, all values are positive.
                         // if Category 'Fund in' is positive then it is a credit else a debit.
-                        if(tokens[5].equals("Fund in")){
+                        if((tokens.length >= 6) && tokens[5].equals("Fund in")){
                             //This is credit
                             trans.setTransactionAmount(-Double.parseDouble(tokens[2]));
                         }
@@ -53,19 +54,30 @@ public class DataModelerByond {
 
                        //The final balance is in very first row
 
-                       if (firstRec) {
+                      /* if (firstRec && !tokens[4].isEmpty()) {
                         finalBalance = Double.parseDouble(tokens[4]);
                                 firstRec = false;
-                        }
+                        }*/
                         //Initial balance is towards the end so keep overwriting
                         // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
-                        translistFinal.setInitialBalance(Double.parseDouble(tokens[4]) + trans.getTransactionAmount());
-
+                        if((tokens.length >= 5) && !tokens[4].isEmpty()) {
+                            translistFinal.setInitialBalance(Double.parseDouble(tokens[4]) + trans.getTransactionAmount());
+                        }
+                        else{
+                            adjBalance = adjBalance + trans.getTransactionAmount();
+                        }
                     }
                 }
 
                 if (isHeader)
                     isHeader = false;
+            }
+
+            translistFinal.setInitialBalance(translistFinal.getInitialBalance()+adjBalance);
+
+            finalBalance = translistFinal.getInitialBalance();
+            for(Transactions trans: translistFinal.getTransactionsList()){
+                finalBalance = finalBalance - trans.getTransactionAmount();
             }
             translistFinal.setFinalBalance(finalBalance);
         }
