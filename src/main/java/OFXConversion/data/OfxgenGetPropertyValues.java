@@ -54,6 +54,7 @@ public class OfxgenGetPropertyValues {
     public static Double testintialBalanceVanguard =0.0;
     public static Double testfinalBalanceVanguard =0.0;
     public static String convertedVanguardFileName ="";
+    public static int transSheetNumber;
 
     //chase
     public static String chaseAccountType = "";
@@ -86,7 +87,7 @@ public class OfxgenGetPropertyValues {
             pollingDirPath = prop.getProperty("ofxgenprops.backgroundprocessing.pollingDirPath");
             backgroundProcessingRequired = prop.getProperty("ofxgenprops.backgroundprocessing");
             prefixMarcusFilename = prop.getProperty("ofxgenprops.backgroundprocessing.marcus.prefixMarcusFilename");
-            intialBalanceMarcus = Double.parseDouble(prop.getProperty("ofxgenprops.backgroundprocessing.marcus.intialBalanceMarcus"));
+            intialBalanceMarcus = Double.parseDouble(prop.getProperty("ofxgenprops.marcus.intialBalanceMarcus"));
             amazonAccountId = prop.getProperty("ofxgenprops.amazon.amazonAccountId");
             byondAccountId = prop.getProperty("ofxgenprops.byond.byondAccountId");
             marcusAccountId = prop.getProperty("ofxgenprops.marcus.marcusAccountId");
@@ -98,7 +99,7 @@ public class OfxgenGetPropertyValues {
             testinitialBalanceByond = Double.parseDouble(prop.getProperty("ofxgenprops.testing.byond.intialBalanceByond"));
             testinitialBalanceAmazon = Double.parseDouble(prop.getProperty("ofxgenprops.testing.amazon.intialBalanceAmazon"));
             testinitialBalanceTSB = Double.parseDouble(prop.getProperty("ofxgenprops.testing.tsb.intialBalanceTSB"));
-            suffixTSB = prop.getProperty("ofxgenprops.backgroundprocessing.tsb.suffixTSB");
+            suffixTSB = prop.getProperty("ofxgenprops.tsb.suffixTSB");
 
             prefixByondFileName = prop.getProperty("ofxgenprops.backgroundprocessing.byond.prefixByondFileName");
             amazonAccountType = prop.getProperty("ofxgenprops.amazon.accountype");
@@ -108,28 +109,27 @@ public class OfxgenGetPropertyValues {
             testFinalBalanceMarcus = Double.parseDouble(prop.getProperty("ofxgenprops.testing.marcus.finalBalanceMarcus"));
             testFinalBalanceAmazon = Double.parseDouble(prop.getProperty("ofxgenprops.testing.amazon.finalBalanceAmazon"));
             prefixAmazonFileName = prop.getProperty("ofxgenprops.backgroundprocessing.amazon.prefixAmazonFileName");
-            initialBalanceAmazon = Double.parseDouble(prop.getProperty("ofxgenprops.backgroundprocessing.amazon.intialBalanceAmazon"));
+            initialBalanceAmazon = Double.parseDouble(prop.getProperty("ofxgenprops.amazon.intialBalanceAmazon"));
             prefixSantanderFileName = prop.getProperty("ofxgenprops.backgroundprocessing.santander.prefixSantanderFileName");
             convertedSantanderFileName = prop.getProperty("ofxgenprops.backgroundprocessing.santander.convertedSantanderFileName");
-            maxQifCommentsChars= Integer.parseInt(prop.getProperty("ofxgenprops.backgroundprocessing.santander.maxQifCommentsChars"));
+            maxQifCommentsChars= Integer.parseInt(prop.getProperty("ofxgenprops.santander.maxQifCommentsChars"));
             testFilePathSantander = prop.getProperty("ofxgenprops.testing.santander.testFilePathSantander");
             tsbDestFileName = prop.getProperty("ofxgenprops.tsb.destFileName");
 
             //Vanguard
             vanguardAccountType = prop.getProperty("ofxgenprops.vanguard.accountype");
             vanguardAccountId = prop.getProperty("ofxgenprops.vanguard.vanguardAccountId");
-            vanguardDateChars= Integer.parseInt(prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.dateChars"));
+            vanguardDateChars= Integer.parseInt(prop.getProperty("ofxgenprops.vanguard.dateChars"));
             prefixVanguardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.prefixVanguardFileName");
             testFilePathVanguard = prop.getProperty("ofxgenprops.testing.vanguard.testFilePathVanguard");
             testintialBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.intialBalanceVanguard"));
-            convertedVanguardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.convertedVanguardFileName");
+            convertedVanguardFileName = prop.getProperty("ofxgenprops.vanguard.convertedVanguardFileName");
             testfinalBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.finalBalanceVanguard"));
-           // intialBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.initialBalanceVanguard"));
+            transSheetNumber = Integer.parseInt(prop.getProperty("ofxgenprops.vanguard.transSheetNumber"));
 
             //chase
             chaseAccountType = prop.getProperty("ofxgenprops.chase.accountype");
             chaseAccountId = prop.getProperty("ofxgenprops.chase.chaseAccountId");
-
             testFilePathChase = prop.getProperty("ofxgenprops.testing.chase.testFilePathChase");
             testintialBalanceChase = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.initialBalanceChase"));
             testfinalBalanceChase = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.finalBalanceChase"));

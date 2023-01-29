@@ -1,18 +1,22 @@
 package OFXConversion.modelers;
 
+import OFXConversion.data.OfxgenGetPropertyValues;
 import OFXConversion.data.TransactionList;
 import OFXConversion.data.Transactions;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
 import java.util.Locale;
-
-
 
 public class DataModelerVanguard {
 
@@ -25,9 +29,111 @@ public class DataModelerVanguard {
         // or StandardCharsets.US_ASCII with JDK1.7+
     }
     public TransactionList createTransactionList(String sourceFileName) throws IOException {
+        TransactionList translistFinal = new TransactionList();
+
+        try {
+
+            FileInputStream file = new FileInputStream(sourceFileName);
+
+            //Get the workbook instance for XLS file
+            HSSFWorkbook workbook = new HSSFWorkbook(file);
+
+            //Get first sheet from the workbook
+            HSSFSheet sheet = workbook.getSheetAt(OfxgenGetPropertyValues.transSheetNumber);
+
+            //Iterate through each rows from first sheet
+            Iterator < Row > rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+
+                //For each row, iterate through each columns
+                Iterator < Cell > cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+
+                    Cell cell = cellIterator.next();
+
+                    if(cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Cash Transactions")) {
+                        if (cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Date")) {
+
+                            row = rowIterator.next();
+                            //these rows are now cash transactions
+                            while (rowIterator.hasNext()) {
+                                Iterator<Cell> innerCellIterator = row.cellIterator();
+
+                                Cell innerCell = innerCellIterator.next();
+                                Transactions trans = new Transactions();
+                                //Date	Details	Amount	Balance
+                                //01/12/2021	Regular Deposit	200.00	319.97
+                                //01/12/2021	Bought 1 S&P 500 UCITS ETF Distributing (VUSA)	-65.89	254.08
+                                //01/12/2021	Bought 1 FTSE Developed World UCITS ETF Distributing (VEVE)	-68.73	185.35
+                                if (innerCell.getCellType().equals(CellType.STRING) && innerCell.getStringCellValue().equals("Balance")) {
+                                    //we have come to end of cash transactions
+                                    break;
+                                }
+                                trans.setTransactionDate(innerCell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                                innerCell = innerCellIterator.next();
+                                trans.setTransactionDetails(innerCell.getStringCellValue());
+                                innerCell = innerCellIterator.next();
+                                trans.setTransactionAmount(innerCell.getNumericCellValue());
+                                row = rowIterator.next();
+                            }
+                        } //if celltype is string for date
+                        else {
+                            continue;
+                        }
+                    } //if celltype is string for cash transactions
+
+                    if(cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Investment Transactions")) {
+                        if (cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Date")) {
+
+                            row = rowIterator.next();
+                            //these rows are now cash transactions
+                            while (rowIterator.hasNext()) {
+                                Iterator<Cell> innerCellIterator = row.cellIterator();
+
+                                Cell innerCell = innerCellIterator.next();
+                                Transactions trans = new Transactions();
+                                //Date	InvestmentName	TransactionDetails	Quantity	Price	Cost
+                                //05/12/2022	FTSE Developed World UCITS ETF Distributing (VEVE)	Bought 9 FTSE Developed World UCITS ETF Distributing (VEVE)	9.00	65.4156	588.74
+                                //05/12/2022	S&P 500 UCITS ETF Distributing (VUSA)	Bought 9 S&P 500 UCITS ETF Distributing (VUSA)	9.00	63.7467	573.72
+                                //03/11/2022	FTSE Developed World UCITS ETF Distributing (VEVE)	Bought 9 FTSE Developed World UCITS ETF Distributing (VEVE)	9.00	64.7222	582.50
+                                if (innerCell.getCellType().equals(CellType.STRING) && innerCell.getStringCellValue().equals("Balance")) {
+                                    //we have come to end of cash transactions
+                                    break;
+                                }
+                                trans.setTransactionDate(innerCell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                                innerCell = innerCellIterator.next();
+                                trans.setTransactionDetails(innerCell.getStringCellValue());
+                                innerCell = innerCellIterator.next();
+                                trans.setTransactionAmount(innerCell.getNumericCellValue());
+                                row = rowIterator.next();
+                            }
+                        } //if celltype is string for date
+                        else {
+                            continue;
+                        }
+                    } //if celltype is string for cash transactions
+                }
+                System.out.println("");
+            }
+            file.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return(new TransactionList());
+
+    }
+
+/*
+    private void processCashTransactionList(String inputStream){
 
         TransactionList translistFinal = new TransactionList();
-        try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
+        //try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
             DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
 
 
@@ -102,9 +208,9 @@ public class DataModelerVanguard {
             translistFinal.setFinalBalance(finalBalance);
             translistFinal.setInitialBalance(intialBalance);
 
-        }
+        //}
         return translistFinal;
-    }
+    } */
 }
 
 

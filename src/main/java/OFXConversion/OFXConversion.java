@@ -25,9 +25,6 @@ public class OFXConversion {
     //TODO fix logging
     private final static Logger logger = Logger.getLogger(OFXConversion.class.getName());
 
-
-    //TODO why not use this real account number - 7365 0100 0067 4567, this account number however should match money
-
     /* 5 Dec 2018 - Unfortunately they keep changing pdf format, which is a pain !!!
     Rahul has taken a decision to use csv format instead as that will not change.
     That however requires the previous balance to be input.
