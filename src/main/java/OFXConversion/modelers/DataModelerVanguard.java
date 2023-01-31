@@ -1,8 +1,6 @@
 package OFXConversion.modelers;
 
-import OFXConversion.data.OfxgenGetPropertyValues;
-import OFXConversion.data.TransactionList;
-import OFXConversion.data.Transactions;
+import OFXConversion.data.*;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -30,6 +28,7 @@ public class DataModelerVanguard {
     }
     public TransactionList createTransactionList(String sourceFileName) throws IOException {
         TransactionList translistFinal = new TransactionList();
+        InvTransactionList invTranslistFinal = new InvTransactionList();
 
         try {
 
@@ -74,7 +73,13 @@ public class DataModelerVanguard {
                                 innerCell = innerCellIterator.next();
                                 trans.setTransactionDetails(innerCell.getStringCellValue());
                                 innerCell = innerCellIterator.next();
-                                trans.setTransactionAmount(innerCell.getNumericCellValue());
+                                if(trans.getTransactionDetails().startsWith("Bought")) {
+                                    trans.setTransactionAmount(-(innerCell.getNumericCellValue()));
+                                }
+                                else
+                                    trans.setTransactionAmount((innerCell.getNumericCellValue()));
+
+                                translistFinal.getTransactionsList().add(trans);
                                 row = rowIterator.next();
                             }
                         } //if celltype is string for date
@@ -92,7 +97,7 @@ public class DataModelerVanguard {
                                 Iterator<Cell> innerCellIterator = row.cellIterator();
 
                                 Cell innerCell = innerCellIterator.next();
-                                Transactions trans = new Transactions();
+                                InvTransactions itrans = new InvTransactions()  ;
                                 //Date	InvestmentName	TransactionDetails	Quantity	Price	Cost
                                 //05/12/2022	FTSE Developed World UCITS ETF Distributing (VEVE)	Bought 9 FTSE Developed World UCITS ETF Distributing (VEVE)	9.00	65.4156	588.74
                                 //05/12/2022	S&P 500 UCITS ETF Distributing (VUSA)	Bought 9 S&P 500 UCITS ETF Distributing (VUSA)	9.00	63.7467	573.72
@@ -101,12 +106,15 @@ public class DataModelerVanguard {
                                     //we have come to end of cash transactions
                                     break;
                                 }
-                                trans.setTransactionDate(innerCell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+
+                                itrans.setTransactionDate(innerCell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                                 innerCell = innerCellIterator.next();
-                                trans.setTransactionDetails(innerCell.getStringCellValue());
+                                itrans.setTransactionDetails(innerCell.getStringCellValue());
                                 innerCell = innerCellIterator.next();
-                                trans.setTransactionAmount(innerCell.getNumericCellValue());
+                                itrans.setTransactionAmount(innerCell.getNumericCellValue());
                                 row = rowIterator.next();
+
+
                             }
                         } //if celltype is string for date
                         else {

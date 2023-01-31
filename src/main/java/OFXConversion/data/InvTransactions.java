@@ -2,12 +2,11 @@ package OFXConversion.data;
 
 public class InvTransactions extends Transactions {
     private String invName;
-    private int quantity;
-    private double price;
-    private double commission;
+    private int invQuantity;
+    private double invPrice;
+    private double invCommission;
 
-    private TransactionTypes transactionType;
-
+    private TransactionTypes invTransactionType;
 
     public String getInvName() {
         return invName;
@@ -17,36 +16,35 @@ public class InvTransactions extends Transactions {
         this.invName = invName;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getInvQuantity() {
+        return invQuantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setInvQuantity(int invQuantity) {
+        this.invQuantity = invQuantity;
     }
 
-    public double getPrice() {
-        return price;
+    public double getInvPrice() {
+        return invPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setInvPrice(double invPrice) {
+        this.invPrice = invPrice;
     }
 
-    public double getCommission() {
-        return commission;
+    public double getInvCommission() {
+        return invCommission;
     }
 
-    public void setCommission(double commission) {
-        this.commission = commission;
+    public void setInvCommission(double invCommission) {
+        this.invCommission = invCommission;
     }
 
-    public TransactionTypes getTransactionType() {
-        return transactionType;
+    public TransactionTypes getInvTransactionType() {
+        return invTransactionType;
     }
 
-    public void setTransactionType(TransactionTypes transactionType) {
-        this.transactionType = transactionType;
+    public void setInvTransactionType(TransactionTypes invTransactionType) {
+        this.invTransactionType = invTransactionType;
     }
-
 }

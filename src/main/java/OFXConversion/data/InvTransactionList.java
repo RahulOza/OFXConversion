@@ -31,4 +31,25 @@ public class InvTransactionList {
     public void setFinalBalance(Double finalBalance) {
         this.finalBalance = finalBalance;
     }
+
+    public void printTransactionList(){
+
+        System.out.println(" *********************************************** ");
+        System.out.println(" *********************************************** ");
+        System.out.println(" Transaction List Printing, Initial Bal = "+initialBalance+" Final Bal = " + finalBalance);
+        int ctr = 1;
+        for (InvTransactions i: invTransactionsList) {
+            System.out.println(" Item : " + ctr++);
+            System.out.println(" Date : " + i.transactionDate.toString());
+            System.out.println(" Inv Name : " + i.getInvName().toString());
+            System.out.println(" Inv Quant : " + i.getInvQuantity());
+            System.out.println(" Inv Price : " + i.getInvPrice());
+            System.out.println(" Inv Comm : " + i.getInvCommission());
+            System.out.println(" Inv Type : " + i.getInvTransactionType());
+            System.out.println(" Details : " + i.transactionDetails);
+            System.out.println(" Amount : £" + i.transactionAmount.toString());
+        }
+        System.out.println(" *********************************************** ");
+    }
 }
+
