@@ -1,5 +1,6 @@
 package OFXConversion;
 
+import OFXConversion.data.AllTransactions;
 import OFXConversion.data.OfxgenGetPropertyValues;
 import OFXConversion.data.TransactionList;
 import OFXConversion.modelers.*;
@@ -106,18 +107,22 @@ public class OFXConversionTest {
     }
 
     @Test
-    public void testVanguard() throws IOException{
+    public void testVanguard() throws Exception {
 
         DataModelerVanguard DM = new DataModelerVanguard();
 
         logger.info("testVanguard Started");
 
-        TransactionList transactionList = DM.createTransactionList(testFilePathVanguard);
+        //TransactionList transactionList = DM.createTransactionList(testFilePathVanguard);
+        AllTransactions alltransactionLists = DM.createTransactionList(testFilePathVanguard);
 
-        Double initialBalanceRounded = Double.parseDouble(df.format(transactionList.getInitialBalance()));
+        alltransactionLists.getInvTrans().printTransactionList();
+        alltransactionLists.getCashTrans().printTransactionList();
+
+       Double initialBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getInitialBalance()));
         assertEquals(initialBalanceRounded, testintialBalanceVanguard);
 
-        Double finalBalanceRounded = Double.parseDouble(df.format(transactionList.getFinalBalance()));
+        Double finalBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getFinalBalance()));
         assertEquals(finalBalanceRounded, testfinalBalanceVanguard);
 
         convertFileVanguard(OfxgenGetPropertyValues.testFilePathVanguard);

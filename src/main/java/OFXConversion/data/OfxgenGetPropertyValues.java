@@ -53,8 +53,10 @@ public class OfxgenGetPropertyValues {
     public static String testFilePathVanguard ="";
     public static Double testintialBalanceVanguard =0.0;
     public static Double testfinalBalanceVanguard =0.0;
-    public static String convertedVanguardFileName ="";
+    public static String convertedVanguardCashFileName ="";
+    public static String convertedVanguardInvFileName ="";
     public static int transSheetNumber;
+    public static String vanguardSymbolMapFile ="";
 
     //chase
     public static String chaseAccountType = "";
@@ -123,10 +125,11 @@ public class OfxgenGetPropertyValues {
             prefixVanguardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.prefixVanguardFileName");
             testFilePathVanguard = prop.getProperty("ofxgenprops.testing.vanguard.testFilePathVanguard");
             testintialBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.intialBalanceVanguard"));
-            convertedVanguardFileName = prop.getProperty("ofxgenprops.vanguard.convertedVanguardFileName");
+            convertedVanguardCashFileName = prop.getProperty("ofxgenprops.vanguard.convertedVanguardCashFileName");
+            convertedVanguardInvFileName = prop.getProperty("ofxgenprops.vanguard.convertedVanguardInvFileName");
             testfinalBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.finalBalanceVanguard"));
             transSheetNumber = Integer.parseInt(prop.getProperty("ofxgenprops.vanguard.transSheetNumber"));
-
+            vanguardSymbolMapFile = prop.getProperty("ofxgenprops.vanguard.symbolMapFile");
             //chase
             chaseAccountType = prop.getProperty("ofxgenprops.chase.accountype");
             chaseAccountId = prop.getProperty("ofxgenprops.chase.chaseAccountId");

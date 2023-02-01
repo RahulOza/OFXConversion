@@ -85,14 +85,14 @@ public class OFXConversion {
     public static void convertFileVanguard(String fileName) throws IOException {
         DataModelerVanguard DM = new DataModelerVanguard();
         OfxGen OfGen = new OfxGen();
+        //TODO - fix this
+        //TransactionList transactionList = DM.createTransactionList(fileName);
 
-        TransactionList transactionList = DM.createTransactionList(fileName);
+       // Collections.sort(transactionList.getTransactionsList(), new TransactionList());
 
-        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
+        //transactionList.printTransactionList();
 
-        transactionList.printTransactionList();
-
-        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
+        //OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
 
     }
 

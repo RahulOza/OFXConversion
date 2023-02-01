@@ -6,6 +6,8 @@ public class InvTransactions extends Transactions {
     private double invPrice;
     private double invCommission;
 
+    private String invSymb;
+
     private TransactionTypes invTransactionType;
 
     public String getInvName() {
@@ -46,5 +48,13 @@ public class InvTransactions extends Transactions {
 
     public void setInvTransactionType(TransactionTypes invTransactionType) {
         this.invTransactionType = invTransactionType;
+    }
+
+    public String getInvSymb() {
+        return invSymb;
+    }
+
+    public void setInvSymb(String invSymb) {
+        this.invSymb = invSymb;
     }
 }

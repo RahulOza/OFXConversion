@@ -13,22 +13,48 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 
-public class DataModelerVanguard {
+import static java.lang.System.exit;
 
-    private Double finalBalance = 0.0;
-    private Double intialBalance = 0.0;
+public class DataModelerVanguard {
+     HashMap<String, String> invSymbolMap = new HashMap<String, String>();
 
     public static boolean isNotPureAscii(String v) {
         return !(StandardCharsets.US_ASCII.newEncoder().canEncode(v));
         // or "ISO-8859-1" for ISO Latin 1
         // or StandardCharsets.US_ASCII with JDK1.7+
     }
-    public TransactionList createTransactionList(String sourceFileName) throws IOException {
+    private void readSymbolMap() throws Exception {
+        try (BufferedReader inputStream = new BufferedReader(new FileReader(OfxgenGetPropertyValues.vanguardSymbolMapFile))) {
+            String lineOfStatement;
+
+            while ((lineOfStatement = inputStream.readLine()) != null) {
+                //read all symbols and add to a hashmap
+                String[] tokens = lineOfStatement.split(",");
+                if(tokens.length == 2){
+                 invSymbolMap.put(tokens[0],tokens[1]);
+                }
+                else {
+                    throw new Exception("Invalid HashMap file");
+                }
+            }//while
+        }//open file
+        catch(IOException e){
+            System.out.println("Exception: " + e);
+
+        }
+    }
+    public AllTransactions createTransactionList(String sourceFileName) throws Exception {
         TransactionList translistFinal = new TransactionList();
         InvTransactionList invTranslistFinal = new InvTransactionList();
+        boolean isFirstRec = true;
+        boolean cashTransStatements = false;
+        boolean invTransStatements = false;
+
+        readSymbolMap();
 
         try {
 
@@ -49,10 +75,10 @@ public class DataModelerVanguard {
                 Iterator < Cell > cellIterator = row.cellIterator();
                 while (cellIterator.hasNext()) {
 
-                    Cell cell = cellIterator.next();
+                   Cell cell = cellIterator.next();
 
-                    if(cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Cash Transactions")) {
-                        if (cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Date")) {
+
+                           if (cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Date") && cashTransStatements) {
 
                             row = rowIterator.next();
                             //these rows are now cash transactions
@@ -69,27 +95,37 @@ public class DataModelerVanguard {
                                     //we have come to end of cash transactions
                                     break;
                                 }
+                                //date
                                 trans.setTransactionDate(innerCell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                                 innerCell = innerCellIterator.next();
+                                //transaction details
                                 trans.setTransactionDetails(innerCell.getStringCellValue());
                                 innerCell = innerCellIterator.next();
-                                if(trans.getTransactionDetails().startsWith("Bought")) {
-                                    trans.setTransactionAmount(-(innerCell.getNumericCellValue()));
+                                //Amount
+                                trans.setTransactionAmount((innerCell.getNumericCellValue()));
+                                //Balance
+                                innerCell = innerCellIterator.next();
+                                if(isFirstRec){
+                                    //final balance in very first line
+                                    translistFinal.setFinalBalance(innerCell.getNumericCellValue());
+                                    isFirstRec = false;
                                 }
-                                else
-                                    trans.setTransactionAmount((innerCell.getNumericCellValue()));
+                                //keep overwriting initial balance until the very end
+                                translistFinal.setInitialBalance(innerCell.getNumericCellValue());
 
                                 translistFinal.getTransactionsList().add(trans);
                                 row = rowIterator.next();
+                                cashTransStatements = false;
                             }
                         } //if celltype is string for date
-                        else {
-                            continue;
-                        }
+
+                    if(cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Cash Transactions") && !cashTransStatements) {
+                        cashTransStatements = true;
                     } //if celltype is string for cash transactions
 
-                    if(cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Investment Transactions")) {
-                        if (cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Date")) {
+
+
+                        if (cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Date") && invTransStatements) {
 
                             row = rowIterator.next();
                             //these rows are now cash transactions
@@ -109,17 +145,50 @@ public class DataModelerVanguard {
 
                                 itrans.setTransactionDate(innerCell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                                 innerCell = innerCellIterator.next();
+
+                                String invNameTmp ="";
+                                String invSymTmp = "";
+                                if(innerCell.getStringCellValue().indexOf('(') >0) {
+                                     invNameTmp = innerCell.getStringCellValue().substring(0, innerCell.getStringCellValue().indexOf('('));
+                                     invSymTmp = innerCell.getStringCellValue().substring(innerCell.getStringCellValue().indexOf('(') + 1, innerCell.getStringCellValue().indexOf(')'));
+                                }
+                                else{
+                                    invNameTmp = innerCell.getStringCellValue().trim();
+                                    invSymTmp = invSymbolMap.get(invNameTmp);
+                                }
+                                String invNameTmp1 = invNameTmp.replace("Distributing","");
+
+                                itrans.setInvSymb(invSymTmp);
+                                itrans.setInvName(invNameTmp1);
+                                innerCell = innerCellIterator.next();
                                 itrans.setTransactionDetails(innerCell.getStringCellValue());
+                                if(itrans.getTransactionDetails().startsWith("Bought")){
+                                    itrans.setInvTransactionType(TransactionTypes.MF_BUY);
+                                }
+                                else if(itrans.getTransactionDetails().startsWith("Sold")){
+                                    itrans.setInvTransactionType(TransactionTypes.MF_SELL);
+                                }
+                                else {
+                                    throw new Exception("Invalid Transacton Type");
+                                }
+
+                                //Quantity
+                                innerCell = innerCellIterator.next();
+                                itrans.setInvQuantity((int)innerCell.getNumericCellValue());
+                                //price
+                                innerCell = innerCellIterator.next();
+                                itrans.setInvPrice(innerCell.getNumericCellValue());
+                                //cost == amount
                                 innerCell = innerCellIterator.next();
                                 itrans.setTransactionAmount(innerCell.getNumericCellValue());
+
+                                invTranslistFinal.getInvTransactionsList().add(itrans);
                                 row = rowIterator.next();
-
-
+                                invTransStatements = false;
                             }
                         } //if celltype is string for date
-                        else {
-                            continue;
-                        }
+                    if(cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Investment Transactions") && !invTransStatements) {
+                        invTransStatements = true;
                     } //if celltype is string for cash transactions
                 }
                 System.out.println("");
@@ -131,9 +200,7 @@ public class DataModelerVanguard {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        return(new TransactionList());
+        return(new AllTransactions(invTranslistFinal,translistFinal));
 
     }
 

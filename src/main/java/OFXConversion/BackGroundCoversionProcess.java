@@ -93,7 +93,9 @@ public class BackGroundCoversionProcess implements Runnable{
                 if(filename.toString().endsWith(".txt")){
                     //if .txt file can be vanguard or RBS Select
 
-                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixVanguardFileName) && !(filename.toString().contains(OfxgenGetPropertyValues.convertedVanguardFileName)) ){
+                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixVanguardFileName)
+                            && !( (filename.toString().contains(OfxgenGetPropertyValues.convertedVanguardCashFileName)) ||
+                                        (filename.toString().contains(OfxgenGetPropertyValues.convertedVanguardInvFileName)))){
                         try {
                             OFXConversion.convertFileVanguard(pollDirPath + "\\" + filename.toString());
                             processed = true;
