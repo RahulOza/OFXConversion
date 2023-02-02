@@ -2,9 +2,9 @@ package OFXConversion.data;
 
 public class InvTransactions extends Transactions {
     private String invName;
-    private int invQuantity;
-    private double invPrice;
-    private double invCommission;
+    private Integer invQuantity;
+    private Double invPrice;
+    private Double invCommission;
 
     private String invSymb;
 
@@ -18,7 +18,7 @@ public class InvTransactions extends Transactions {
         this.invName = invName;
     }
 
-    public int getInvQuantity() {
+    public Integer getInvQuantity() {
         return invQuantity;
     }
 
@@ -26,7 +26,7 @@ public class InvTransactions extends Transactions {
         this.invQuantity = invQuantity;
     }
 
-    public double getInvPrice() {
+    public Double getInvPrice() {
         return invPrice;
     }
 
@@ -34,7 +34,7 @@ public class InvTransactions extends Transactions {
         this.invPrice = invPrice;
     }
 
-    public double getInvCommission() {
+    public Double getInvCommission() {
         return invCommission;
     }
 

@@ -20,32 +20,16 @@ import java.util.Locale;
 import static java.lang.System.exit;
 
 public class DataModelerVanguard {
-     HashMap<String, String> invSymbolMap = new HashMap<String, String>();
+
 
     public static boolean isNotPureAscii(String v) {
         return !(StandardCharsets.US_ASCII.newEncoder().canEncode(v));
         // or "ISO-8859-1" for ISO Latin 1
         // or StandardCharsets.US_ASCII with JDK1.7+
     }
-    private void readSymbolMap() throws Exception {
-        try (BufferedReader inputStream = new BufferedReader(new FileReader(OfxgenGetPropertyValues.vanguardSymbolMapFile))) {
-            String lineOfStatement;
 
-            while ((lineOfStatement = inputStream.readLine()) != null) {
-                //read all symbols and add to a hashmap
-                String[] tokens = lineOfStatement.split(",");
-                if(tokens.length == 2){
-                 invSymbolMap.put(tokens[0],tokens[1]);
-                }
-                else {
-                    throw new Exception("Invalid HashMap file");
-                }
-            }//while
-        }//open file
-        catch(IOException e){
-            System.out.println("Exception: " + e);
+    private void inverseSymbolMap(){
 
-        }
     }
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
         TransactionList translistFinal = new TransactionList();
@@ -54,7 +38,7 @@ public class DataModelerVanguard {
         boolean cashTransStatements = false;
         boolean invTransStatements = false;
 
-        readSymbolMap();
+        invTranslistFinal.readSymbolMap();
 
         try {
 
@@ -148,17 +132,20 @@ public class DataModelerVanguard {
 
                                 String invNameTmp ="";
                                 String invSymTmp = "";
+                                String[] invSymTmpMap;
                                 if(innerCell.getStringCellValue().indexOf('(') >0) {
                                      invNameTmp = innerCell.getStringCellValue().substring(0, innerCell.getStringCellValue().indexOf('('));
                                      invSymTmp = innerCell.getStringCellValue().substring(innerCell.getStringCellValue().indexOf('(') + 1, innerCell.getStringCellValue().indexOf(')'));
+                                    itrans.setInvSymb(invSymTmp);
                                 }
                                 else{
                                     invNameTmp = innerCell.getStringCellValue().trim();
-                                    invSymTmp = invSymbolMap.get(invNameTmp);
+                                    invSymTmpMap = invTranslistFinal.getInvSymbolMap().get(invNameTmp);
+                                    itrans.setInvSymb(invSymTmpMap[0]);
                                 }
                                 String invNameTmp1 = invNameTmp.replace("Distributing","");
 
-                                itrans.setInvSymb(invSymTmp);
+
                                 itrans.setInvName(invNameTmp1);
                                 innerCell = innerCellIterator.next();
                                 itrans.setTransactionDetails(innerCell.getStringCellValue());

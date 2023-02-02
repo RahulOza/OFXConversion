@@ -139,7 +139,7 @@ class OfxGen {
         }
 
     }
-    void ofxInvFileWriter (InvTransactionList transactionList, String fileName, String accountId, String accounType){
+    void ofxInvFileWriter (InvTransactionList itransactionList, String fileName, String accountId, String accounType){
 
         String ofxExtn=".ofx";
 
@@ -170,7 +170,7 @@ class OfxGen {
 
             ofxv1Writer.writeEndAggregate("STATUS");
 
-            ofxv1Writer.writeElement("DTSERVER",transactionList.getInvTransactionsList().get(0).getTransactionDate().format( myformatter) + "[0]");
+            ofxv1Writer.writeElement("DTSERVER",itransactionList.getInvTransactionsList().get(0).getTransactionDate().format( myformatter) + "[0]");
             ofxv1Writer.writeElement("LANGUAGE","ENG");
 
             ofxv1Writer.writeEndAggregate("SONRS");
@@ -202,10 +202,10 @@ class OfxGen {
             // Investment transactions
             ofxv1Writer.writeStartAggregate("INVTRANLIST");
 
-            ofxv1Writer.writeElement("DTSTART",transactionList.getInvTransactionsList().get(0).getTransactionDate().format(myformatter) + "[0]");
-            ofxv1Writer.writeElement("DTEND",transactionList.getInvTransactionsList().get(transactionList.getInvTransactionsList().size()-1).getTransactionDate().format(myformatter) + "[0]");
+            ofxv1Writer.writeElement("DTSTART",itransactionList.getInvTransactionsList().get(0).getTransactionDate().format(myformatter) + "[0]");
+            ofxv1Writer.writeElement("DTEND",itransactionList.getInvTransactionsList().get(itransactionList.getInvTransactionsList().size()-1).getTransactionDate().format(myformatter) + "[0]");
 
-            for (InvTransactions t: transactionList.getInvTransactionsList() ) {
+            for (InvTransactions t: itransactionList.getInvTransactionsList()) {
 
                 switch(t.getInvTransactionType()){
                     case MF_BUY:
@@ -217,15 +217,22 @@ class OfxGen {
                         ofxv1Writer.writeElement("DTSETTLE",t.getTransactionDate().format(myformatter) + "[0]");
                         ofxv1Writer.writeElement("MEMO",t.getTransactionDetails());
                         ofxv1Writer.writeStartAggregate("INVTRAN");
-
-
+                        ofxv1Writer.writeStartAggregate("SECID");
+                        ofxv1Writer.writeElement("UNIQUEID",t.getInvSymb());
+                        ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
+                        ofxv1Writer.writeEndAggregate("SECID");
+                        ofxv1Writer.writeElement("UNITS",t.getInvQuantity().toString());
+                        ofxv1Writer.writeElement("UNITPRICE",t.getInvPrice().toString());
+                        ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
+                        ofxv1Writer.writeElement("SUBACCTSEC","CASH");
+                        ofxv1Writer.writeElement("SUBACCTFUND","CASH");
                         ofxv1Writer.writeEndAggregate("INVBUY");
                         ofxv1Writer.writeElement("BUYTYPE", "BUY");
                         ofxv1Writer.writeEndAggregate("BUYMF");
                     case MF_SELL:
                     default:
                 }
-                ofxv1Writer.writeStartAggregate("STMTTRN");
+                /*ofxv1Writer.writeStartAggregate("STMTTRN");
                 if(t.getTransactionAmount() > 0) {
                     ofxv1Writer.writeElement("TRNTYPE", "DEBIT");
                 }
@@ -236,19 +243,19 @@ class OfxGen {
 
                 if(accounType.equalsIgnoreCase("Debit")){
                     t.setTransactionAmount(t.getTransactionAmount());
-                }
-                else if(accounType.equalsIgnoreCase("Credit")){
+                }*/
+                //else if(accounType.equalsIgnoreCase("Credit")){
                     // reverse values if its a credit account
                     // balance and each transaction amounts become negative
-                    t.setTransactionAmount(-t.getTransactionAmount());
-                }
-                else{
-                    throw new Exception("Unknow Account Type - Account needs to be either a Credit or Debit account");
-                }
-                ofxv1Writer.writeElement("TRNAMT",t.getTransactionAmount().toString());
-                ofxv1Writer.writeElement("FITID",fitIdPref + fitIdPart + fitid++);
-                ofxv1Writer.writeElement("NAME",t.getTransactionDetails().substring(0,Math.min(t.getTransactionDetails().length(),nameLimit)));
-                ofxv1Writer.writeElement("MEMO",t.getTransactionDetails());
+                 //   t.setTransactionAmount(-t.getTransactionAmount());
+               // }
+               // else{
+                //    throw new Exception("Unknow Account Type - Account needs to be either a Credit or Debit account");
+                //}
+                //ofxv1Writer.writeElement("TRNAMT",t.getTransactionAmount().toString());
+                //ofxv1Writer.writeElement("FITID",fitIdPref + fitIdPart + fitid++);
+                //ofxv1Writer.writeElement("NAME",t.getTransactionDetails().substring(0,Math.min(t.getTransactionDetails().length(),nameLimit)));
+                //ofxv1Writer.writeElement("MEMO",t.getTransactionDetails());
 
 
 
@@ -256,27 +263,59 @@ class OfxGen {
 
             }
 
-            ofxv1Writer.writeEndAggregate("BANKTRANLIST");
-            ofxv1Writer.writeStartAggregate("LEDGERBAL");
+            //ofxv1Writer.writeEndAggregate("BANKTRANLIST");
+            //ofxv1Writer.writeStartAggregate("LEDGERBAL");
 
-            ofxv1Writer.writeElement("BALAMT", transactionList.getFinalBalance().toString());
-            ofxv1Writer.writeElement("DTASOF",transactionList.getTransactionsList().get(transactionList.getTransactionsList().size()-1).getTransactionDate().format(myformatter) + "[0]");
+           // ofxv1Writer.writeElement("BALAMT", transactionList.getFinalBalance().toString());
+           // ofxv1Writer.writeElement("DTASOF",transactionList.getTransactionsList().get(transactionList.getTransactionsList().size()-1).getTransactionDate().format(myformatter) + "[0]");
 
-            ofxv1Writer.writeEndAggregate("LEDGERBAL");
+            //ofxv1Writer.writeEndAggregate("LEDGERBAL");
             ofxv1Writer.writeEndAggregate("INVSTMTRS");
             ofxv1Writer.writeEndAggregate("INVSTMTTRNRS");
             ofxv1Writer.writeEndAggregate("INVSTMTMSGSRSV1");
 
+            //List all the securities
+            ofxv1Writer.writeStartAggregate("SECLISTMSGSRSV1");
+            ofxv1Writer.writeStartAggregate("SECLIST");
 
+            for (Map.Entry<String, String[]> entry : itransactionList.getReverseSymbolMap().entrySet()) {
+                String key = entry.getKey();
+                String values[] = entry.getValue();
 
+                switch(values[1]){
+                    case "MF":
+                        ofxv1Writer.writeStartAggregate("MFINFO");
+                        ofxv1Writer.writeStartAggregate("SECINFO");
+                        ofxv1Writer.writeStartAggregate("SECID");
+                        ofxv1Writer.writeElement("UNIQUEID",key);
+                        ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
+                        ofxv1Writer.writeEndAggregate("SECID");
+                        ofxv1Writer.writeElement("SECNAME",values[0]);
+                        ofxv1Writer.writeElement("TICKER",key);
+                        ofxv1Writer.writeEndAggregate("SECINFO");
+                        ofxv1Writer.writeEndAggregate("MFINFO");
+                    case "ST":
+                        ofxv1Writer.writeStartAggregate("STOCKINFO");
+                        ofxv1Writer.writeStartAggregate("SECINFO");
+                        ofxv1Writer.writeStartAggregate("SECID");
+                        ofxv1Writer.writeElement("UNIQUEID",key);
+                        ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
+                        ofxv1Writer.writeEndAggregate("SECID");
+                        ofxv1Writer.writeElement("SECNAME",values[0]);
+                        ofxv1Writer.writeElement("TICKER",key);
+                        ofxv1Writer.writeEndAggregate("SECINFO");
+                        ofxv1Writer.writeEndAggregate("STOCKINFO");
+                }
+            }
+            ofxv1Writer.writeEndAggregate("SECLIST");
+            ofxv1Writer.writeEndAggregate("SECLISTMSGSRSV1");
             ofxv1Writer.writeEndAggregate("OFX");
-
             ofxv1Writer.close();
         }
         catch(Exception e){
             e.printStackTrace();
 
-        }
+        }//exception
 
     }
 }

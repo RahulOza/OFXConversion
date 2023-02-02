@@ -94,6 +94,8 @@ public class OFXConversion {
 
         //OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
 
+        //OfGen.ofxInvFileWriter();
+
     }
 
     public static void convertFileChase(String fileName) throws IOException {
