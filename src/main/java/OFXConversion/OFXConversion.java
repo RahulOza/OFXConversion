@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.logging.Logger;
 
+import OFXConversion.data.AllTransactions;
+import OFXConversion.data.InvTransactionList;
 import OFXConversion.data.OfxgenGetPropertyValues;
 import OFXConversion.modelers.*;
 import org.springframework.boot.CommandLineRunner;
@@ -82,19 +84,23 @@ public class OFXConversion {
 
     }
 
-    public static void convertFileVanguard(String fileName) throws IOException {
+    public static void convertFileVanguard(String fileName) throws Exception {
         DataModelerVanguard DM = new DataModelerVanguard();
         OfxGen OfGen = new OfxGen();
-        //TODO - fix this
-        //TransactionList transactionList = DM.createTransactionList(fileName);
 
-       // Collections.sort(transactionList.getTransactionsList(), new TransactionList());
+        AllTransactions transactionLists = DM.createTransactionList(fileName);
 
-        //transactionList.printTransactionList();
+        Collections.sort(transactionLists.getCashTrans().getTransactionsList(), new TransactionList());
 
-        //OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
+        transactionLists.getCashTrans().printTransactionList();
 
-        //OfGen.ofxInvFileWriter();
+        Collections.sort(transactionLists.getInvTrans().getInvTransactionsList(), new InvTransactionList());
+
+        transactionLists.getInvTrans().printTransactionList();
+
+        OfGen.ofxFileWriter(transactionLists.getCashTrans(),fileName, OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
+
+        OfGen.ofxInvFileWriter(transactionLists.getInvTrans(),fileName,OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
 
     }
 
@@ -115,7 +121,7 @@ public class OFXConversion {
     public static void main(String[] args) throws IOException {
 
 
-        logger.info(" ######### OfxGen v1.7 (Byond Fixes) ##########");
+        logger.info(" ######### OfxGen v1.8 (Vanguard Investment Fixes) ##########");
         if(args.length < 1){
             logger.severe("Missing ofxgen.properties file as parameter");
         }

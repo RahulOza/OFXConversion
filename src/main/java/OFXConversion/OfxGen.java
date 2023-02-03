@@ -142,6 +142,7 @@ class OfxGen {
     void ofxInvFileWriter (InvTransactionList itransactionList, String fileName, String accountId, String accounType){
 
         String ofxExtn=".ofx";
+        String suffixForInvst = "Inv";
 
         DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("yyyyMMdd110000.000", Locale.ENGLISH);
         int fitid = 1;
@@ -149,7 +150,7 @@ class OfxGen {
         String fitIdPref = "R";
 
         // ofxFileName = filePath + ofxFileName + fileSuffix + ofxExtn;
-        String ofxFileName = fileName.substring(0,fileName.length()-4) + ofxExtn;
+        String ofxFileName = fileName.substring(0,fileName.length()-4) + suffixForInvst + ofxExtn;
 
 
         try {

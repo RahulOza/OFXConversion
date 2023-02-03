@@ -45,6 +45,7 @@ public class OfxgenGetPropertyValues {
     public static String testFilePathSantander ="";
     public static String tsbDestFileName ="";
 
+    //TODO A number of converted file names are not used ?
     //Vanguard
     public static String vanguardAccountType = "";
     public static String vanguardAccountId = "";
