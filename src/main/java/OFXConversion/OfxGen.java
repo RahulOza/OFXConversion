@@ -74,12 +74,10 @@ class OfxGen {
             ofxv1Writer.writeStartAggregate("CCSTMTRS");
 
             ofxv1Writer.writeElement("CURDEF","GBP");
-
             ofxv1Writer.writeStartAggregate("CCACCTFROM");
 
 
             ofxv1Writer.writeElement("ACCTID", accountId);
-
             ofxv1Writer.writeEndAggregate("CCACCTFROM");
 
             // Bank transactions
@@ -231,46 +229,16 @@ class OfxGen {
                         ofxv1Writer.writeElement("BUYTYPE", "BUY");
                         ofxv1Writer.writeEndAggregate("BUYMF");
                     case MF_SELL:
+                    case BONUS:
+                    case STOCK_BUY:
+                    case STOCK_SELL:
+                    case DIVIDEND:
+
                     default:
                 }
-                /*ofxv1Writer.writeStartAggregate("STMTTRN");
-                if(t.getTransactionAmount() > 0) {
-                    ofxv1Writer.writeElement("TRNTYPE", "DEBIT");
-                }
-                else{
-                    ofxv1Writer.writeElement("TRNTYPE", "CREDIT");
-                }
-                ofxv1Writer.writeElement("DTPOSTED",t.getTransactionDate().format(myformatter) + "[0]");
-
-                if(accounType.equalsIgnoreCase("Debit")){
-                    t.setTransactionAmount(t.getTransactionAmount());
-                }*/
-                //else if(accounType.equalsIgnoreCase("Credit")){
-                    // reverse values if its a credit account
-                    // balance and each transaction amounts become negative
-                 //   t.setTransactionAmount(-t.getTransactionAmount());
-               // }
-               // else{
-                //    throw new Exception("Unknow Account Type - Account needs to be either a Credit or Debit account");
-                //}
-                //ofxv1Writer.writeElement("TRNAMT",t.getTransactionAmount().toString());
-                //ofxv1Writer.writeElement("FITID",fitIdPref + fitIdPart + fitid++);
-                //ofxv1Writer.writeElement("NAME",t.getTransactionDetails().substring(0,Math.min(t.getTransactionDetails().length(),nameLimit)));
-                //ofxv1Writer.writeElement("MEMO",t.getTransactionDetails());
-
-
-
                 ofxv1Writer.writeEndAggregate("INVTRANLIST");
 
             }
-
-            //ofxv1Writer.writeEndAggregate("BANKTRANLIST");
-            //ofxv1Writer.writeStartAggregate("LEDGERBAL");
-
-           // ofxv1Writer.writeElement("BALAMT", transactionList.getFinalBalance().toString());
-           // ofxv1Writer.writeElement("DTASOF",transactionList.getTransactionsList().get(transactionList.getTransactionsList().size()-1).getTransactionDate().format(myformatter) + "[0]");
-
-            //ofxv1Writer.writeEndAggregate("LEDGERBAL");
             ofxv1Writer.writeEndAggregate("INVSTMTRS");
             ofxv1Writer.writeEndAggregate("INVSTMTTRNRS");
             ofxv1Writer.writeEndAggregate("INVSTMTMSGSRSV1");

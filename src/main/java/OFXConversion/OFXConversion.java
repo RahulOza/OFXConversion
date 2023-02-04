@@ -37,7 +37,7 @@ public class OFXConversion {
 
         TransactionList transactionList = DM.createTransactionList(fileName);
 
-        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
+        transactionList.getTransactionsList().sort(new TransactionList());
 
         transactionList.printTransactionList();
 
@@ -76,7 +76,7 @@ public class OFXConversion {
 
         TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
 
-        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
+        transactionList.getTransactionsList().sort(new TransactionList());
 
         transactionList.printTransactionList();
 
@@ -90,11 +90,11 @@ public class OFXConversion {
 
         AllTransactions transactionLists = DM.createTransactionList(fileName);
 
-        Collections.sort(transactionLists.getCashTrans().getTransactionsList(), new TransactionList());
+        transactionLists.getCashTrans().getTransactionsList().sort(new TransactionList());
 
         transactionLists.getCashTrans().printTransactionList();
 
-        Collections.sort(transactionLists.getInvTrans().getInvTransactionsList(), new InvTransactionList());
+        transactionLists.getInvTrans().getInvTransactionsList().sort(new InvTransactionList());
 
         transactionLists.getInvTrans().printTransactionList();
 
@@ -110,7 +110,7 @@ public class OFXConversion {
 
         TransactionList transactionList = DM.createTransactionList(fileName);
 
-        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
+        transactionList.getTransactionsList().sort(new TransactionList());
 
         transactionList.printTransactionList();
 

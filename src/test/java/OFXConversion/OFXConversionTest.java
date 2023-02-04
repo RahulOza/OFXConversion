@@ -113,7 +113,6 @@ public class OFXConversionTest {
 
         logger.info("testVanguard Started");
 
-        //TransactionList transactionList = DM.createTransactionList(testFilePathVanguard);
         AllTransactions alltransactionLists = DM.createTransactionList(testFilePathVanguard);
 
         alltransactionLists.getInvTrans().printTransactionList();
