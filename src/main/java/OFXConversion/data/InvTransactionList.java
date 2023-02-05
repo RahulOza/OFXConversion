@@ -105,7 +105,9 @@ public class InvTransactionList implements Comparator<InvTransactions> {
                             "\n\t e.g. LifeStrategy 100% Equity Fund - Accumulation,GB00B41XG308,MF ");
                 }
             }//while
-        }//open file
+            //populate reverse symbol map as well
+            reverseSymbolMap();
+        }//try ..open file
         catch(IOException e){
             System.out.println("Exception: " + e);
 

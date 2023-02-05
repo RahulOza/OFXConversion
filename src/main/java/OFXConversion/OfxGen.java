@@ -191,9 +191,9 @@ class OfxGen {
 
             ofxv1Writer.writeElement("CURDEF","GBP");
 
-            ofxv1Writer.writeStartAggregate("CCACCTFROM");
+            ofxv1Writer.writeStartAggregate("INVACCTFROM");
 
-
+            ofxv1Writer.writeElement("BROKERID", "BROKER");
             ofxv1Writer.writeElement("ACCTID", accountId);
 
             ofxv1Writer.writeEndAggregate("INVACCTFROM");
@@ -236,9 +236,9 @@ class OfxGen {
 
                     default:
                 }
-                ofxv1Writer.writeEndAggregate("INVTRANLIST");
 
             }
+            ofxv1Writer.writeEndAggregate("INVTRANLIST");
             ofxv1Writer.writeEndAggregate("INVSTMTRS");
             ofxv1Writer.writeEndAggregate("INVSTMTTRNRS");
             ofxv1Writer.writeEndAggregate("INVSTMTMSGSRSV1");

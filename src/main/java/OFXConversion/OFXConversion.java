@@ -120,8 +120,11 @@ public class OFXConversion {
 
     public static void main(String[] args) throws IOException {
 
+        Double myVersion = 2.0;
+        String myVersionDetails = "Vanguard Investment Fixes";
 
-        logger.info(" ######### OfxGen v1.8 (Vanguard Investment Fixes) ##########");
+
+        logger.info(" ######### OfxGen v"+myVersion.toString()+" ("+ myVersionDetails +") ##########");
         if(args.length < 1){
             logger.severe("Missing ofxgen.properties file as parameter");
         }
@@ -130,9 +133,15 @@ public class OFXConversion {
             // if we have a parameter, it's the properties file for running local background processing.
             try {
                 OfxgenGetPropertyValues.getPropValues(arg);
+                //check if we have the right version of props file
+                if(!OfxgenGetPropertyValues.version.equals(myVersion)){
+                    throw new Exception("Incorrect properties version file");
+                }
 
             } catch (IOException exception) {
                 logger.severe(exception.toString());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
             if(OfxgenGetPropertyValues.backgroundProcessingRequired.equalsIgnoreCase("True")) {
                 Path dir = Paths.get(OfxgenGetPropertyValues.pollingDirPath);

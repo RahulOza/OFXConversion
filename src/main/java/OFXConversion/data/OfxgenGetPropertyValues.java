@@ -14,6 +14,7 @@ public class OfxgenGetPropertyValues {
     private final static Logger logger = Logger.getLogger(OFXConversion.class.getName());
 
     //properties
+    public static Double version=0.0;
     public static String pollingDirPath ="";
     public static String backgroundProcessingRequired = "";
     public static String prefixMarcusFilename = "";
@@ -85,6 +86,8 @@ public class OfxgenGetPropertyValues {
             }
 
             Date time = new Date(System.currentTimeMillis());
+
+            version = Double.parseDouble(prop.getProperty("ofxgenprops.version"));
 
             // get the property value and print it out
             pollingDirPath = prop.getProperty("ofxgenprops.backgroundprocessing.pollingDirPath");

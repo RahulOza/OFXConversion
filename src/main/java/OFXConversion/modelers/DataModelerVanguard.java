@@ -21,16 +21,6 @@ import static java.lang.System.exit;
 
 public class DataModelerVanguard {
 
-
-    public static boolean isNotPureAscii(String v) {
-        return !(StandardCharsets.US_ASCII.newEncoder().canEncode(v));
-        // or "ISO-8859-1" for ISO Latin 1
-        // or StandardCharsets.US_ASCII with JDK1.7+
-    }
-
-    private void inverseSymbolMap(){
-
-    }
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
         TransactionList translistFinal = new TransactionList();
         InvTransactionList invTranslistFinal = new InvTransactionList();
