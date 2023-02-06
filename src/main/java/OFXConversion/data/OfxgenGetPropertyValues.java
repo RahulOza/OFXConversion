@@ -129,8 +129,8 @@ public class OfxgenGetPropertyValues {
             prefixVanguardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.vanguard.prefixVanguardFileName");
             testFilePathVanguard = prop.getProperty("ofxgenprops.testing.vanguard.testFilePathVanguard");
             testintialBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.intialBalanceVanguard"));
-            convertedVanguardCashFileName = prop.getProperty("ofxgenprops.vanguard.convertedVanguardCashFileName");
-            convertedVanguardInvFileName = prop.getProperty("ofxgenprops.vanguard.convertedVanguardInvFileName");
+            //convertedVanguardCashFileName = prop.getProperty("ofxgenprops.vanguard.convertedVanguardCashFileName");
+            //convertedVanguardInvFileName = prop.getProperty("ofxgenprops.vanguard.convertedVanguardInvFileName");
             testfinalBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.finalBalanceVanguard"));
             transSheetNumber = Integer.parseInt(prop.getProperty("ofxgenprops.vanguard.transSheetNumber"));
             vanguardSymbolMapFile = prop.getProperty("ofxgenprops.vanguard.symbolMapFile");
@@ -140,7 +140,7 @@ public class OfxgenGetPropertyValues {
             testFilePathChase = prop.getProperty("ofxgenprops.testing.chase.testFilePathChase");
             testintialBalanceChase = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.initialBalanceChase"));
             testfinalBalanceChase = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.finalBalanceChase"));
-            convertedChaseFileName = prop.getProperty("ofxgenprops.backgroundprocessing.chase.convertedChaseFileName");
+            //convertedChaseFileName = prop.getProperty("ofxgenprops.backgroundprocessing.chase.convertedChaseFileName");
 
 
             result = "Loaded property = pollingDirPath = " + pollingDirPath;

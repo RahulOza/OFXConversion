@@ -19,6 +19,8 @@ import java.util.Locale;
 
 import static java.lang.System.exit;
 
+//TODO - Dividends - add these whilst processing cash transactions
+
 public class DataModelerVanguard {
 
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {

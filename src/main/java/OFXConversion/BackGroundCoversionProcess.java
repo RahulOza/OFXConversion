@@ -137,7 +137,9 @@ public class BackGroundCoversionProcess implements Runnable{
 
                 if(!processed){
                     logger.info("I have done nothing with file:"+filename.toString());
+
                 }
+                processed = false;
 
             }
 

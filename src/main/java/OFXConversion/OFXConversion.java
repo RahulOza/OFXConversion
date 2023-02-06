@@ -120,7 +120,7 @@ public class OFXConversion {
 
     public static void main(String[] args) throws IOException {
 
-        Double myVersion = 2.0;
+        Double myVersion = 2.1;
         String myVersionDetails = "Vanguard Investment Fixes";
 
 

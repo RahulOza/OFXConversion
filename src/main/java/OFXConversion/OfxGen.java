@@ -30,7 +30,7 @@ class OfxGen {
        String fitIdPart = new SimpleDateFormat("ddMMyyyyhhmmssS").format(new Date());
        String fitIdPref = "R";
 
-      // ofxFileName = filePath + ofxFileName + fileSuffix + ofxExtn;
+
        String ofxFileName = fileName.substring(0,fileName.length()-4) + ofxExtn;
 
 
@@ -147,7 +147,6 @@ class OfxGen {
         String fitIdPart = new SimpleDateFormat("ddMMyyyyhhmmssS").format(new Date());
         String fitIdPref = "R";
 
-        // ofxFileName = filePath + ofxFileName + fileSuffix + ofxExtn;
         String ofxFileName = fileName.substring(0,fileName.length()-4) + suffixForInvst + ofxExtn;
 
 
@@ -159,12 +158,16 @@ class OfxGen {
             ofxv1Writer.setWriteAttributesOnNewLine(true);
 
             ofxv1Writer.writeStartAggregate("OFX");
+
+            //=============== header
             ofxv1Writer.writeStartAggregate("SIGNONMSGSRSV1");
             ofxv1Writer.writeStartAggregate("SONRS");
             ofxv1Writer.writeStartAggregate("STATUS");
 
             ofxv1Writer.writeElement("CODE","0");
+
             ofxv1Writer.writeElement("SEVERITY","INFO");
+
             ofxv1Writer.writeElement("MESSAGE","OK");
 
             ofxv1Writer.writeEndAggregate("STATUS");
@@ -175,27 +178,31 @@ class OfxGen {
             ofxv1Writer.writeEndAggregate("SONRS");
             ofxv1Writer.writeEndAggregate("SIGNONMSGSRSV1");
 
+            //=================== header ends
+
+            //=================== investment messages start
+
             ofxv1Writer.writeStartAggregate("INVSTMTMSGSRSV1");
             ofxv1Writer.writeStartAggregate("INVSTMTTRNRS");
 
-            ofxv1Writer.writeElement("TRNUID","0");
+            //TODO create a trans id? what happens if we do?
+            ofxv1Writer.writeElement("TRNUID","045");
 
             ofxv1Writer.writeStartAggregate("STATUS");
 
             ofxv1Writer.writeElement("CODE","0");
             ofxv1Writer.writeElement("SEVERITY","INFO");
-            ofxv1Writer.writeElement("MESSAGE","OK");
 
             ofxv1Writer.writeEndAggregate("STATUS");
-            ofxv1Writer.writeStartAggregate("INVSTMTRS");
 
+            ofxv1Writer.writeStartAggregate("INVSTMTRS");
+            ofxv1Writer.writeElement("DTASOF",itransactionList.getInvTransactionsList().get(0).getTransactionDate().format( myformatter) + "[0]");
             ofxv1Writer.writeElement("CURDEF","GBP");
 
             ofxv1Writer.writeStartAggregate("INVACCTFROM");
 
             ofxv1Writer.writeElement("BROKERID", "BROKER");
             ofxv1Writer.writeElement("ACCTID", accountId);
-
             ofxv1Writer.writeEndAggregate("INVACCTFROM");
 
             // Investment transactions
@@ -215,19 +222,22 @@ class OfxGen {
                         ofxv1Writer.writeElement("DTTRADE",t.getTransactionDate().format(myformatter) + "[0]");
                         ofxv1Writer.writeElement("DTSETTLE",t.getTransactionDate().format(myformatter) + "[0]");
                         ofxv1Writer.writeElement("MEMO",t.getTransactionDetails());
-                        ofxv1Writer.writeStartAggregate("INVTRAN");
+                        ofxv1Writer.writeEndAggregate("INVTRAN");
                         ofxv1Writer.writeStartAggregate("SECID");
                         ofxv1Writer.writeElement("UNIQUEID",t.getInvSymb());
                         ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
                         ofxv1Writer.writeEndAggregate("SECID");
                         ofxv1Writer.writeElement("UNITS",t.getInvQuantity().toString());
                         ofxv1Writer.writeElement("UNITPRICE",t.getInvPrice().toString());
+                        // as it is a buy it is debit hence negative trans amount
+                        t.setTransactionAmount(-t.getTransactionAmount());
                         ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
                         ofxv1Writer.writeElement("SUBACCTSEC","CASH");
                         ofxv1Writer.writeElement("SUBACCTFUND","CASH");
                         ofxv1Writer.writeEndAggregate("INVBUY");
                         ofxv1Writer.writeElement("BUYTYPE", "BUY");
                         ofxv1Writer.writeEndAggregate("BUYMF");
+                        break;
                     case MF_SELL:
                     case BONUS:
                     case STOCK_BUY:
@@ -263,6 +273,7 @@ class OfxGen {
                         ofxv1Writer.writeElement("TICKER",key);
                         ofxv1Writer.writeEndAggregate("SECINFO");
                         ofxv1Writer.writeEndAggregate("MFINFO");
+                        break;
                     case "ST":
                         ofxv1Writer.writeStartAggregate("STOCKINFO");
                         ofxv1Writer.writeStartAggregate("SECINFO");
@@ -274,6 +285,7 @@ class OfxGen {
                         ofxv1Writer.writeElement("TICKER",key);
                         ofxv1Writer.writeEndAggregate("SECINFO");
                         ofxv1Writer.writeEndAggregate("STOCKINFO");
+                        break;
                 }
             }
             ofxv1Writer.writeEndAggregate("SECLIST");

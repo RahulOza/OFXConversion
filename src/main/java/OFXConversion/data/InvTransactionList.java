@@ -124,5 +124,15 @@ public class InvTransactionList implements Comparator<InvTransactions> {
             reverseSymbolMap.put(values[0],new String[]{key,values[1]});
         }
     }
+    public void printReverseSymbolMap(){
+        int ctr=0;
+        for (Map.Entry<String, String[]> entry : reverseSymbolMap.entrySet()) {
+            String key = entry.getKey();
+            String values[] = entry.getValue();
+            System.out.println(" Item : " + ctr++);
+            System.out.println(" Key : " + key);
+            System.out.println(" Values : " + values.toString());
+        }
+    }
 }
 
