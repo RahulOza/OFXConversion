@@ -76,9 +76,35 @@ public class DataModelerVanguard {
                                 innerCell = innerCellIterator.next();
                                 //transaction details
                                 trans.setTransactionDetails(innerCell.getStringCellValue());
+
+                                InvTransactions itransDiv = new InvTransactions();
+
                                 innerCell = innerCellIterator.next();
                                 //Amount
                                 trans.setTransactionAmount((innerCell.getNumericCellValue()));
+
+                                if(trans.getTransactionDetails().startsWith("DIV:")){
+
+                                    itransDiv.setTransactionDate(trans.getTransactionDate());
+                                    itransDiv.setTransactionDetails(trans.getTransactionDetails());
+                                    itransDiv.setInvTransactionType(TransactionTypes.DIVIDEND);
+                                    // if dividend create inv transactions
+                                    String tranDetails = trans.getTransactionDetails();
+                                    //symbol is 4 digits at position 5
+                                    // DIV: VETY.XLON.GB @ GBP 0.001857370
+                                    String invSymbol = tranDetails.substring(5,9);
+
+                                    if(invTranslistFinal.getReverseSymbolMap().containsKey(invSymbol)) {
+                                        itransDiv.setInvSymb(invSymbol);
+                                        itransDiv.setInvName(invTranslistFinal.getReverseSymbolMap().get(invSymbol)[0]);
+                                    }
+                                    else{
+                                        throw new Exception("Symbol in statement does not exist in mapfile, please add it to mapfile:"+ invSymbol);
+                                    }
+                                    itransDiv.setTransactionAmount(trans.getTransactionAmount());
+                                    invTranslistFinal.getInvTransactionsList().add(itransDiv);
+
+                                }
                                 //Balance
                                 innerCell = innerCellIterator.next();
                                 if(isFirstRec){
@@ -100,7 +126,6 @@ public class DataModelerVanguard {
                     } //if celltype is string for cash transactions
 
 
-
                         if (cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Date") && invTransStatements) {
 
                             row = rowIterator.next();
@@ -109,7 +134,7 @@ public class DataModelerVanguard {
                                 Iterator<Cell> innerCellIterator = row.cellIterator();
 
                                 Cell innerCell = innerCellIterator.next();
-                                InvTransactions itrans = new InvTransactions()  ;
+                                InvTransactions itrans = new InvTransactions();
                                 //Date	InvestmentName	TransactionDetails	Quantity	Price	Cost
                                 //05/12/2022	FTSE Developed World UCITS ETF Distributing (VEVE)	Bought 9 FTSE Developed World UCITS ETF Distributing (VEVE)	9.00	65.4156	588.74
                                 //05/12/2022	S&P 500 UCITS ETF Distributing (VUSA)	Bought 9 S&P 500 UCITS ETF Distributing (VUSA)	9.00	63.7467	573.72
@@ -128,7 +153,13 @@ public class DataModelerVanguard {
                                 if(innerCell.getStringCellValue().indexOf('(') >0) {
                                      invNameTmp = innerCell.getStringCellValue().substring(0, innerCell.getStringCellValue().indexOf('('));
                                      invSymTmp = innerCell.getStringCellValue().substring(innerCell.getStringCellValue().indexOf('(') + 1, innerCell.getStringCellValue().indexOf(')'));
-                                    itrans.setInvSymb(invSymTmp);
+                                     //check if symbol exists else error out
+                                    if(invTranslistFinal.getReverseSymbolMap().containsKey(invSymTmp)) {
+                                        itrans.setInvSymb(invSymTmp);
+                                    }
+                                    else{
+                                        throw new Exception("Symbol in statement does not exist in mapfile, please add it to mapfile:"+ invNameTmp);
+                                    }
                                 }
                                 else{
                                     invNameTmp = innerCell.getStringCellValue().trim();
@@ -136,7 +167,6 @@ public class DataModelerVanguard {
                                     itrans.setInvSymb(invSymTmpMap[0]);
                                 }
                                 String invNameTmp1 = invNameTmp.replace("Distributing","");
-
 
                                 itrans.setInvName(invNameTmp1);
                                 innerCell = innerCellIterator.next();
@@ -148,7 +178,7 @@ public class DataModelerVanguard {
                                     itrans.setInvTransactionType(TransactionTypes.MF_SELL);
                                 }
                                 else {
-                                    throw new Exception("Invalid Transacton Type");
+                                    throw new Exception("Invalid Transacton Type:"+ itrans.getTransactionDetails());
                                 }
 
                                 //Quantity

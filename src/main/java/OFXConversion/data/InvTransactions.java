@@ -10,6 +10,12 @@ public class InvTransactions extends Transactions {
 
     private TransactionTypes invTransactionType;
 
+    public InvTransactions(){
+        invQuantity = 0;
+        invPrice =0.0;
+        invCommission = 0.0;
+    }
+
     public String getInvName() {
         return invName;
     }

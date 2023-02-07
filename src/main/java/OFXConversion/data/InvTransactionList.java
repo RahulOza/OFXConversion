@@ -101,7 +101,7 @@ public class InvTransactionList implements Comparator<InvTransactions> {
                     }
                 }
                 else {
-                    throw new Exception("Invalid HashMap file - format: SecurityName, SecuritySymbol, InvestmentType " +
+                    throw new Exception("Invalid Map file - format: SecurityName, SecuritySymbol, InvestmentType " +
                             "\n\t e.g. LifeStrategy 100% Equity Fund - Accumulation,GB00B41XG308,MF ");
                 }
             }//while

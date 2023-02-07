@@ -243,8 +243,25 @@ class OfxGen {
                     case STOCK_BUY:
                     case STOCK_SELL:
                     case DIVIDEND:
-
+                        ofxv1Writer.writeStartAggregate("INCOME");
+                        ofxv1Writer.writeStartAggregate("INVTRAN");
+                        ofxv1Writer.writeElement("FITID",fitIdPref + fitIdPart + fitid++);
+                        ofxv1Writer.writeElement("DTTRADE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("DTSETTLE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("MEMO",t.getTransactionDetails());
+                        ofxv1Writer.writeEndAggregate("INVTRAN");
+                        ofxv1Writer.writeStartAggregate("SECID");
+                        ofxv1Writer.writeElement("UNIQUEID",t.getInvSymb());
+                        ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
+                        ofxv1Writer.writeEndAggregate("SECID");
+                        ofxv1Writer.writeElement("INCOMETYPE","DIV");
+                        ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
+                        ofxv1Writer.writeElement("SUBACCTSEC","CASH");
+                        ofxv1Writer.writeElement("SUBACCTFUND","CASH");
+                        ofxv1Writer.writeEndAggregate("INCOME");
+                        break;
                     default:
+                        throw new Exception("Invalid Transaction Type");
                 }
 
             }
