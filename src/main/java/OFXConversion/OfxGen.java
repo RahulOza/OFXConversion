@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import OFXConversion.data.InvTransactionList;
+import OFXConversion.data.InvTransactions;
 import OFXConversion.data.TransactionList;
 import OFXConversion.data.Transactions;
 import net.sf.ofx4j.io.v1.OFXV1Writer;
@@ -28,7 +30,7 @@ class OfxGen {
        String fitIdPart = new SimpleDateFormat("ddMMyyyyhhmmssS").format(new Date());
        String fitIdPref = "R";
 
-      // ofxFileName = filePath + ofxFileName + fileSuffix + ofxExtn;
+
        String ofxFileName = fileName.substring(0,fileName.length()-4) + ofxExtn;
 
 
@@ -72,12 +74,10 @@ class OfxGen {
             ofxv1Writer.writeStartAggregate("CCSTMTRS");
 
             ofxv1Writer.writeElement("CURDEF","GBP");
-
             ofxv1Writer.writeStartAggregate("CCACCTFROM");
 
 
             ofxv1Writer.writeElement("ACCTID", accountId);
-
             ofxv1Writer.writeEndAggregate("CCACCTFROM");
 
             // Bank transactions
@@ -135,6 +135,185 @@ class OfxGen {
             e.printStackTrace();
 
         }
+
+    }
+    void ofxInvFileWriter (InvTransactionList itransactionList, String fileName, String accountId, String accounType){
+
+        String ofxExtn=".ofx";
+        String suffixForInvst = "Inv";
+
+        DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("yyyyMMdd110000.000", Locale.ENGLISH);
+        int fitid = 1;
+        String fitIdPart = new SimpleDateFormat("ddMMyyyyhhmmssS").format(new Date());
+        String fitIdPref = "R";
+
+        String ofxFileName = fileName.substring(0,fileName.length()-4) + suffixForInvst + ofxExtn;
+
+
+        try {
+            OFXV1Writer ofxv1Writer = new OFXV1Writer(new PrintWriter(ofxFileName));
+
+            ofxv1Writer.writeHeaders(ofxHeader);
+
+            ofxv1Writer.setWriteAttributesOnNewLine(true);
+
+            ofxv1Writer.writeStartAggregate("OFX");
+
+            //=============== header
+            ofxv1Writer.writeStartAggregate("SIGNONMSGSRSV1");
+            ofxv1Writer.writeStartAggregate("SONRS");
+            ofxv1Writer.writeStartAggregate("STATUS");
+
+            ofxv1Writer.writeElement("CODE","0");
+
+            ofxv1Writer.writeElement("SEVERITY","INFO");
+
+            ofxv1Writer.writeElement("MESSAGE","OK");
+
+            ofxv1Writer.writeEndAggregate("STATUS");
+
+            ofxv1Writer.writeElement("DTSERVER",itransactionList.getInvTransactionsList().get(0).getTransactionDate().format( myformatter) + "[0]");
+            ofxv1Writer.writeElement("LANGUAGE","ENG");
+
+            ofxv1Writer.writeEndAggregate("SONRS");
+            ofxv1Writer.writeEndAggregate("SIGNONMSGSRSV1");
+
+            //=================== header ends
+
+            //=================== investment messages start
+
+            ofxv1Writer.writeStartAggregate("INVSTMTMSGSRSV1");
+            ofxv1Writer.writeStartAggregate("INVSTMTTRNRS");
+
+            //TODO create a trans id? what happens if we do?
+            ofxv1Writer.writeElement("TRNUID","045");
+
+            ofxv1Writer.writeStartAggregate("STATUS");
+
+            ofxv1Writer.writeElement("CODE","0");
+            ofxv1Writer.writeElement("SEVERITY","INFO");
+
+            ofxv1Writer.writeEndAggregate("STATUS");
+
+            ofxv1Writer.writeStartAggregate("INVSTMTRS");
+            ofxv1Writer.writeElement("DTASOF",itransactionList.getInvTransactionsList().get(0).getTransactionDate().format( myformatter) + "[0]");
+            ofxv1Writer.writeElement("CURDEF","GBP");
+
+            ofxv1Writer.writeStartAggregate("INVACCTFROM");
+
+            ofxv1Writer.writeElement("BROKERID", "BROKER");
+            ofxv1Writer.writeElement("ACCTID", accountId);
+            ofxv1Writer.writeEndAggregate("INVACCTFROM");
+
+            // Investment transactions
+            ofxv1Writer.writeStartAggregate("INVTRANLIST");
+
+            ofxv1Writer.writeElement("DTSTART",itransactionList.getInvTransactionsList().get(0).getTransactionDate().format(myformatter) + "[0]");
+            ofxv1Writer.writeElement("DTEND",itransactionList.getInvTransactionsList().get(itransactionList.getInvTransactionsList().size()-1).getTransactionDate().format(myformatter) + "[0]");
+
+            for (InvTransactions t: itransactionList.getInvTransactionsList()) {
+
+                switch(t.getInvTransactionType()){
+                    case MF_BUY:
+                        ofxv1Writer.writeStartAggregate("BUYMF");
+                        ofxv1Writer.writeStartAggregate("INVBUY");
+                        ofxv1Writer.writeStartAggregate("INVTRAN");
+                        ofxv1Writer.writeElement("FITID",fitIdPref + fitIdPart + fitid++);
+                        ofxv1Writer.writeElement("DTTRADE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("DTSETTLE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("MEMO",t.getTransactionDetails());
+                        ofxv1Writer.writeEndAggregate("INVTRAN");
+                        ofxv1Writer.writeStartAggregate("SECID");
+                        ofxv1Writer.writeElement("UNIQUEID",t.getInvSymb());
+                        ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
+                        ofxv1Writer.writeEndAggregate("SECID");
+                        ofxv1Writer.writeElement("UNITS",t.getInvQuantity().toString());
+                        ofxv1Writer.writeElement("UNITPRICE",t.getInvPrice().toString());
+                        // as it is a buy it is debit hence negative trans amount
+                        t.setTransactionAmount(-t.getTransactionAmount());
+                        ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
+                        ofxv1Writer.writeElement("SUBACCTSEC","CASH");
+                        ofxv1Writer.writeElement("SUBACCTFUND","CASH");
+                        ofxv1Writer.writeEndAggregate("INVBUY");
+                        ofxv1Writer.writeElement("BUYTYPE", "BUY");
+                        ofxv1Writer.writeEndAggregate("BUYMF");
+                        break;
+                    case MF_SELL:
+                    case BONUS:
+                    case STOCK_BUY:
+                    case STOCK_SELL:
+                    case DIVIDEND:
+                        ofxv1Writer.writeStartAggregate("INCOME");
+                        ofxv1Writer.writeStartAggregate("INVTRAN");
+                        ofxv1Writer.writeElement("FITID",fitIdPref + fitIdPart + fitid++);
+                        ofxv1Writer.writeElement("DTTRADE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("DTSETTLE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("MEMO",t.getTransactionDetails());
+                        ofxv1Writer.writeEndAggregate("INVTRAN");
+                        ofxv1Writer.writeStartAggregate("SECID");
+                        ofxv1Writer.writeElement("UNIQUEID",t.getInvSymb());
+                        ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
+                        ofxv1Writer.writeEndAggregate("SECID");
+                        ofxv1Writer.writeElement("INCOMETYPE","DIV");
+                        ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
+                        ofxv1Writer.writeElement("SUBACCTSEC","CASH");
+                        ofxv1Writer.writeElement("SUBACCTFUND","CASH");
+                        ofxv1Writer.writeEndAggregate("INCOME");
+                        break;
+                    default:
+                        throw new Exception("Invalid Transaction Type");
+                }
+
+            }
+            ofxv1Writer.writeEndAggregate("INVTRANLIST");
+            ofxv1Writer.writeEndAggregate("INVSTMTRS");
+            ofxv1Writer.writeEndAggregate("INVSTMTTRNRS");
+            ofxv1Writer.writeEndAggregate("INVSTMTMSGSRSV1");
+
+            //List all the securities
+            ofxv1Writer.writeStartAggregate("SECLISTMSGSRSV1");
+            ofxv1Writer.writeStartAggregate("SECLIST");
+
+            for (Map.Entry<String, String[]> entry : itransactionList.getReverseSymbolMap().entrySet()) {
+                String key = entry.getKey();
+                String values[] = entry.getValue();
+
+                switch(values[1]){
+                    case "MF":
+                        ofxv1Writer.writeStartAggregate("MFINFO");
+                        ofxv1Writer.writeStartAggregate("SECINFO");
+                        ofxv1Writer.writeStartAggregate("SECID");
+                        ofxv1Writer.writeElement("UNIQUEID",key);
+                        ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
+                        ofxv1Writer.writeEndAggregate("SECID");
+                        ofxv1Writer.writeElement("SECNAME",values[0]);
+                        ofxv1Writer.writeElement("TICKER",key);
+                        ofxv1Writer.writeEndAggregate("SECINFO");
+                        ofxv1Writer.writeEndAggregate("MFINFO");
+                        break;
+                    case "ST":
+                        ofxv1Writer.writeStartAggregate("STOCKINFO");
+                        ofxv1Writer.writeStartAggregate("SECINFO");
+                        ofxv1Writer.writeStartAggregate("SECID");
+                        ofxv1Writer.writeElement("UNIQUEID",key);
+                        ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
+                        ofxv1Writer.writeEndAggregate("SECID");
+                        ofxv1Writer.writeElement("SECNAME",values[0]);
+                        ofxv1Writer.writeElement("TICKER",key);
+                        ofxv1Writer.writeEndAggregate("SECINFO");
+                        ofxv1Writer.writeEndAggregate("STOCKINFO");
+                        break;
+                }
+            }
+            ofxv1Writer.writeEndAggregate("SECLIST");
+            ofxv1Writer.writeEndAggregate("SECLISTMSGSRSV1");
+            ofxv1Writer.writeEndAggregate("OFX");
+            ofxv1Writer.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+
+        }//exception
 
     }
 }

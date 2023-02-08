@@ -90,15 +90,17 @@ public class BackGroundCoversionProcess implements Runnable{
                        }
                    }//Byond
                } // .csv
-                if(filename.toString().endsWith(".txt")){
-                    //if .txt file can be vanguard or RBS Select
+                if(filename.toString().endsWith(".Xls")){
+                    //if .Xls file can only be vanguard
 
-                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixVanguardFileName) && !(filename.toString().contains(OfxgenGetPropertyValues.convertedVanguardFileName)) ){
+                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixVanguardFileName)){
                         try {
                             OFXConversion.convertFileVanguard(pollDirPath + "\\" + filename.toString());
                             processed = true;
                         } catch (IOException e) {
                             logger.severe(e.toString());
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
                         }
                     }//Vanguard
 
@@ -135,7 +137,9 @@ public class BackGroundCoversionProcess implements Runnable{
 
                 if(!processed){
                     logger.info("I have done nothing with file:"+filename.toString());
+
                 }
+                processed = false;
 
             }
 

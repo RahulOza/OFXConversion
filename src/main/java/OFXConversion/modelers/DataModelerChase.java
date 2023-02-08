@@ -5,11 +5,13 @@ import OFXConversion.data.Transactions;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.math.RoundingMode;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -81,18 +83,27 @@ public class DataModelerChase {
                 if (transDetails.startsWith("You opened your account")) {
                     continue;
                 }
+
                 if (transDetails.startsWith("Closing balance")) {
                     //final line, set/check final balance
-                    Matcher tm = Pattern.compile("\\d+(\\.\\d{2})").matcher(transDetails);
+                    String noCommaTransDetails = transDetails.replace(",","");
+                    Matcher tm = Pattern.compile("\\d+(\\.\\d{2})").matcher(noCommaTransDetails);
                     if( tm.find() ) {
-                        Double stmtFinalBalance = Double.parseDouble(tm.group(0));
-                        if (!stmtFinalBalance.equals(finalBalance)){
+                        //round off and compare
+                        DecimalFormat df = new DecimalFormat("#.##");
+
+                        df.setRoundingMode(RoundingMode.CEILING);
+                        Double stmtFinalBalance = Double.parseDouble((tm.group(0)));
+                        Double stmtFinalBalanceRounded = Double.parseDouble(df.format(stmtFinalBalance));
+
+                        if (!stmtFinalBalance.equals(stmtFinalBalanceRounded)){
                             throw new RuntimeException("Error in processing due to balance mismatch");
                         }
                     }
                     break;
                 }
                 if (transDetails.startsWith("Opening balance")){
+                    String noCommaTransDetails = transDetails.replace(",","");
                     //first line, set initial balance
                     Matcher tm = Pattern.compile("\\d+(\\.\\d{2})").matcher(transDetails);
                     if( tm.find() ) {

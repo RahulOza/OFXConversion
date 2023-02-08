@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.logging.Logger;
 
+import OFXConversion.data.AllTransactions;
+import OFXConversion.data.InvTransactionList;
 import OFXConversion.data.OfxgenGetPropertyValues;
 import OFXConversion.modelers.*;
 import org.springframework.boot.CommandLineRunner;
@@ -25,9 +27,6 @@ public class OFXConversion {
     //TODO fix logging
     private final static Logger logger = Logger.getLogger(OFXConversion.class.getName());
 
-
-    //TODO why not use this real account number - 7365 0100 0067 4567, this account number however should match money
-
     /* 5 Dec 2018 - Unfortunately they keep changing pdf format, which is a pain !!!
     Rahul has taken a decision to use csv format instead as that will not change.
     That however requires the previous balance to be input.
@@ -38,7 +37,7 @@ public class OFXConversion {
 
         TransactionList transactionList = DM.createTransactionList(fileName);
 
-        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
+        transactionList.getTransactionsList().sort(new TransactionList());
 
         transactionList.printTransactionList();
 
@@ -77,7 +76,7 @@ public class OFXConversion {
 
         TransactionList transactionList = DM.createTransactionList(fileName,initialBalance);
 
-        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
+        transactionList.getTransactionsList().sort(new TransactionList());
 
         transactionList.printTransactionList();
 
@@ -85,17 +84,23 @@ public class OFXConversion {
 
     }
 
-    public static void convertFileVanguard(String fileName) throws IOException {
+    public static void convertFileVanguard(String fileName) throws Exception {
         DataModelerVanguard DM = new DataModelerVanguard();
         OfxGen OfGen = new OfxGen();
 
-        TransactionList transactionList = DM.createTransactionList(fileName);
+        AllTransactions transactionLists = DM.createTransactionList(fileName);
 
-        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
+        transactionLists.getCashTrans().getTransactionsList().sort(new TransactionList());
 
-        transactionList.printTransactionList();
+        transactionLists.getCashTrans().printTransactionList();
 
-        OfGen.ofxFileWriter(transactionList,fileName, OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
+        transactionLists.getInvTrans().getInvTransactionsList().sort(new InvTransactionList());
+
+        transactionLists.getInvTrans().printTransactionList();
+
+        OfGen.ofxFileWriter(transactionLists.getCashTrans(),fileName, OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
+
+        OfGen.ofxInvFileWriter(transactionLists.getInvTrans(),fileName,OfxgenGetPropertyValues.vanguardAccountId,OfxgenGetPropertyValues.vanguardAccountType);
 
     }
 
@@ -105,7 +110,7 @@ public class OFXConversion {
 
         TransactionList transactionList = DM.createTransactionList(fileName);
 
-        Collections.sort(transactionList.getTransactionsList(), new TransactionList());
+        transactionList.getTransactionsList().sort(new TransactionList());
 
         transactionList.printTransactionList();
 
@@ -115,8 +120,11 @@ public class OFXConversion {
 
     public static void main(String[] args) throws IOException {
 
+        Double myVersion = 2.1;
+        String myVersionDetails = "Vanguard Investment Fixes";
 
-        logger.info(" ######### OfxGen v1.7 (Byond Fixes) ##########");
+
+        logger.info(" ######### OfxGen v"+myVersion.toString()+" ("+ myVersionDetails +") ##########");
         if(args.length < 1){
             logger.severe("Missing ofxgen.properties file as parameter");
         }
@@ -125,9 +133,15 @@ public class OFXConversion {
             // if we have a parameter, it's the properties file for running local background processing.
             try {
                 OfxgenGetPropertyValues.getPropValues(arg);
+                //check if we have the right version of props file
+                if(!OfxgenGetPropertyValues.version.equals(myVersion)){
+                    throw new Exception("Incorrect properties version file");
+                }
 
             } catch (IOException exception) {
                 logger.severe(exception.toString());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
             if(OfxgenGetPropertyValues.backgroundProcessingRequired.equalsIgnoreCase("True")) {
                 Path dir = Paths.get(OfxgenGetPropertyValues.pollingDirPath);
