@@ -239,9 +239,74 @@ class OfxGen {
                         ofxv1Writer.writeEndAggregate("BUYMF");
                         break;
                     case MF_SELL:
+                        ofxv1Writer.writeStartAggregate("SELLMF");
+                        ofxv1Writer.writeStartAggregate("INVSELL");
+                        ofxv1Writer.writeStartAggregate("INVTRAN");
+                        ofxv1Writer.writeElement("FITID",fitIdPref + fitIdPart + fitid++);
+                        ofxv1Writer.writeElement("DTTRADE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("DTSETTLE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("MEMO",t.getTransactionDetails());
+                        ofxv1Writer.writeEndAggregate("INVTRAN");
+                        ofxv1Writer.writeStartAggregate("SECID");
+                        ofxv1Writer.writeElement("UNIQUEID",t.getInvSymb());
+                        ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
+                        ofxv1Writer.writeEndAggregate("SECID");
+                        ofxv1Writer.writeElement("UNITS",t.getInvQuantity().toString());
+                        ofxv1Writer.writeElement("UNITPRICE",t.getInvPrice().toString());
+                        ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
+                        ofxv1Writer.writeElement("SUBACCTSEC","CASH");
+                        ofxv1Writer.writeElement("SUBACCTFUND","CASH");
+                        ofxv1Writer.writeEndAggregate("INVSELL");
+                        ofxv1Writer.writeElement("SELLTYPE", "SELL");
+                        ofxv1Writer.writeEndAggregate("SELLMF");
+                        break;
                     case BONUS:
                     case STOCK_BUY:
+                        ofxv1Writer.writeStartAggregate("BUYSTOCK");
+                        ofxv1Writer.writeStartAggregate("INVBUY");
+                        ofxv1Writer.writeStartAggregate("INVTRAN");
+                        ofxv1Writer.writeElement("FITID",fitIdPref + fitIdPart + fitid++);
+                        ofxv1Writer.writeElement("DTTRADE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("DTSETTLE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("MEMO",t.getTransactionDetails());
+                        ofxv1Writer.writeEndAggregate("INVTRAN");
+                        ofxv1Writer.writeStartAggregate("SECID");
+                        ofxv1Writer.writeElement("UNIQUEID",t.getInvSymb());
+                        ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
+                        ofxv1Writer.writeEndAggregate("SECID");
+                        ofxv1Writer.writeElement("UNITS",t.getInvQuantity().toString());
+                        ofxv1Writer.writeElement("UNITPRICE",t.getInvPrice().toString());
+                        // as it is a buy it is debit hence negative trans amount
+                        t.setTransactionAmount(-t.getTransactionAmount());
+                        ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
+                        ofxv1Writer.writeElement("SUBACCTSEC","CASH");
+                        ofxv1Writer.writeElement("SUBACCTFUND","CASH");
+                        ofxv1Writer.writeEndAggregate("INVBUY");
+                        ofxv1Writer.writeElement("BUYTYPE", "BUY");
+                        ofxv1Writer.writeEndAggregate("BUYSTOCK");
+                        break;
                     case STOCK_SELL:
+                        ofxv1Writer.writeStartAggregate("SELLSTOCK");
+                        ofxv1Writer.writeStartAggregate("INVSELL");
+                        ofxv1Writer.writeStartAggregate("INVTRAN");
+                        ofxv1Writer.writeElement("FITID",fitIdPref + fitIdPart + fitid++);
+                        ofxv1Writer.writeElement("DTTRADE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("DTSETTLE",t.getTransactionDate().format(myformatter) + "[0]");
+                        ofxv1Writer.writeElement("MEMO",t.getTransactionDetails());
+                        ofxv1Writer.writeEndAggregate("INVTRAN");
+                        ofxv1Writer.writeStartAggregate("SECID");
+                        ofxv1Writer.writeElement("UNIQUEID",t.getInvSymb());
+                        ofxv1Writer.writeElement("UNIQUEIDTYPE","TICKER");
+                        ofxv1Writer.writeEndAggregate("SECID");
+                        ofxv1Writer.writeElement("UNITS",t.getInvQuantity().toString());
+                        ofxv1Writer.writeElement("UNITPRICE",t.getInvPrice().toString());
+                        ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
+                        ofxv1Writer.writeElement("SUBACCTSEC","CASH");
+                        ofxv1Writer.writeElement("SUBACCTFUND","CASH");
+                        ofxv1Writer.writeEndAggregate("INVSELL");
+                        ofxv1Writer.writeElement("SELLTYPE", "SELL");
+                        ofxv1Writer.writeEndAggregate("SELLSTOCK");
+                        break;
                     case DIVIDEND:
                         ofxv1Writer.writeStartAggregate("INCOME");
                         ofxv1Writer.writeStartAggregate("INVTRAN");

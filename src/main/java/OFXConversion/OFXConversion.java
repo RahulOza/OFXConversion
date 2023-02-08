@@ -135,7 +135,7 @@ public class OFXConversion {
                 OfxgenGetPropertyValues.getPropValues(arg);
                 //check if we have the right version of props file
                 if(!OfxgenGetPropertyValues.version.equals(myVersion)){
-                    throw new Exception("Incorrect properties version file");
+                    throw new Exception("Incorrect properties version file, program version:"+myVersion+" properties file version:"+OfxgenGetPropertyValues.version);
                 }
 
             } catch (IOException exception) {
