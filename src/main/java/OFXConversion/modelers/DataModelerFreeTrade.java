@@ -4,6 +4,7 @@ import OFXConversion.data.*;
 import groovy.transform.Immutable;
 
 import java.io.*;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -14,17 +15,9 @@ import java.util.Map;
 
 public class DataModelerFreeTrade {
 
-    private enum freetradeTypes {
-        MONTHLY_STATEMENT,
-        DIVIDEND,
-        ORDER,
-        TOP_UP,
-        INTEREST_FROM_CASH
-    }
-
     private Map<String, Integer> Col = new HashMap<>();
 
-    public void DataModelerFreeTrade() {
+    public void populateCols() {
 
         Col.put("Title", 0);
         Col.put("Type", 1);
@@ -65,20 +58,21 @@ public class DataModelerFreeTrade {
         boolean invTransStatements = false;
 
         invTranslistFinal.readSymbolMap();
+        populateCols();
 
         try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
-            DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss", Locale.ENGLISH);
+            DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
 
             String lineOfStatement;
             boolean isHeader = true;
             Double adjBalance = 0.0;
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
-            /*
+
                 // first line is the header so ignore it
                 if (!isHeader) {
 
-                    String[] tokens = lineOfStatement.split(",");
+                    String[] tokens = lineOfStatement.split(",",-1);
                     // we know the tokens are
                     // Title,Type,Timestamp,Account Currency,Total Amount,Buy / Sell,Ticker,ISIN,Price per Share in Account Currency,Stamp Duty,
                     //  0    1      2           3                4             5       6      7                   8                    9
@@ -88,7 +82,7 @@ public class DataModelerFreeTrade {
                     //    20               21                22                23                        24
                     // Dividend Gross Distribution Amount,Dividend Net Distribution Amount,Dividend Withheld Tax Percentage,Dividend Withheld Tax Amount
                     //                 25                             26                               27                         28
-                    if (tokens[Col.get("Type")].equals(freetradeTypes.MONTHLY_STATEMENT)) {
+                    if (tokens[Col.get("Type")].equals("MONTHLY_STATEMENT")) {
                         //nothing to process if just monthly statement
                         continue;
                     }
@@ -105,47 +99,57 @@ public class DataModelerFreeTrade {
                     // INTEREST_FROM_CASH ==> cash only
 
                     //Date
-                    trans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")], myformatter));
-                    itrans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")], myformatter));
+                    trans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
+                    itrans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
 
                     //transaction details
-                    trans.setTransactionDetails(tokens[Col.get("Title")] + ":" + tokens[Col.get("Type")]);
+                    trans.setTransactionDetails(tokens[Col.get("Title")]);
                     itrans.setTransactionDetails(tokens[Col.get("Title")] + ":" + tokens[Col.get("Type")]);
 
                     //Amount
                     trans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
                     itrans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
 
-                    if (tokens[1].equals(freetradeTypes.ORDER) || tokens[1].equals(freetradeTypes.DIVIDEND)) {
-                        //Investments
+                    if (tokens[1].equals("ORDER") || tokens[1].equals("DIVIDEND")) {
+                        //Investment transactions ..
 
+                        //Name
+                        itrans.setInvName(tokens[Col.get("Title")]);
+                        //Ticker
                         itrans.setInvSymb(tokens[Col.get("Ticker")]);
 
 
-                        if (tokens[1].equals(freetradeTypes.DIVIDEND)) {
+                        if (tokens[1].equals("DIVIDEND")) {
                             itrans.setInvTransactionType(TransactionTypes.DIVIDEND);
                         } else {
                             //This is buy or sell order
 
                             //Quantity
-                            itrans.setInvQuantity(Integer.parseInt(tokens[Col.get("Quantity")]));
+                            itrans.setInvQuantity(Double.parseDouble(tokens[Col.get("Quantity")]));
                             //price
-                            //TODO - price in local currency or account currency?
-                            itrans.setInvPrice(Double.parseDouble(tokens[Col.get("Price per Share")]));
+                            itrans.setInvPrice(Double.parseDouble(tokens[Col.get("Price per Share in Account Currency")]));
                             //commission = fx fees + stamp duty for shares
-                            itrans.setInvCommission(Double.parseDouble(tokens[Col.get("FX Fee Amount")]) +
-                                    Double.parseDouble(tokens[Col.get("Stamp Duty")]));
+                            if(!tokens[Col.get("FX Fee Amount")].isEmpty()){
+                                itrans.setInvCommission(Double.parseDouble(tokens[Col.get("FX Fee Amount")]));
+                            }
+                            if(!tokens[Col.get("Stamp Duty")].isEmpty()){
+                                itrans.setInvCommission(itrans.getInvCommission() + Double.parseDouble(tokens[Col.get("Stamp Duty")]));
+                            }
 
-                            switch (invTranslistFinal.getReverseSymbolMap().get(invTranslistFinal)[1]) {
+                            switch (invTranslistFinal.getReverseSymbolMap().get(itrans.getInvSymb())[1]) {
                                 case "MF":
                                     if (tokens[Col.get("Buy / Sell")].equals("BUY")) {
                                         itrans.setInvTransactionType(TransactionTypes.MF_BUY);
+                                        //set negative amount for cash transactions for BUY
+                                        trans.setTransactionAmount(-trans.getTransactionAmount());
                                     } else
                                         itrans.setInvTransactionType(TransactionTypes.MF_SELL);
                                     break;
                                 case "ST":
                                     if (tokens[Col.get("Buy / Sell")].equals("BUY")) {
                                         itrans.setInvTransactionType(TransactionTypes.STOCK_BUY);
+                                        //set negative amount for cash transactions for BUY
+                                        trans.setTransactionAmount(-trans.getTransactionAmount());
                                     } else
                                         itrans.setInvTransactionType(TransactionTypes.STOCK_SELL);
                                     break;
@@ -153,12 +157,12 @@ public class DataModelerFreeTrade {
                                     throw new Exception("invalid symbol encountered");
                             }//switch
                         }//buy/sell if/else
+                        invTranslistFinal.getInvTransactionsList().add(itrans);
                     }// order or dividend
 
-                    invTranslistFinal.getInvTransactionsList().add(itrans);
                     translistFinal.getTransactionsList().add(trans);
                 }//header
-            */
+
                 if (isHeader)
                     isHeader = false;
             }//while not null

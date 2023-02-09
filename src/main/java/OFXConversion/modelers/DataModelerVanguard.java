@@ -174,7 +174,7 @@ public class DataModelerVanguard {
 
                                 //Quantity
                                 innerCell = innerCellIterator.next();
-                                itrans.setInvQuantity((int)innerCell.getNumericCellValue());
+                                itrans.setInvQuantity(innerCell.getNumericCellValue());
                                 //price
                                 innerCell = innerCellIterator.next();
                                 itrans.setInvPrice(innerCell.getNumericCellValue());

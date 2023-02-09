@@ -151,7 +151,27 @@ public class OFXConversionTest {
 
         logger.info("testChase Competed Successfully");
     }
+    @Test
+    public void testFreetrade() throws Exception{
 
+
+        DataModelerFreeTrade DM = new DataModelerFreeTrade();
+
+        logger.info("testFreetrade Started");
+
+        AllTransactions alltransactionLists = DM.createTransactionList(testFilePathfreetrade);
+
+        Double initialBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getInitialBalance()));
+        assertEquals(initialBalanceRounded, testintialBalancefreetrade);
+
+        Double finalBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getFinalBalance()));
+        assertEquals(finalBalanceRounded, testfinalBalancefreetrade);
+
+        convertFileFreetrade(testFilePathfreetrade);
+
+        logger.info("testFreetrade Competed Successfully");
+
+    }
 
 
     @After

@@ -229,6 +229,9 @@ class OfxGen {
                         ofxv1Writer.writeEndAggregate("SECID");
                         ofxv1Writer.writeElement("UNITS",t.getInvQuantity().toString());
                         ofxv1Writer.writeElement("UNITPRICE",t.getInvPrice().toString());
+                        if(t.getInvCommission().compareTo(0.0) > 0){
+                            ofxv1Writer.writeElement("FEES",t.getInvCommission().toString());
+                        }
                         // as it is a buy it is debit hence negative trans amount
                         t.setTransactionAmount(-t.getTransactionAmount());
                         ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
@@ -253,6 +256,9 @@ class OfxGen {
                         ofxv1Writer.writeEndAggregate("SECID");
                         ofxv1Writer.writeElement("UNITS",t.getInvQuantity().toString());
                         ofxv1Writer.writeElement("UNITPRICE",t.getInvPrice().toString());
+                        if(t.getInvCommission().compareTo(0.0) > 0){
+                            ofxv1Writer.writeElement("FEES",t.getInvCommission().toString());
+                        }
                         ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
                         ofxv1Writer.writeElement("SUBACCTSEC","CASH");
                         ofxv1Writer.writeElement("SUBACCTFUND","CASH");
@@ -276,6 +282,9 @@ class OfxGen {
                         ofxv1Writer.writeEndAggregate("SECID");
                         ofxv1Writer.writeElement("UNITS",t.getInvQuantity().toString());
                         ofxv1Writer.writeElement("UNITPRICE",t.getInvPrice().toString());
+                        if(t.getInvCommission().compareTo(0.0) > 0){
+                            ofxv1Writer.writeElement("FEES",t.getInvCommission().toString());
+                        }
                         // as it is a buy it is debit hence negative trans amount
                         t.setTransactionAmount(-t.getTransactionAmount());
                         ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
@@ -300,6 +309,9 @@ class OfxGen {
                         ofxv1Writer.writeEndAggregate("SECID");
                         ofxv1Writer.writeElement("UNITS",t.getInvQuantity().toString());
                         ofxv1Writer.writeElement("UNITPRICE",t.getInvPrice().toString());
+                        if(t.getInvCommission().compareTo(0.0) > 0){
+                            ofxv1Writer.writeElement("FEES",t.getInvCommission().toString());
+                        }
                         ofxv1Writer.writeElement("TOTAL",t.getTransactionAmount().toString());
                         ofxv1Writer.writeElement("SUBACCTSEC","CASH");
                         ofxv1Writer.writeElement("SUBACCTFUND","CASH");

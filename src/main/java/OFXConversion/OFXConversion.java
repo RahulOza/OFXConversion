@@ -118,6 +118,26 @@ public class OFXConversion {
 
     }
 
+    public static void convertFileFreetrade(String fileName) throws Exception {
+        DataModelerFreeTrade DM = new DataModelerFreeTrade();
+        OfxGen OfGen = new OfxGen();
+
+        AllTransactions transactionLists = DM.createTransactionList(fileName);
+
+        transactionLists.getCashTrans().getTransactionsList().sort(new TransactionList());
+
+        transactionLists.getCashTrans().printTransactionList();
+
+        transactionLists.getInvTrans().getInvTransactionsList().sort(new InvTransactionList());
+
+        transactionLists.getInvTrans().printTransactionList();
+
+        OfGen.ofxFileWriter(transactionLists.getCashTrans(),fileName, OfxgenGetPropertyValues.freetradeAccountId,OfxgenGetPropertyValues.freetradeAccountType);
+
+        OfGen.ofxInvFileWriter(transactionLists.getInvTrans(),fileName,OfxgenGetPropertyValues.freetradeAccountId,OfxgenGetPropertyValues.freetradeAccountType);
+
+    }
+
     public static void main(String[] args) throws IOException {
 
         Double myVersion = 2.1;

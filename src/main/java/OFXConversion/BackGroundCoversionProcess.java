@@ -89,6 +89,15 @@ public class BackGroundCoversionProcess implements Runnable{
                            logger.severe(e.toString());
                        }
                    }//Byond
+                   if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixfreetradeFileName)) {
+                       try {
+                           OFXConversion.convertFileFreetrade(pollDirPath + "\\" + filename.toString());
+                           processed = true;
+                       } catch (Exception e) {
+                           logger.severe(e.toString());
+                       }
+                   }//Freetrade
+
                } // .csv
                 if(filename.toString().endsWith(".Xls")){
                     //if .Xls file can only be vanguard
