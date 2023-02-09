@@ -22,7 +22,6 @@ public class DataModelerByond {
 
             String lineOfStatement;
             boolean isHeader = true;
-            boolean firstRec = true;
             Double adjBalance = 0.0;
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
@@ -54,10 +53,6 @@ public class DataModelerByond {
 
                        //The final balance is in very first row
 
-                      /* if (firstRec && !tokens[4].isEmpty()) {
-                        finalBalance = Double.parseDouble(tokens[4]);
-                                firstRec = false;
-                        }*/
                         //Initial balance is towards the end so keep overwriting
                         // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
                         if((tokens.length >= 5) && !tokens[4].isEmpty()) {

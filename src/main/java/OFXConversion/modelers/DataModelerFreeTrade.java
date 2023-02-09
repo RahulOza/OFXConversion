@@ -1,20 +1,61 @@
 package OFXConversion.modelers;
 
 import OFXConversion.data.*;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
+import groovy.transform.Immutable;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
 
 public class DataModelerFreeTrade {
-    //TODO - code for freetrade account
+
+    private enum freetradeTypes {
+        MONTHLY_STATEMENT,
+        DIVIDEND,
+        ORDER,
+        TOP_UP,
+        INTEREST_FROM_CASH
+    }
+
+    private Map<String, Integer> Col = new HashMap<>();
+
+    public void DataModelerFreeTrade() {
+
+        Col.put("Title", 0);
+        Col.put("Type", 1);
+        Col.put("Timestamp", 2);
+        Col.put("Account Currency", 3);
+        Col.put("Total Amount", 4);
+        Col.put("Buy / Sell", 5);
+        Col.put("Ticker", 6);
+        Col.put("ISIN", 7);
+        Col.put("Price per Share in Account Currency", 8);
+        Col.put("Stamp Duty", 9);
+        Col.put("Quantity", 10);
+        Col.put("Venue", 11);
+        Col.put("Order ID", 12);
+        Col.put("Order Type", 13);
+        Col.put("Instrument Currency", 14);
+        Col.put("Total Shares Amount", 15);
+        Col.put("Price per Share", 16);
+        Col.put("FX Rate", 17);
+        Col.put("Base FX Rate", 18);
+        Col.put("FX Fee (BPS)", 19);
+        Col.put("FX Fee Amount", 20);
+        Col.put("Dividend Ex Date", 21);
+        Col.put("Dividend Pay Date", 22);
+        Col.put("Dividend Eligible Quantity", 23);
+        Col.put("Dividend Amount Per Share", 24);
+        Col.put("Dividend Gross Distribution Amount", 25);
+        Col.put("Dividend Net Distribution Amount", 26);
+        Col.put("Dividend Withheld Tax Percentage", 27);
+        Col.put("Dividend Withheld Tax Amount", 28);
+    }
 
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
         TransactionList translistFinal = new TransactionList();
@@ -25,184 +66,103 @@ public class DataModelerFreeTrade {
 
         invTranslistFinal.readSymbolMap();
 
-        try {
+        try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
+            DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss", Locale.ENGLISH);
 
-            FileInputStream file = new FileInputStream(sourceFileName);
+            String lineOfStatement;
+            boolean isHeader = true;
+            Double adjBalance = 0.0;
 
-            //Get the workbook instance for XLS file
-            HSSFWorkbook workbook = new HSSFWorkbook(file);
+            while ((lineOfStatement = inputStream.readLine()) != null) {
+            /*
+                // first line is the header so ignore it
+                if (!isHeader) {
 
-            //Get first sheet from the workbook
-            HSSFSheet sheet = workbook.getSheetAt(OfxgenGetPropertyValues.transSheetNumber);
+                    String[] tokens = lineOfStatement.split(",");
+                    // we know the tokens are
+                    // Title,Type,Timestamp,Account Currency,Total Amount,Buy / Sell,Ticker,ISIN,Price per Share in Account Currency,Stamp Duty,
+                    //  0    1      2           3                4             5       6      7                   8                    9
+                    // Quantity,Venue,Order ID,Order Type,Instrument Currency,Total Shares Amount,Price per Share,FX Rate,Base FX Rate,FX Fee (BPS),
+                    //    10      11    12         13              14              15                 16             17        18          19
+                    // FX Fee Amount,Dividend Ex Date,Dividend Pay Date,Dividend Eligible Quantity,Dividend Amount Per Share,
+                    //    20               21                22                23                        24
+                    // Dividend Gross Distribution Amount,Dividend Net Distribution Amount,Dividend Withheld Tax Percentage,Dividend Withheld Tax Amount
+                    //                 25                             26                               27                         28
+                    if (tokens[Col.get("Type")].equals(freetradeTypes.MONTHLY_STATEMENT)) {
+                        //nothing to process if just monthly statement
+                        continue;
+                    }
+                    if (tokens.length < 28) {
+                        //if there are less than the mandated fields we cannot process
+                        throw new Exception("Less than 28 fields in this line ..pls revisit");
+                    }
+                    Transactions trans = new Transactions();
+                    InvTransactions itrans = new InvTransactions();
+                    //some transactions are cash only while others are investments as well
+                    // DIVIDEND ==> Inv and cash
+                    // ORDER, ==> Inv and cash
+                    // TOP_UP ==> cash only
+                    // INTEREST_FROM_CASH ==> cash only
 
-            //Iterate through each rows from first sheet
-            Iterator<Row> rowIterator = sheet.iterator();
-            while (rowIterator.hasNext()) {
-                Row row = rowIterator.next();
+                    //Date
+                    trans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")], myformatter));
+                    itrans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")], myformatter));
 
-                //For each row, iterate through each columns
-                Iterator <Cell> cellIterator = row.cellIterator();
-                while (cellIterator.hasNext()) {
+                    //transaction details
+                    trans.setTransactionDetails(tokens[Col.get("Title")] + ":" + tokens[Col.get("Type")]);
+                    itrans.setTransactionDetails(tokens[Col.get("Title")] + ":" + tokens[Col.get("Type")]);
 
-                    Cell cell = cellIterator.next();
+                    //Amount
+                    trans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
+                    itrans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
 
+                    if (tokens[1].equals(freetradeTypes.ORDER) || tokens[1].equals(freetradeTypes.DIVIDEND)) {
+                        //Investments
 
-                    if (cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Date") && cashTransStatements) {
-
-                        row = rowIterator.next();
-                        //these rows are now cash transactions
-                        while (rowIterator.hasNext()) {
-                            Iterator<Cell> innerCellIterator = row.cellIterator();
-
-                            Cell innerCell = innerCellIterator.next();
-                            Transactions trans = new Transactions();
-                            //Date	Details	Amount	Balance
-                            //01/12/2021	Regular Deposit	200.00	319.97
-                            //01/12/2021	Bought 1 S&P 500 UCITS ETF Distributing (VUSA)	-65.89	254.08
-                            //01/12/2021	Bought 1 FTSE Developed World UCITS ETF Distributing (VEVE)	-68.73	185.35
-                            if (innerCell.getCellType().equals(CellType.STRING) && innerCell.getStringCellValue().equals("Balance")) {
-                                //we have come to end of cash transactions
-                                break;
-                            }
-                            //date
-                            trans.setTransactionDate(innerCell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-                            innerCell = innerCellIterator.next();
-                            //transaction details
-                            trans.setTransactionDetails(innerCell.getStringCellValue());
-
-                            InvTransactions itransDiv = new InvTransactions();
-
-                            innerCell = innerCellIterator.next();
-                            //Amount
-                            trans.setTransactionAmount((innerCell.getNumericCellValue()));
-
-                            if(trans.getTransactionDetails().startsWith("DIV:")){
-
-                                itransDiv.setTransactionDate(trans.getTransactionDate());
-                                itransDiv.setTransactionDetails(trans.getTransactionDetails());
-                                itransDiv.setInvTransactionType(TransactionTypes.DIVIDEND);
-                                // if dividend create inv transactions
-                                String tranDetails = trans.getTransactionDetails();
-                                //symbol is 4 digits at position 5
-                                // DIV: VETY.XLON.GB @ GBP 0.001857370
-                                String invSymbol = tranDetails.substring(5,9);
-
-                                if(invTranslistFinal.getReverseSymbolMap().containsKey(invSymbol)) {
-                                    itransDiv.setInvSymb(invSymbol);
-                                    itransDiv.setInvName(invTranslistFinal.getReverseSymbolMap().get(invSymbol)[0]);
-                                }
-                                else{
-                                    throw new Exception("Symbol in statement does not exist in mapfile, please add it to mapfile:"+ invSymbol);
-                                }
-                                itransDiv.setTransactionAmount(trans.getTransactionAmount());
-                                invTranslistFinal.getInvTransactionsList().add(itransDiv);
-
-                            }
-                            //Balance
-                            innerCell = innerCellIterator.next();
-                            if(isFirstRec){
-                                //final balance in very first line
-                                translistFinal.setFinalBalance(innerCell.getNumericCellValue());
-                                isFirstRec = false;
-                            }
-                            //keep overwriting initial balance until the very end
-                            translistFinal.setInitialBalance(innerCell.getNumericCellValue());
-
-                            translistFinal.getTransactionsList().add(trans);
-                            row = rowIterator.next();
-                            cashTransStatements = false;
-                        }
-                    } //if celltype is string for date
-
-                    if(cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Cash Transactions") && !cashTransStatements) {
-                        cashTransStatements = true;
-                    } //if celltype is string for cash transactions
+                        itrans.setInvSymb(tokens[Col.get("Ticker")]);
 
 
-                    if (cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Date") && invTransStatements) {
-
-                        row = rowIterator.next();
-                        //these rows are now cash transactions
-                        while (rowIterator.hasNext()) {
-                            Iterator<Cell> innerCellIterator = row.cellIterator();
-
-                            Cell innerCell = innerCellIterator.next();
-                            InvTransactions itrans = new InvTransactions();
-                            //Date	InvestmentName	TransactionDetails	Quantity	Price	Cost
-                            //05/12/2022	FTSE Developed World UCITS ETF Distributing (VEVE)	Bought 9 FTSE Developed World UCITS ETF Distributing (VEVE)	9.00	65.4156	588.74
-                            //05/12/2022	S&P 500 UCITS ETF Distributing (VUSA)	Bought 9 S&P 500 UCITS ETF Distributing (VUSA)	9.00	63.7467	573.72
-                            //03/11/2022	FTSE Developed World UCITS ETF Distributing (VEVE)	Bought 9 FTSE Developed World UCITS ETF Distributing (VEVE)	9.00	64.7222	582.50
-                            if (innerCell.getCellType().equals(CellType.STRING) && innerCell.getStringCellValue().equals("Balance")) {
-                                //we have come to end of cash transactions
-                                break;
-                            }
-
-                            itrans.setTransactionDate(innerCell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-                            innerCell = innerCellIterator.next();
-
-                            String invNameTmp ="";
-                            String invSymTmp = "";
-                            String[] invSymTmpMap;
-                            if(innerCell.getStringCellValue().indexOf('(') >0) {
-                                invNameTmp = innerCell.getStringCellValue().substring(0, innerCell.getStringCellValue().indexOf('('));
-                                invSymTmp = innerCell.getStringCellValue().substring(innerCell.getStringCellValue().indexOf('(') + 1, innerCell.getStringCellValue().indexOf(')'));
-                                //check if symbol exists else error out
-                                if(invTranslistFinal.getReverseSymbolMap().containsKey(invSymTmp)) {
-                                    itrans.setInvSymb(invSymTmp);
-                                }
-                                else{
-                                    throw new Exception("Symbol in statement does not exist in mapfile, please add it to mapfile:"+ invNameTmp);
-                                }
-                            }
-                            else{
-                                invNameTmp = innerCell.getStringCellValue().trim();
-                                invSymTmpMap = invTranslistFinal.getInvSymbolMap().get(invNameTmp);
-                                itrans.setInvSymb(invSymTmpMap[0]);
-                            }
-                            String invNameTmp1 = invNameTmp.replace("Distributing","");
-
-                            itrans.setInvName(invNameTmp1);
-                            innerCell = innerCellIterator.next();
-                            itrans.setTransactionDetails(innerCell.getStringCellValue());
-                            if(itrans.getTransactionDetails().startsWith("Bought")){
-                                itrans.setInvTransactionType(TransactionTypes.MF_BUY);
-                            }
-                            else if(itrans.getTransactionDetails().startsWith("Sold")){
-                                itrans.setInvTransactionType(TransactionTypes.MF_SELL);
-                            }
-                            else {
-                                throw new Exception("Invalid Transacton Type:"+ itrans.getTransactionDetails());
-                            }
+                        if (tokens[1].equals(freetradeTypes.DIVIDEND)) {
+                            itrans.setInvTransactionType(TransactionTypes.DIVIDEND);
+                        } else {
+                            //This is buy or sell order
 
                             //Quantity
-                            innerCell = innerCellIterator.next();
-                            itrans.setInvQuantity((int)innerCell.getNumericCellValue());
+                            itrans.setInvQuantity(Integer.parseInt(tokens[Col.get("Quantity")]));
                             //price
-                            innerCell = innerCellIterator.next();
-                            itrans.setInvPrice(innerCell.getNumericCellValue());
-                            //cost == amount
-                            innerCell = innerCellIterator.next();
-                            itrans.setTransactionAmount(innerCell.getNumericCellValue());
+                            //TODO - price in local currency or account currency?
+                            itrans.setInvPrice(Double.parseDouble(tokens[Col.get("Price per Share")]));
+                            //commission = fx fees + stamp duty for shares
+                            itrans.setInvCommission(Double.parseDouble(tokens[Col.get("FX Fee Amount")]) +
+                                    Double.parseDouble(tokens[Col.get("Stamp Duty")]));
 
-                            invTranslistFinal.getInvTransactionsList().add(itrans);
-                            row = rowIterator.next();
-                            invTransStatements = false;
-                        }
-                    } //if celltype is string for date
-                    if(cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Investment Transactions") && !invTransStatements) {
-                        invTransStatements = true;
-                    } //if celltype is string for cash transactions
-                }
-                System.out.println("");
-            }
-            file.close();
+                            switch (invTranslistFinal.getReverseSymbolMap().get(invTranslistFinal)[1]) {
+                                case "MF":
+                                    if (tokens[Col.get("Buy / Sell")].equals("BUY")) {
+                                        itrans.setInvTransactionType(TransactionTypes.MF_BUY);
+                                    } else
+                                        itrans.setInvTransactionType(TransactionTypes.MF_SELL);
+                                    break;
+                                case "ST":
+                                    if (tokens[Col.get("Buy / Sell")].equals("BUY")) {
+                                        itrans.setInvTransactionType(TransactionTypes.STOCK_BUY);
+                                    } else
+                                        itrans.setInvTransactionType(TransactionTypes.STOCK_SELL);
+                                    break;
+                                default:
+                                    throw new Exception("invalid symbol encountered");
+                            }//switch
+                        }//buy/sell if/else
+                    }// order or dividend
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return(new AllTransactions(invTranslistFinal,translistFinal));
-
-    }
-}
+                    invTranslistFinal.getInvTransactionsList().add(itrans);
+                    translistFinal.getTransactionsList().add(trans);
+                }//header
+            */
+                if (isHeader)
+                    isHeader = false;
+            }//while not null
+        } //try
+        return (new AllTransactions(invTranslistFinal, translistFinal));
+    }//function
+}//class
