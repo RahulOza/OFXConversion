@@ -138,8 +138,8 @@ public class DataModelerVanguard {
                                 itrans.setTransactionDate(innerCell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                                 innerCell = innerCellIterator.next();
 
-                                String invNameTmp ="";
-                                String invSymTmp = "";
+                                String invNameTmp;
+                                String invSymTmp;
                                 String[] invSymTmpMap;
                                 if(innerCell.getStringCellValue().indexOf('(') >0) {
                                      invNameTmp = innerCell.getStringCellValue().substring(0, innerCell.getStringCellValue().indexOf('('));
@@ -191,12 +191,9 @@ public class DataModelerVanguard {
                         invTransStatements = true;
                     } //if celltype is string for cash transactions
                 }
-                System.out.println("");
             }
             file.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

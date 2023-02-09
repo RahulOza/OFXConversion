@@ -58,7 +58,6 @@ class OfxGen {
             ofxv1Writer.writeEndAggregate("SONRS");
             ofxv1Writer.writeEndAggregate("SIGNONMSGSRSV1");
 
-            //TODO - CREDIT/DEBIT CARDS? we consider everyting as CREDIT cards?? it does not really matters but needs to be fixed ??
             ofxv1Writer.writeStartAggregate("CREDITCARDMSGSRSV1");
             ofxv1Writer.writeStartAggregate("CCSTMTTRNRS");
 

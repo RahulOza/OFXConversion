@@ -3,7 +3,6 @@ package OFXConversion;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.logging.Logger;
 
 import OFXConversion.data.AllTransactions;
@@ -144,7 +143,7 @@ public class OFXConversion {
         String myVersionDetails = "Vanguard Investment Fixes";
 
 
-        logger.info(" ######### OfxGen v"+myVersion.toString()+" ("+ myVersionDetails +") ##########");
+        logger.info(" ######### OfxGen v"+myVersion+" ("+ myVersionDetails +") ##########");
         if(args.length < 1){
             logger.severe("Missing ofxgen.properties file as parameter");
         }

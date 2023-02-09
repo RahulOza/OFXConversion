@@ -1,21 +1,21 @@
 package OFXConversion.modelers;
 
 import OFXConversion.data.*;
-import groovy.transform.Immutable;
 
 import java.io.*;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
 public class DataModelerFreeTrade {
 
-    private Map<String, Integer> Col = new HashMap<>();
+    private final Map<String, Integer> Col;
+
+    public DataModelerFreeTrade() {
+        Col = new HashMap<>();
+    }
 
     public void populateCols() {
 
@@ -53,9 +53,6 @@ public class DataModelerFreeTrade {
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
         TransactionList translistFinal = new TransactionList();
         InvTransactionList invTranslistFinal = new InvTransactionList();
-        boolean isFirstRec = true;
-        boolean cashTransStatements = false;
-        boolean invTransStatements = false;
 
         invTranslistFinal.readSymbolMap();
         populateCols();
@@ -65,7 +62,6 @@ public class DataModelerFreeTrade {
 
             String lineOfStatement;
             boolean isHeader = true;
-            Double adjBalance = 0.0;
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
 

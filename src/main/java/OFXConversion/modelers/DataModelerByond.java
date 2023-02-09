@@ -12,9 +12,9 @@ import java.util.Locale;
 
 public class DataModelerByond {
 
-    private Double finalBalance = 0.0;
 
     public TransactionList createTransactionList(String sourceFileName) throws IOException {
+        Double finalBalance;
 
         TransactionList translistFinal = new TransactionList();
         try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
@@ -24,7 +24,7 @@ public class DataModelerByond {
             boolean isHeader = true;
             Double adjBalance = 0.0;
 
-            while ((lineOfStatement = inputStream.readLine()) != null) {
+            while (null != (lineOfStatement = inputStream.readLine())) {
 
                 // first line is the header so ignore it
                 if (!isHeader) {
