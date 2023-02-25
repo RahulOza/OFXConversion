@@ -105,8 +105,13 @@ public class DataModelerFreeTrade {
                     //Amount
                     trans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
                     itrans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
+                    if(tokens[Col.get("Type")].equals("WITHDRAWAL")) {
+                        //if withdrawal then amount is negative
+                        trans.setTransactionAmount(-Double.parseDouble(tokens[Col.get("Total Amount")]));
+                    }
 
-                    if (tokens[1].equals("ORDER") || tokens[1].equals("DIVIDEND")) {
+
+                    if (tokens[Col.get("Type")].equals("ORDER") || tokens[Col.get("Type")].equals("DIVIDEND")) {
                         //Investment transactions ..
 
                         //Name
@@ -115,7 +120,7 @@ public class DataModelerFreeTrade {
                         itrans.setInvSymb(tokens[Col.get("Ticker")]);
 
 
-                        if (tokens[1].equals("DIVIDEND")) {
+                        if (tokens[Col.get("Type")].equals("DIVIDEND")) {
                             itrans.setInvTransactionType(TransactionTypes.DIVIDEND);
                         } else {
                             //This is buy or sell order
