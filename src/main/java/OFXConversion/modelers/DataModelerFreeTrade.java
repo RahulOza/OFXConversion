@@ -138,16 +138,20 @@ public class DataModelerFreeTrade {
                                         itrans.setInvTransactionType(TransactionTypes.MF_BUY);
                                         //set negative amount for cash transactions for BUY
                                         trans.setTransactionAmount(-trans.getTransactionAmount());
-                                    } else
+                                    } else {
                                         itrans.setInvTransactionType(TransactionTypes.MF_SELL);
+                                        itrans.setInvQuantity(-itrans.getInvQuantity());
+                                    }
                                     break;
                                 case "ST":
                                     if (tokens[Col.get("Buy / Sell")].equals("BUY")) {
                                         itrans.setInvTransactionType(TransactionTypes.STOCK_BUY);
                                         //set negative amount for cash transactions for BUY
                                         trans.setTransactionAmount(-trans.getTransactionAmount());
-                                    } else
+                                    } else {
                                         itrans.setInvTransactionType(TransactionTypes.STOCK_SELL);
+                                        itrans.setInvQuantity(-itrans.getInvQuantity());
+                                    }
                                     break;
                                 default:
                                     throw new Exception("invalid symbol encountered");

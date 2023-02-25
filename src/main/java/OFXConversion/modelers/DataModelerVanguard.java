@@ -164,17 +164,19 @@ public class DataModelerVanguard {
                                 itrans.setTransactionDetails(innerCell.getStringCellValue());
                                 if(itrans.getTransactionDetails().startsWith("Bought")){
                                     itrans.setInvTransactionType(TransactionTypes.MF_BUY);
+                                    //Quantity
+                                    innerCell = innerCellIterator.next();
+                                    itrans.setInvQuantity(innerCell.getNumericCellValue());
                                 }
                                 else if(itrans.getTransactionDetails().startsWith("Sold")){
                                     itrans.setInvTransactionType(TransactionTypes.MF_SELL);
+                                    //Quantity
+                                    innerCell = innerCellIterator.next();
+                                    itrans.setInvQuantity(-innerCell.getNumericCellValue());
                                 }
                                 else {
                                     throw new Exception("Invalid Transacton Type:"+ itrans.getTransactionDetails());
                                 }
-
-                                //Quantity
-                                innerCell = innerCellIterator.next();
-                                itrans.setInvQuantity(innerCell.getNumericCellValue());
                                 //price
                                 innerCell = innerCellIterator.next();
                                 itrans.setInvPrice(innerCell.getNumericCellValue());
