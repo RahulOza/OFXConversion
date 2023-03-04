@@ -105,7 +105,7 @@ public class DataModelerChase {
                 if (transDetails.startsWith("Opening balance")){
                     String noCommaTransDetails = transDetails.replace(",","");
                     //first line, set initial balance
-                    Matcher tm = Pattern.compile("\\d+(\\.\\d{2})").matcher(transDetails);
+                    Matcher tm = Pattern.compile("\\d+(\\.\\d{2})").matcher(noCommaTransDetails);
                     if( tm.find() ) {
                         initialBalance = Double.parseDouble(tm.group(0));
                         finalBalance =  initialBalance;
