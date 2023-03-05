@@ -99,12 +99,12 @@ public class DataModelerVanguard {
                                 //Balance
                                 innerCell = innerCellIterator.next();
                                 if(isFirstRec){
-                                    //final balance in very first line
-                                    translistFinal.setFinalBalance(innerCell.getNumericCellValue());
+                                    //initial balance in very first line
+                                    translistFinal.setInitialBalance(innerCell.getNumericCellValue() - trans.getTransactionAmount());
                                     isFirstRec = false;
                                 }
-                                //keep overwriting initial balance until the very end
-                                translistFinal.setInitialBalance(innerCell.getNumericCellValue());
+                                //keep overwriting final balance until the very end
+                                translistFinal.setFinalBalance(innerCell.getNumericCellValue());
 
                                 translistFinal.getTransactionsList().add(trans);
                                 row = rowIterator.next();
