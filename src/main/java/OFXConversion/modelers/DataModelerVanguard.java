@@ -9,17 +9,8 @@ import org.apache.poi.ss.usermodel.Row;
 
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
-
-import static java.lang.System.exit;
-
-//TODO - Dividends - add these whilst processing cash transactions
 
 public class DataModelerVanguard {
 
@@ -108,12 +99,12 @@ public class DataModelerVanguard {
                                 //Balance
                                 innerCell = innerCellIterator.next();
                                 if(isFirstRec){
-                                    //final balance in very first line
-                                    translistFinal.setFinalBalance(innerCell.getNumericCellValue());
+                                    //initial balance in very first line
+                                    translistFinal.setInitialBalance(innerCell.getNumericCellValue() - trans.getTransactionAmount());
                                     isFirstRec = false;
                                 }
-                                //keep overwriting initial balance until the very end
-                                translistFinal.setInitialBalance(innerCell.getNumericCellValue());
+                                //keep overwriting final balance until the very end
+                                translistFinal.setFinalBalance(innerCell.getNumericCellValue());
 
                                 translistFinal.getTransactionsList().add(trans);
                                 row = rowIterator.next();
@@ -147,8 +138,8 @@ public class DataModelerVanguard {
                                 itrans.setTransactionDate(innerCell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                                 innerCell = innerCellIterator.next();
 
-                                String invNameTmp ="";
-                                String invSymTmp = "";
+                                String invNameTmp;
+                                String invSymTmp;
                                 String[] invSymTmpMap;
                                 if(innerCell.getStringCellValue().indexOf('(') >0) {
                                      invNameTmp = innerCell.getStringCellValue().substring(0, innerCell.getStringCellValue().indexOf('('));
@@ -173,17 +164,19 @@ public class DataModelerVanguard {
                                 itrans.setTransactionDetails(innerCell.getStringCellValue());
                                 if(itrans.getTransactionDetails().startsWith("Bought")){
                                     itrans.setInvTransactionType(TransactionTypes.MF_BUY);
+                                    //Quantity
+                                    innerCell = innerCellIterator.next();
+                                    itrans.setInvQuantity(innerCell.getNumericCellValue());
                                 }
                                 else if(itrans.getTransactionDetails().startsWith("Sold")){
                                     itrans.setInvTransactionType(TransactionTypes.MF_SELL);
+                                    //Quantity
+                                    innerCell = innerCellIterator.next();
+                                    itrans.setInvQuantity(-innerCell.getNumericCellValue());
                                 }
                                 else {
                                     throw new Exception("Invalid Transacton Type:"+ itrans.getTransactionDetails());
                                 }
-
-                                //Quantity
-                                innerCell = innerCellIterator.next();
-                                itrans.setInvQuantity((int)innerCell.getNumericCellValue());
                                 //price
                                 innerCell = innerCellIterator.next();
                                 itrans.setInvPrice(innerCell.getNumericCellValue());
@@ -200,101 +193,15 @@ public class DataModelerVanguard {
                         invTransStatements = true;
                     } //if celltype is string for cash transactions
                 }
-                System.out.println("");
             }
             file.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return(new AllTransactions(invTranslistFinal,translistFinal));
 
     }
-
-/*
-    private void processCashTransactionList(String inputStream){
-
-        TransactionList translistFinal = new TransactionList();
-        //try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
-            DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
-
-
-            String lineOfStatement;
-            boolean isHeader = true;
-            boolean firstRec = true;
-
-            while ((lineOfStatement = inputStream.readLine()) != null) {
-
-                // first line is the header so ignore it
-                if (!isHeader) {
-                    //replace consecutive tabs by single
-                    String newLineOfStatement = lineOfStatement.replaceAll("\t(?=\t)","");
-
-                    String[] tokens = newLineOfStatement.split("\\t");
-                    // we know the tokens are
-                    //Date |	Details	| What's gone in |	What's gone out | 	Balance
-                    // 0          1           2                                  3
-                    // Date	Description	Amount(GBP)
-                    //    17 May 2021\tBought 8 S&P 500 UCITS ETF Distributing (VUSA)\t\t−£448.79\t£1,555.59
-
-                    if (tokens.length > 1) {
-                        Transactions trans = new Transactions();
-
-                        trans.setTransactionDate(LocalDate.parse(tokens[0], myformatter));
-                        trans.setTransactionDetails(tokens[1]);
-                        String transactionDetails = tokens[1];
-                        //2 is empty
-                        String transAmountWithComma = tokens[2].replace("£","");
-                        String transAmount = transAmountWithComma.replace(",","");
-
-                        // It was found non ascii characters creep in so check if that is the case
-                        if(isNotPureAscii(transAmount)){
-                         String transAmountNew = transAmount.replaceAll("[^\\x00-\\x7F]", "");
-                            //the non ascii character is the negative sign hence revert sign.
-                            trans.setTransactionAmount(Double.parseDouble(transAmountNew));
-                        }
-                        else{
-                            trans.setTransactionAmount(Double.parseDouble(transAmount));
-                        }
-                        //if something is 'Bought' then it is a debit
-                        if(transactionDetails.startsWith("Bought")) {
-                            trans.setTransactionAmount(-trans.getTransactionAmount());
-                        }
-
-                        transAmountWithComma = tokens[3].replace("£","");
-                        transAmount = transAmountWithComma.replace(",","");
-
-                        String transAmountNew;
-                        if(isNotPureAscii(transAmount)) {
-                            transAmountNew = transAmount.replaceAll("[^\\x00-\\x7F]", "");
-                        }
-                        else{
-                            transAmountNew = transAmount;
-                        }
-
-                        if (firstRec) {
-                            //Initial balance is in the very first line
-                            // Initial balance is AFTER the first transaction so add the value of transaction to get the actual initial value.
-                            finalBalance = Double.parseDouble(transAmountNew);
-                            firstRec = false;
-                        }
-                        intialBalance = Double.parseDouble(transAmountNew) - trans.getTransactionAmount();
-                        translistFinal.getTransactionsList().add(trans);
-
-                    }
-                }
-
-                if (isHeader)
-                    isHeader = false;
-            }
-            translistFinal.setFinalBalance(finalBalance);
-            translistFinal.setInitialBalance(intialBalance);
-
-        //}
-        return translistFinal;
-    } */
 }
 
 

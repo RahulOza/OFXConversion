@@ -3,7 +3,6 @@ package OFXConversion;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.logging.Logger;
 
 import OFXConversion.data.AllTransactions;
@@ -118,13 +117,33 @@ public class OFXConversion {
 
     }
 
+    public static void convertFileFreetrade(String fileName) throws Exception {
+        DataModelerFreeTrade DM = new DataModelerFreeTrade();
+        OfxGen OfGen = new OfxGen();
+
+        AllTransactions transactionLists = DM.createTransactionList(fileName);
+
+        transactionLists.getCashTrans().getTransactionsList().sort(new TransactionList());
+
+        transactionLists.getCashTrans().printTransactionList();
+
+        transactionLists.getInvTrans().getInvTransactionsList().sort(new InvTransactionList());
+
+        transactionLists.getInvTrans().printTransactionList();
+
+        OfGen.ofxFileWriter(transactionLists.getCashTrans(),fileName, OfxgenGetPropertyValues.freetradeAccountId,OfxgenGetPropertyValues.freetradeAccountType);
+
+        OfGen.ofxInvFileWriter(transactionLists.getInvTrans(),fileName,OfxgenGetPropertyValues.freetradeAccountId,OfxgenGetPropertyValues.freetradeAccountType);
+
+    }
+
     public static void main(String[] args) throws IOException {
 
         Double myVersion = 2.1;
         String myVersionDetails = "Vanguard Investment Fixes";
 
 
-        logger.info(" ######### OfxGen v"+myVersion.toString()+" ("+ myVersionDetails +") ##########");
+        logger.info(" ######### OfxGen v"+myVersion+" ("+ myVersionDetails +") ##########");
         if(args.length < 1){
             logger.severe("Missing ofxgen.properties file as parameter");
         }
@@ -135,7 +154,7 @@ public class OFXConversion {
                 OfxgenGetPropertyValues.getPropValues(arg);
                 //check if we have the right version of props file
                 if(!OfxgenGetPropertyValues.version.equals(myVersion)){
-                    throw new Exception("Incorrect properties version file");
+                    throw new Exception("Incorrect properties version file, program version:"+myVersion+" properties file version:"+OfxgenGetPropertyValues.version);
                 }
 
             } catch (IOException exception) {

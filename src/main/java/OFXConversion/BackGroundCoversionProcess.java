@@ -67,7 +67,7 @@ public class BackGroundCoversionProcess implements Runnable{
                if(filename.toString().endsWith(".csv")){
                     if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixMarcusFilename)){
                         try {
-                            OFXConversion.convertFileMarcus(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.intialBalanceMarcus);
+                            OFXConversion.convertFileMarcus(pollDirPath + "\\" + filename,OfxgenGetPropertyValues.intialBalanceMarcus);
                             processed = true;
                         } catch (IOException e) {
                             logger.severe(e.toString());
@@ -75,7 +75,7 @@ public class BackGroundCoversionProcess implements Runnable{
                     }//Marcus
                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixAmazonFileName)){
                        try {
-                           OFXConversion.convertFileAmazon(pollDirPath + "\\" + filename.toString(),OfxgenGetPropertyValues.initialBalanceAmazon);
+                           OFXConversion.convertFileAmazon(pollDirPath + "\\" + filename,OfxgenGetPropertyValues.initialBalanceAmazon);
                            processed = true;
                        } catch (IOException e) {
                            logger.severe(e.toString());
@@ -83,19 +83,28 @@ public class BackGroundCoversionProcess implements Runnable{
                    }//Amazon
                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixByondFileName)) {
                        try {
-                           OFXConversion.convertFileByond(pollDirPath + "\\" + filename.toString());
+                           OFXConversion.convertFileByond(pollDirPath + "\\" + filename);
                            processed = true;
                        } catch (IOException e) {
                            logger.severe(e.toString());
                        }
                    }//Byond
+                   if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixfreetradeFileName)) {
+                       try {
+                           OFXConversion.convertFileFreetrade(pollDirPath + "\\" + filename);
+                           processed = true;
+                       } catch (Exception e) {
+                           logger.severe(e.toString());
+                       }
+                   }//Freetrade
+
                } // .csv
                 if(filename.toString().endsWith(".Xls")){
                     //if .Xls file can only be vanguard
 
                     if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixVanguardFileName)){
                         try {
-                            OFXConversion.convertFileVanguard(pollDirPath + "\\" + filename.toString());
+                            OFXConversion.convertFileVanguard(pollDirPath + "\\" + filename);
                             processed = true;
                         } catch (IOException e) {
                             logger.severe(e.toString());
@@ -109,7 +118,7 @@ public class BackGroundCoversionProcess implements Runnable{
                     //.qif can be TSB OR Santander ...
                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixSantanderFileName) && !(filename.toString().contains(OfxgenGetPropertyValues.convertedSantanderFileName)) ){
                        try {
-                           OFXConversion.convertFileSantander(pollDirPath + "\\" + filename.toString());
+                           OFXConversion.convertFileSantander(pollDirPath + "\\" + filename);
                            processed = true;
                        } catch (IOException e) {
                            logger.severe(e.toString());
@@ -118,7 +127,7 @@ public class BackGroundCoversionProcess implements Runnable{
                     else {
                         if (filename.toString().endsWith(OfxgenGetPropertyValues.suffixTSB)) {
                             try {
-                                OFXConversion.convertFileTSB(pollDirPath + "\\" + filename.toString());
+                                OFXConversion.convertFileTSB(pollDirPath + "\\" + filename);
                                 processed = true;
                             } catch (IOException e) {
                                 logger.severe(e.toString());
@@ -128,7 +137,7 @@ public class BackGroundCoversionProcess implements Runnable{
                 } // .qif
                 if(filename.toString().endsWith(".pdf")) {
                     try {
-                        OFXConversion.convertFileChase(pollDirPath + "\\" + filename.toString());
+                        OFXConversion.convertFileChase(pollDirPath + "\\" + filename);
                         processed = true;
                     } catch (IOException e) {
                         logger.severe(e.toString());
@@ -136,7 +145,7 @@ public class BackGroundCoversionProcess implements Runnable{
                 }//chase
 
                 if(!processed){
-                    logger.info("I have done nothing with file:"+filename.toString());
+                    logger.info("I have done nothing with file:"+filename);
 
                 }
                 processed = false;

@@ -39,10 +39,10 @@ public class DataModelerTSB {
         FileWriter filewriter = new FileWriter(UIFile.getAbsoluteFile());
         BufferedWriter outputStream= new BufferedWriter(filewriter);
         String lineOfStatement;
-        while((lineOfStatement = inputStream.readLine()) != null){
+        while(null != (lineOfStatement = inputStream.readLine())){
 
             if(lineOfStatement.startsWith("D")) {
-                LocalDate extractedDate = LocalDate.parse(lineOfStatement.substring(1,lineOfStatement.length()),myInputFormatter);
+                LocalDate extractedDate = LocalDate.parse(lineOfStatement.substring(1),myInputFormatter);
                 String convertedDate  = extractedDate.format(myOutputFormatter);
                 String newLineOfStatement = "D"+convertedDate;
                 outputStream.write(newLineOfStatement);

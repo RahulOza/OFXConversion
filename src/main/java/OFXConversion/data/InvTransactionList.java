@@ -47,7 +47,7 @@ public class InvTransactionList implements Comparator<InvTransactions> {
         for (InvTransactions i: invTransactionsList) {
             System.out.println(" Item : " + ctr++);
             System.out.println(" Date : " + i.transactionDate.toString());
-            System.out.println(" Inv Name : " + i.getInvName().toString());
+            System.out.println(" Inv Name : " + i.getInvName());
             System.out.println(" Inv Symbol : " + i.getInvSymb());
             System.out.println(" Inv Quant : " + i.getInvQuantity());
             System.out.println(" Inv Price : " + i.getInvPrice());
