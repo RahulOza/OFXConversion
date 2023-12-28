@@ -133,10 +133,12 @@ public class DataModelerChase {
 
                 noCommaTransAmount = transAmount.replace(",","");
                 try {
-                    if (tranOperation.equals("Purchase") || tranOperation.equals("Transfer")) {
+                    if(noCommaTransAmount.contains("-")){
+                        //String contains a minus sign hence negative amount
                         noSignTransAmount = noCommaTransAmount.replace("-", "");
                         trans.setTransactionAmount(-(parseDouble(noSignTransAmount)));
-                    } else {
+                    }
+                    if(noCommaTransAmount.contains("+")){
                         noSignTransAmount = noCommaTransAmount.replace("+", "");
                         trans.setTransactionAmount((parseDouble(noSignTransAmount)));
                     }
