@@ -160,7 +160,7 @@ public class OFXConversion {
     public static void main(String[] args) throws IOException {
 
         Double myVersion = 2.2;
-        String myVersionDetails = "Trading 212 Account";
+        String myVersionDetails = "Chase Account Fixes";
 
 
         logger.info(" ######### OfxGen v"+myVersion+" ("+ myVersionDetails +") ##########");
