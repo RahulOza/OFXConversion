@@ -127,9 +127,8 @@ public class OFXConversionTest {
         convertFileVanguard(OfxgenGetPropertyValues.testFilePathVanguard);
 
         logger.info("testVanguard Competed Successfully");
-
-
     }
+
 
 
     @Test
@@ -152,6 +151,25 @@ public class OFXConversionTest {
         logger.info("testChase Competed Successfully");
     }
     @Test
+    public void testChase1() throws IOException{
+
+        DataModelerChase DM = new DataModelerChase();
+
+        logger.info("testChase1  Started");
+
+        TransactionList transactionList = DM.createTransactionList(testFilePathChase1);
+
+        Double initialBalanceRounded = Double.parseDouble(df.format(transactionList.getInitialBalance()));
+        assertEquals(initialBalanceRounded, testintialBalanceChase1);
+
+        Double finalBalanceRounded = Double.parseDouble(df.format(transactionList.getFinalBalance()));
+        assertEquals(finalBalanceRounded, testfinalBalanceChase1);
+
+        convertFileChase(OfxgenGetPropertyValues.testFilePathChase1);
+
+        logger.info("testChase1 Competed Successfully");
+    }
+    @Test
     public void testFreetrade() throws Exception{
 
 
@@ -172,7 +190,26 @@ public class OFXConversionTest {
         logger.info("testFreetrade Competed Successfully");
 
     }
+    @Test
+    public void testTrading212() throws Exception{
 
+        DataModelerTrading212 DM = new DataModelerTrading212();
+
+        logger.info("testTrading212 Started");
+
+        AllTransactions alltransactionLists = DM.createTransactionList(testFilePathTrading212);
+
+        Double initialBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getInitialBalance()));
+        assertEquals(initialBalanceRounded, testintialBalanceTrading212);
+
+        Double finalBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getFinalBalance()));
+        assertEquals(finalBalanceRounded, testfinalBalanceTrading212);
+
+        convertFileTrading212(testFilePathTrading212);
+
+        logger.info("testTrading212 Competed Successfully");
+
+    }
 
     @After
     public void tearDown()  {

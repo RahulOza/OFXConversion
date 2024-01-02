@@ -46,6 +46,8 @@ public class OfxgenGetPropertyValues {
     public static String testFilePathSantander ="";
     public static String tsbDestFileName ="";
 
+    public static String symbolMapFile ="";
+
     //Vanguard
     public static String vanguardAccountType = "";
     public static String vanguardAccountId = "";
@@ -55,7 +57,7 @@ public class OfxgenGetPropertyValues {
     public static Double testintialBalanceVanguard =0.0;
     public static Double testfinalBalanceVanguard =0.0;
     public static int transSheetNumber;
-    public static String vanguardSymbolMapFile ="";
+
 
     //chase
     public static String chaseAccountType = "";
@@ -64,6 +66,12 @@ public class OfxgenGetPropertyValues {
     public static Double testintialBalanceChase =0.0;
     public static Double testfinalBalanceChase =0.0;
 
+    //chase - additional test case
+
+    public static String testFilePathChase1 ="";
+    public static Double testintialBalanceChase1 =0.0;
+    public static Double testfinalBalanceChase1 =0.0;
+
     //freetrade
     public static String freetradeAccountType = "";
     public static String freetradeAccountId = "";
@@ -71,6 +79,15 @@ public class OfxgenGetPropertyValues {
     public static Double testintialBalancefreetrade =0.0;
     public static Double testfinalBalancefreetrade =0.0;
     public static String prefixfreetradeFileName ="";
+
+    //Trading 212
+    public static String trading212AccountType = "";
+    public static String trading212AccountId = "";
+    public static String testFilePathTrading212 ="";
+    public static Double testintialBalanceTrading212 =0.0;
+    public static Double testfinalBalanceTrading212 =0.0;
+    public static String prefixTrading212FileName ="";
+
 
     //local variables
     private static String result = "";
@@ -135,13 +152,19 @@ public class OfxgenGetPropertyValues {
             testintialBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.intialBalanceVanguard"));
             testfinalBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.finalBalanceVanguard"));
             transSheetNumber = Integer.parseInt(prop.getProperty("ofxgenprops.vanguard.transSheetNumber"));
-            vanguardSymbolMapFile = prop.getProperty("ofxgenprops.vanguard.symbolMapFile");
+            symbolMapFile = prop.getProperty("ofxgenprops.symbolMapFile");
+
             //chase
             chaseAccountType = prop.getProperty("ofxgenprops.chase.accountype");
             chaseAccountId = prop.getProperty("ofxgenprops.chase.chaseAccountId");
             testFilePathChase = prop.getProperty("ofxgenprops.testing.chase.testFilePathChase");
             testintialBalanceChase = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.initialBalanceChase"));
             testfinalBalanceChase = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.finalBalanceChase"));
+
+            //chase - additional test case
+            testFilePathChase1 = prop.getProperty("ofxgenprops.testing.chase.testFilePathChase1");
+            testintialBalanceChase1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.initialBalanceChase1"));
+            testfinalBalanceChase1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.finalBalanceChase1"));
 
             //FreeTrade
             freetradeAccountType = prop.getProperty("ofxgenprops.freetrade.accountype");
@@ -152,7 +175,14 @@ public class OfxgenGetPropertyValues {
             prefixfreetradeFileName = prop.getProperty("ofxgenprops.backgroundprocessing.freetrade.prefixFreetradedFileName");
 
 
-            result = "Loaded property = pollingDirPath = " + pollingDirPath;
+            //Trading212
+            trading212AccountType = prop.getProperty("ofxgenprops.trading212.accountype");
+            trading212AccountId = prop.getProperty("ofxgenprops.trading212.trading212AccountId");
+            testFilePathTrading212 = prop.getProperty("ofxgenprops.testing.trading212.testFilePathTrading212");
+            testintialBalanceTrading212 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.trading212.initialBalanceTrading212"));
+            testfinalBalanceTrading212 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.trading212.finalBalanceTrading212"));
+            prefixTrading212FileName = prop.getProperty("ofxgenprops.backgroundprocessing.trading212.trading212FileName");
+
 
             logger.info(result);
 

@@ -44,7 +44,6 @@ public class DataModelerVanguard {
 
                    Cell cell = cellIterator.next();
 
-
                            if (cell.getCellType().equals(CellType.STRING) && cell.getStringCellValue().equals("Date") && cashTransStatements) {
 
                             row = rowIterator.next();

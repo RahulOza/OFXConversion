@@ -137,10 +137,30 @@ public class OFXConversion {
 
     }
 
+    public static void convertFileTrading212(String fileName) throws Exception {
+        DataModelerTrading212 DM = new DataModelerTrading212();
+        OfxGen OfGen = new OfxGen();
+
+        AllTransactions transactionLists = DM.createTransactionList(fileName);
+
+        transactionLists.getCashTrans().getTransactionsList().sort(new TransactionList());
+
+        transactionLists.getCashTrans().printTransactionList();
+
+        transactionLists.getInvTrans().getInvTransactionsList().sort(new InvTransactionList());
+
+        transactionLists.getInvTrans().printTransactionList();
+
+        OfGen.ofxFileWriter(transactionLists.getCashTrans(),fileName, OfxgenGetPropertyValues.trading212AccountId,OfxgenGetPropertyValues.trading212AccountType);
+
+        OfGen.ofxInvFileWriter(transactionLists.getInvTrans(),fileName,OfxgenGetPropertyValues.trading212AccountId,OfxgenGetPropertyValues.trading212AccountType);
+
+    }
+
     public static void main(String[] args) throws IOException {
 
-        Double myVersion = 2.1;
-        String myVersionDetails = "Vanguard Investment Fixes";
+        Double myVersion = 2.2;
+        String myVersionDetails = "Chase Account Fixes";
 
 
         logger.info(" ######### OfxGen v"+myVersion+" ("+ myVersionDetails +") ##########");

@@ -42,7 +42,7 @@ public class InvTransactionList implements Comparator<InvTransactions> {
 
         System.out.println(" *********************************************** ");
         System.out.println(" *********************************************** ");
-        System.out.println(" Transaction List Printing, Initial Bal = "+initialBalance+" Final Bal = " + finalBalance);
+        System.out.println(" Transaction Inv List Printing, Initial Bal = "+initialBalance+" Final Bal = " + finalBalance);
         int ctr = 1;
         for (InvTransactions i: invTransactionsList) {
             System.out.println(" Item : " + ctr++);
@@ -86,7 +86,7 @@ public class InvTransactionList implements Comparator<InvTransactions> {
     }
 
     public void readSymbolMap() throws Exception {
-        try (BufferedReader inputStream = new BufferedReader(new FileReader(OfxgenGetPropertyValues.vanguardSymbolMapFile))) {
+        try (BufferedReader inputStream = new BufferedReader(new FileReader(OfxgenGetPropertyValues.symbolMapFile))) {
             String lineOfStatement;
 
             while ((lineOfStatement = inputStream.readLine()) != null) {

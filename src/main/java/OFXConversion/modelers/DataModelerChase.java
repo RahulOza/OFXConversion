@@ -59,6 +59,11 @@ public class DataModelerChase {
 
         while (myscanner.hasNextLine()){
             String line = myscanner.nextLine();
+            // Ignore if there is date immediately after text 'Rahul's Account statement'
+            if(line.startsWith("Rahul's Account statement")){
+                line = myscanner.nextLine();
+                line = myscanner.nextLine();
+            }
             Matcher m = Pattern.compile("^\\d{2} [A-z]{3} \\d{4}").matcher(line);
             if(m.find()){
                 // we have found a transaction
@@ -123,17 +128,22 @@ public class DataModelerChase {
 
                 String[] tokens = line.split(" ");
                 String transAmount = tokens[0].replace("£","");
-                String noSignTransAmount;
-                String noCommaTransAmount;
+                String noSignTransAmount = null;
+                String noCommaTransAmount = null;
 
                 noCommaTransAmount = transAmount.replace(",","");
-                              
-                if(tranOperation.equals("Purchase") || tranOperation.equals("Transfer")){
-                    noSignTransAmount = noCommaTransAmount.replace("-","");
-                    trans.setTransactionAmount(-(parseDouble(noSignTransAmount)));
-                } else {
-                    noSignTransAmount = noCommaTransAmount.replace("+","");
-                    trans.setTransactionAmount((parseDouble(noSignTransAmount)));
+                try {
+                    if(noCommaTransAmount.contains("-")){
+                        //String contains a minus sign hence negative amount
+                        noSignTransAmount = noCommaTransAmount.replace("-", "");
+                        trans.setTransactionAmount(-(parseDouble(noSignTransAmount)));
+                    }
+                    if(noCommaTransAmount.contains("+")){
+                        noSignTransAmount = noCommaTransAmount.replace("+", "");
+                        trans.setTransactionAmount((parseDouble(noSignTransAmount)));
+                    }
+                }catch(Exception e){
+                    throw new RuntimeException("Parse Double error:"+ noSignTransAmount);
                 }
                 finalBalance = finalBalance +  trans.getTransactionAmount();
                 transactionList.getTransactionsList().add(trans);
