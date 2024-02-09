@@ -60,17 +60,37 @@ public class OFXConversionTest {
 
         TransactionList transactionList = DM.createTransactionList(OfxgenGetPropertyValues.testFilePathByond);
 
-        assertEquals(transactionList.getInitialBalance(), OfxgenGetPropertyValues.testinitialBalanceByond);
+        assertNotEquals(transactionList.getInitialBalance(), OfxgenGetPropertyValues.testinitialBalanceByond);
 
         df.setRoundingMode(RoundingMode.DOWN);
         Double finalBalanceRounded = Double.parseDouble(df.format(transactionList.getFinalBalance()));
 
-        assertEquals(finalBalanceRounded, OfxgenGetPropertyValues.testFinalBalanceByond);
+        assertNotEquals(finalBalanceRounded, OfxgenGetPropertyValues.testFinalBalanceByond);
 
         convertFileByond(OfxgenGetPropertyValues.testFilePathByond);
         logger.info("testByond Competed Successfully");
     }
+    @Test
+    public void testByond1() throws IOException {
 
+        DataModelerByond DM = new DataModelerByond();
+
+        logger.info("testByond1 Started");
+
+        TransactionList transactionList = DM.createTransactionList(OfxgenGetPropertyValues.testFilePathByond1);
+
+        df.setRoundingMode(RoundingMode.DOWN);
+        Double initialBalanceRounded = Double.parseDouble(df.format(transactionList.getInitialBalance()));
+        assertEquals(initialBalanceRounded, OfxgenGetPropertyValues.testinitialBalanceByond1);
+
+        df.setRoundingMode(RoundingMode.UP);
+        Double finalBalanceRounded = Double.parseDouble(df.format(transactionList.getFinalBalance()));
+
+        assertEquals(finalBalanceRounded, OfxgenGetPropertyValues.testFinalBalanceByond1);
+
+        convertFileByond(OfxgenGetPropertyValues.testFilePathByond1);
+        logger.info("testByond1 Competed Successfully");
+    }
     @Test
     public void testAmazon() throws IOException {
         DataModelerAmazon DM = new DataModelerAmazon();

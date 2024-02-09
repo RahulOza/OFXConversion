@@ -48,6 +48,12 @@ public class OfxgenGetPropertyValues {
 
     public static String symbolMapFile ="";
 
+    //Byond
+    public static String prefixByondFileName1 ="";
+    public static Double testinitialBalanceByond1 =0.0;
+    public static Double testFinalBalanceByond1 =0.0;
+    public static String testFilePathByond1 ="";
+
     //Vanguard
     public static String vanguardAccountType = "";
     public static String vanguardAccountId = "";
@@ -142,6 +148,12 @@ public class OfxgenGetPropertyValues {
             maxQifCommentsChars= Integer.parseInt(prop.getProperty("ofxgenprops.santander.maxQifCommentsChars"));
             testFilePathSantander = prop.getProperty("ofxgenprops.testing.santander.testFilePathSantander");
             tsbDestFileName = prop.getProperty("ofxgenprops.tsb.destFileName");
+
+            //Byond
+            testinitialBalanceByond1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.byond.intialBalanceByond1"));
+            testFinalBalanceByond1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.byond.finalBalanceByond1"));
+            testFilePathByond1 = prop.getProperty("ofxgenprops.testing.byond.testFilePathByond1");
+            prefixByondFileName1 = prop.getProperty("ofxgenprops.backgroundprocessing.byond.prefixByondFileName1");
 
             //Vanguard
             vanguardAccountType = prop.getProperty("ofxgenprops.vanguard.accountype");
