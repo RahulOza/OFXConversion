@@ -190,6 +190,25 @@ public class OFXConversionTest {
         logger.info("testChase1 Competed Successfully");
     }
     @Test
+    public void testChase2() throws IOException{
+
+        DataModelerChase DM = new DataModelerChase();
+
+        logger.info("testChase2  Started");
+
+        TransactionList transactionList = DM.createTransactionList(testFilePathChase2);
+
+        Double initialBalanceRounded = Double.parseDouble(df.format(transactionList.getInitialBalance()));
+        assertEquals(initialBalanceRounded, testintialBalanceChase2);
+
+        Double finalBalanceRounded = Double.parseDouble(df.format(transactionList.getFinalBalance()));
+        assertEquals(finalBalanceRounded, testfinalBalanceChase2);
+
+        convertFileChase(OfxgenGetPropertyValues.testFilePathChase2);
+
+        logger.info("testChase2 Competed Successfully");
+    }
+    @Test
     public void testFreetrade() throws Exception{
 
 

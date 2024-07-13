@@ -73,10 +73,15 @@ public class OfxgenGetPropertyValues {
     public static Double testfinalBalanceChase =0.0;
 
     //chase - additional test case
-
     public static String testFilePathChase1 ="";
     public static Double testintialBalanceChase1 =0.0;
     public static Double testfinalBalanceChase1 =0.0;
+
+    //chase - additional test case
+    public static String testFilePathChase2 ="";
+    public static Double testintialBalanceChase2 =0.0;
+    public static Double testfinalBalanceChase2 =0.0;
+
 
     //freetrade
     public static String freetradeAccountType = "";
@@ -177,6 +182,12 @@ public class OfxgenGetPropertyValues {
             testFilePathChase1 = prop.getProperty("ofxgenprops.testing.chase.testFilePathChase1");
             testintialBalanceChase1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.initialBalanceChase1"));
             testfinalBalanceChase1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.finalBalanceChase1"));
+
+            //chase - additional test case
+            testFilePathChase2 = prop.getProperty("ofxgenprops.testing.chase.testFilePathChase2");
+            testintialBalanceChase2 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.initialBalanceChase2"));
+            testfinalBalanceChase2 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.finalBalanceChase2"));
+
 
             //FreeTrade
             freetradeAccountType = prop.getProperty("ofxgenprops.freetrade.accountype");
