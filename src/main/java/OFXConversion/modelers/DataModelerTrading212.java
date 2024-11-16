@@ -18,20 +18,31 @@ public class DataModelerTrading212 {
     }
     public void populateCols() {
         Col.put("Action", 0);
+        //Time
         Col.put("Timestamp", 1);
         Col.put("ISIN", 2);
         Col.put("Ticker", 3);
-        //name
+        //Name
         Col.put("Title", 4);
-        //no of shares
+        //No. of shares
         Col.put("Quantity", 5);
+        // Price / Share
         Col.put("Price per Share in Account Currency", 6);
+        // Currency (Price / share)
         Col.put("Account Currency", 7);
+        //Exchange rate
         Col.put("FX Rate", 8);
-        Col.put("Total Amount", 9);
-        //Charge amount
-        Col.put("Debit", 10);
-        Col.put("Stamp Duty", 11);
+        // Currency (Result)
+        Col.put("Currency Result",9);
+        //Total
+        Col.put("Total Amount", 10);
+        // Currency (Total)
+        Col.put("Currency Total",11);
+
+        //Cols below were removed, noticed on 16 Nov TODO: remove these later
+        //Col.put("Debit", 10);
+        //Col.put("Stamp Duty", 11);
+
         Col.put("Notes", 12);
         Col.put("Order ID", 13);
     }
@@ -107,11 +118,11 @@ public class DataModelerTrading212 {
                             //Quantity
                             itrans.setInvQuantity(Double.parseDouble(tokens[Col.get("Quantity")]));
                             //price
-                            itrans.setInvPrice(Double.parseDouble(tokens[Col.get("Price per Share in Account Currency")]));
+                            itrans.setInvPrice(Double.parseDouble(tokens[Col.get("Price per Share in Account Currency")])/Double.parseDouble(tokens[Col.get("FX Rate")]));
                             //commission = fx fees + stamp duty for shares
-                            if(!tokens[Col.get("Stamp Duty")].isEmpty()){
+                            /*if(!tokens[Col.get("Stamp Duty")].isEmpty()){
                                 itrans.setInvCommission(itrans.getInvCommission() + Double.parseDouble(tokens[Col.get("Stamp Duty")]));
-                            }
+                            }*/
 
                                 switch (invTranslistFinal.getReverseSymbolMap().get(itrans.getInvSymb())[1]) {
                                     case "MF":
