@@ -117,6 +117,17 @@ public class DataModelerChase {
                     }
                     continue;
                 }
+
+                //MayDay bug fix - This occurs for month of May as the header has 01 May 2024 - 31 May 2024, program considers this as a transaction
+                //If there are two dates occuring then we need to skip this line
+                String newTransDetails = transDetails.substring(2);
+                Matcher m1 = Pattern.compile("^\\d{2} [A-z]{3} \\d{4}").matcher(newTransDetails);
+                if(m1.find()){
+                    // we found another date in the transaction details, need to skip this line as it may be something like below
+                    // 01 May 2024 - 31 May 2024
+                    continue;
+                }
+
                 Transactions trans = new Transactions();
                 trans.setTransactionDate(LocalDate.parse(line.substring(0,11), myformatter));
                 trans.setTransactionDetails(transDetails);
