@@ -48,6 +48,12 @@ public class OfxgenGetPropertyValues {
 
     public static String symbolMapFile ="";
 
+    //Byond
+    public static String prefixByondFileName1 ="";
+    public static Double testinitialBalanceByond1 =0.0;
+    public static Double testFinalBalanceByond1 =0.0;
+    public static String testFilePathByond1 ="";
+
     //Vanguard
     public static String vanguardAccountType = "";
     public static String vanguardAccountId = "";
@@ -67,10 +73,15 @@ public class OfxgenGetPropertyValues {
     public static Double testfinalBalanceChase =0.0;
 
     //chase - additional test case
-
     public static String testFilePathChase1 ="";
     public static Double testintialBalanceChase1 =0.0;
     public static Double testfinalBalanceChase1 =0.0;
+
+    //chase - additional test case
+    public static String testFilePathChase2 ="";
+    public static Double testintialBalanceChase2 =0.0;
+    public static Double testfinalBalanceChase2 =0.0;
+
 
     //freetrade
     public static String freetradeAccountType = "";
@@ -143,6 +154,12 @@ public class OfxgenGetPropertyValues {
             testFilePathSantander = prop.getProperty("ofxgenprops.testing.santander.testFilePathSantander");
             tsbDestFileName = prop.getProperty("ofxgenprops.tsb.destFileName");
 
+            //Byond
+            testinitialBalanceByond1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.byond.intialBalanceByond1"));
+            testFinalBalanceByond1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.byond.finalBalanceByond1"));
+            testFilePathByond1 = prop.getProperty("ofxgenprops.testing.byond.testFilePathByond1");
+            prefixByondFileName1 = prop.getProperty("ofxgenprops.backgroundprocessing.byond.prefixByondFileName1");
+
             //Vanguard
             vanguardAccountType = prop.getProperty("ofxgenprops.vanguard.accountype");
             vanguardAccountId = prop.getProperty("ofxgenprops.vanguard.vanguardAccountId");
@@ -165,6 +182,12 @@ public class OfxgenGetPropertyValues {
             testFilePathChase1 = prop.getProperty("ofxgenprops.testing.chase.testFilePathChase1");
             testintialBalanceChase1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.initialBalanceChase1"));
             testfinalBalanceChase1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.finalBalanceChase1"));
+
+            //chase - additional test case
+            testFilePathChase2 = prop.getProperty("ofxgenprops.testing.chase.testFilePathChase2");
+            testintialBalanceChase2 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.initialBalanceChase2"));
+            testfinalBalanceChase2 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.finalBalanceChase2"));
+
 
             //FreeTrade
             freetradeAccountType = prop.getProperty("ofxgenprops.freetrade.accountype");

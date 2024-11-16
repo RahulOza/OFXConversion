@@ -40,14 +40,16 @@ public class DataModelerByond {
                         trans.setTransactionDate(LocalDate.parse(tokens[1], myformatter));
                         //There is no credit/debit indicator in the statement, all values are positive.
                         // if Category 'Fund in' is positive then it is a credit else a debit.
-                        if((tokens.length >= 6) && tokens[5].equals("Fund in")){
+                        /*if((tokens.length >= 6) && tokens[5].equals("Fund in")){
                             //This is credit
                             trans.setTransactionAmount(-Double.parseDouble(tokens[2]));
                         }
                         else {
                             //This amount is going out hence debit/negative
                             trans.setTransactionAmount(Double.parseDouble(tokens[2]));
-                        }
+                        }*/
+                        //transaction values are inverted in the csv file
+                        trans.setTransactionAmount(-Double.parseDouble(tokens[2]));
 
                         translistFinal.getTransactionsList().add(trans);
 
