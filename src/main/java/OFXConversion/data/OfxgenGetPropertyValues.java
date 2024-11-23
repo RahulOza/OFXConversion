@@ -63,6 +63,9 @@ public class OfxgenGetPropertyValues {
     public static Double testintialBalanceVanguard =0.0;
     public static Double testfinalBalanceVanguard =0.0;
     public static int transSheetNumber;
+    public static String testFilePathVanguard1 ="";
+    public static Double testintialBalanceVanguard1 =0.0;
+    public static Double testfinalBalanceVanguard1 =0.0;
 
 
     //chase
@@ -170,6 +173,10 @@ public class OfxgenGetPropertyValues {
             testfinalBalanceVanguard = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.finalBalanceVanguard"));
             transSheetNumber = Integer.parseInt(prop.getProperty("ofxgenprops.vanguard.transSheetNumber"));
             symbolMapFile = prop.getProperty("ofxgenprops.symbolMapFile");
+            testFilePathVanguard1 = prop.getProperty("ofxgenprops.testing.vanguard.testFilePathVanguard1");
+            testintialBalanceVanguard1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.intialBalanceVanguard1"));
+            testfinalBalanceVanguard1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.vanguard.finalBalanceVanguard1"));
+
 
             //chase
             chaseAccountType = prop.getProperty("ofxgenprops.chase.accountype");

@@ -133,7 +133,7 @@ public class OFXConversionTest {
 
         logger.info("testVanguard Started");
 
-        AllTransactions alltransactionLists = DM.createTransactionList(testFilePathVanguard);
+        AllTransactions alltransactionLists = DM.createTransactionListHSS(testFilePathVanguard);
 
         alltransactionLists.getInvTrans().printTransactionList();
         alltransactionLists.getCashTrans().printTransactionList();
@@ -144,10 +144,32 @@ public class OFXConversionTest {
         Double finalBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getFinalBalance()));
         assertEquals(finalBalanceRounded, testfinalBalanceVanguard);
 
-        convertFileVanguard(OfxgenGetPropertyValues.testFilePathVanguard);
-
         logger.info("testVanguard Competed Successfully");
     }
+
+    @Test
+    public void testVanguard1() throws Exception {
+
+        DataModelerVanguard DM = new DataModelerVanguard();
+
+        logger.info("testVanguard1 Started");
+
+        AllTransactions alltransactionLists = DM.createTransactionListXSS(testFilePathVanguard1);
+
+        alltransactionLists.getInvTrans().printTransactionList();
+        alltransactionLists.getCashTrans().printTransactionList();
+
+        Double initialBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getInitialBalance()));
+        assertEquals(initialBalanceRounded, testintialBalanceVanguard1);
+
+        Double finalBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getFinalBalance()));
+        assertEquals(finalBalanceRounded, testfinalBalanceVanguard1);
+
+        convertFileVanguard(OfxgenGetPropertyValues.testFilePathVanguard1);
+
+        logger.info("testVanguard1 Competed Successfully");
+    }
+
 
 
 

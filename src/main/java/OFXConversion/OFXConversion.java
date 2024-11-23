@@ -87,7 +87,7 @@ public class OFXConversion {
         DataModelerVanguard DM = new DataModelerVanguard();
         OfxGen OfGen = new OfxGen();
 
-        AllTransactions transactionLists = DM.createTransactionList(fileName);
+        AllTransactions transactionLists = DM.createTransactionListXSS(fileName);
 
         transactionLists.getCashTrans().getTransactionsList().sort(new TransactionList());
 

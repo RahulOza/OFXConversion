@@ -106,8 +106,8 @@ public class BackGroundCoversionProcess implements Runnable{
                        }
                    }//Trading212
                } // .csv
-                if(filename.toString().endsWith(".Xls")){
-                    //if .Xls file can only be vanguard
+                if(filename.toString().endsWith(".Xls") || filename.toString().endsWith(".Xlsx")  ){
+                    //if .Xls or Xlsx file can only be vanguard
 
                     if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixVanguardFileName)){
                         try {
