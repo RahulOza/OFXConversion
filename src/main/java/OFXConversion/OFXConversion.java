@@ -159,8 +159,8 @@ public class OFXConversion {
 
     public static void main(String[] args) throws IOException {
 
-        Double myVersion = 2.2;
-        String myVersionDetails = "Byond Account Fixes";
+        Double myVersion = 2.3;
+        String myVersionDetails = "Vanguard Xlsx fixes";
 
 
         logger.info(" ######### OfxGen v"+myVersion+" ("+ myVersionDetails +") ##########");
