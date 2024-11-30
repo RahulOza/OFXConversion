@@ -153,19 +153,24 @@ public class DataModelerDodl {
 
                     //Now strip the word 'Purchase' and a space which is 9 chars
                     String quantityAndFundNameWithComma = line.substring((11+9),(line.length()-transDetailsNoDateLength-transDetailsNoDateNoBalLength-26));
+
+
                     String quantityAndFundName = quantityAndFundNameWithComma.replace(",","");
+                    Integer commaCount = 0;
+                    if(quantityAndFundName.length() != quantityAndFundNameWithComma.length())
+                        commaCount = commaCount + 1;
 
                     // next number DDDD.DD is the Quantity
                     Pattern regex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
                     Matcher matcher = regex.matcher(quantityAndFundName);
                     int quantityLength = 0;
                     while(matcher.find()){
-                        quantityLength = matcher.group(1).length();
+                        quantityLength = matcher.group(1).length()+1;
                         itrans.setInvQuantity(Double.parseDouble(matcher.group(1)));
                         break;
                     }
                     //Now the rest of the chars will be fund name
-                    String fundName = line.substring(((11+9+1)+quantityLength),line.indexOf("4462")-1);
+                    String fundName = line.substring(((11+9+commaCount)+quantityLength),line.indexOf("4462")-1);
                     itrans.setInvName(fundName);
 
                     //Plan as of now is to always buy mutual funds and this is a purchase transactions.
