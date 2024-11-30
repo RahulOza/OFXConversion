@@ -74,6 +74,7 @@ public class OfxgenGetPropertyValues {
     public static String testFilePathChase ="";
     public static Double testintialBalanceChase =0.0;
     public static Double testfinalBalanceChase =0.0;
+    public static String prefixChaseFileName ="";
 
     //chase - additional test case
     public static String testFilePathChase1 ="";
@@ -102,6 +103,14 @@ public class OfxgenGetPropertyValues {
     public static Double testfinalBalanceTrading212 =0.0;
     public static String prefixTrading212FileName ="";
 
+
+    //Dodl
+    public static String dodlAccountType = "";
+    public static String dodlAccountId = "";
+    public static String testFilePathDodl ="";
+    public static Double testintialBalanceDodl =0.0;
+    public static Double testfinalBalanceDodl =0.0;
+    public static String prefixDodlFileName ="";
 
     //local variables
     private static String result = "";
@@ -184,6 +193,7 @@ public class OfxgenGetPropertyValues {
             testFilePathChase = prop.getProperty("ofxgenprops.testing.chase.testFilePathChase");
             testintialBalanceChase = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.initialBalanceChase"));
             testfinalBalanceChase = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chase.finalBalanceChase"));
+            prefixChaseFileName = prop.getProperty("ofxgenprops.backgroundprocessing.chase.chaseFileName");
 
             //chase - additional test case
             testFilePathChase1 = prop.getProperty("ofxgenprops.testing.chase.testFilePathChase1");
@@ -212,6 +222,15 @@ public class OfxgenGetPropertyValues {
             testintialBalanceTrading212 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.trading212.initialBalanceTrading212"));
             testfinalBalanceTrading212 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.trading212.finalBalanceTrading212"));
             prefixTrading212FileName = prop.getProperty("ofxgenprops.backgroundprocessing.trading212.trading212FileName");
+
+
+            //Dodl
+            dodlAccountType = prop.getProperty("ofxgenprops.dodl.accountype");
+            dodlAccountId = prop.getProperty("ofxgenprops.dodl.dodlAccountId");
+            testFilePathDodl = prop.getProperty("ofxgenprops.testing.dodl.testFilePathDodl");
+            testintialBalanceDodl = Double.parseDouble(prop.getProperty("ofxgenprops.testing.dodl.initialBalanceDodl"));
+            testfinalBalanceDodl = Double.parseDouble(prop.getProperty("ofxgenprops.testing.dodl.finalBalanceDodl"));
+            prefixDodlFileName = prop.getProperty("ofxgenprops.backgroundprocessing.dodl.dodlFileName");
 
 
             logger.info(result);

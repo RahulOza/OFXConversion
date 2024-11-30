@@ -272,6 +272,27 @@ public class OFXConversionTest {
 
     }
 
+    @Test
+    public void testDodl() throws Exception{
+
+        DataModelerDodl DM = new DataModelerDodl();
+
+        logger.info("testDodl Started");
+
+        AllTransactions alltransactionLists = DM.createTransactionList(testFilePathDodl);
+
+        Double initialBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getInitialBalance()));
+        assertEquals(initialBalanceRounded, testintialBalanceDodl);
+
+        Double finalBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getFinalBalance()));
+        assertEquals(finalBalanceRounded, testfinalBalanceDodl);
+
+        convertFileDodl(testFilePathDodl);
+
+        logger.info("testDodl Competed Successfully");
+
+    }
+
     @After
     public void tearDown()  {
     }

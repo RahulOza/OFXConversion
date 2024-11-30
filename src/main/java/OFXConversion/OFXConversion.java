@@ -137,6 +137,27 @@ public class OFXConversion {
 
     }
 
+
+    public static void convertFileDodl(String fileName) throws Exception {
+        DataModelerDodl DM = new DataModelerDodl();
+        OfxGen OfGen = new OfxGen();
+
+        AllTransactions transactionLists = DM.createTransactionList(fileName);
+
+        transactionLists.getCashTrans().getTransactionsList().sort(new TransactionList());
+
+        transactionLists.getCashTrans().printTransactionList();
+
+        transactionLists.getInvTrans().getInvTransactionsList().sort(new InvTransactionList());
+
+        transactionLists.getInvTrans().printTransactionList();
+
+        OfGen.ofxFileWriter(transactionLists.getCashTrans(),fileName, OfxgenGetPropertyValues.dodlAccountId,OfxgenGetPropertyValues.dodlAccountType);
+
+        OfGen.ofxInvFileWriter(transactionLists.getInvTrans(),fileName,OfxgenGetPropertyValues.dodlAccountId,OfxgenGetPropertyValues.dodlAccountType);
+
+    }
+
     public static void convertFileTrading212(String fileName) throws Exception {
         DataModelerTrading212 DM = new DataModelerTrading212();
         OfxGen OfGen = new OfxGen();
