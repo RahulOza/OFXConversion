@@ -84,12 +84,13 @@ public class DataModelerDodl {
 
                 //if it is just the date then don't continue
                 if(line.length() < 11){
-                    break;
+                    continue;
                 }
 
                 //Balance is the final number DDDD.DD in the remaining string
                 String transDetailsNoDateWithComma = line.substring(11);
                 String transDetailsNoDate = transDetailsNoDateWithComma.replace(",","");
+
 
                 Pattern regex0 = Pattern.compile("(\\d+(?:\\.\\d+)?)");
                 Matcher matcher0 = regex0.matcher(transDetailsNoDate);
@@ -101,7 +102,7 @@ public class DataModelerDodl {
                         invTranslistFinal.setFinalBalance(Double.parseDouble(matcher0.group(1)));
                     }
                     transactionList.setInitialBalance(Double.parseDouble(matcher0.group(1)));
-                    invTranslistFinal.setFinalBalance(Double.parseDouble(matcher0.group(1)));
+                    invTranslistFinal.setInitialBalance(Double.parseDouble(matcher0.group(1)));
                 }
                 //there is always a balance
                 firstTrans = Boolean.FALSE;
@@ -109,6 +110,15 @@ public class DataModelerDodl {
                 //Get next substring without date and without balance
                 String transDetailsNoDateNoBalWithComma = line.substring(11,line.length()-transDetailsNoDateLength);
                 String transDetailsNoDateNoBal = transDetailsNoDateNoBalWithComma.replace(",","");
+
+                // * BALANCE B/F is a special case with only the balance
+                if(transDetailsNoDate.startsWith("* BALANCE B/F *")) {
+                    //We just have the transaction details
+                    trans.setTransactionDetails(transDetailsNoDateNoBal);
+                    trans.setTransactionAmount(transactionList.getInitialBalance());
+                    transactionList.getTransactionsList().add(trans);
+                    continue;
+                }
 
                 //Amount is the number DDDD.DD in the remaining string
                 Pattern regex1 = Pattern.compile("(\\d+(?:\\.\\d+)?)");
@@ -129,19 +139,20 @@ public class DataModelerDodl {
                 //Investment transactions are the ones starting with Purchase
                 if(transDetails.startsWith("Purchase")){
                     // For investment transactions strip the settlement date and reference
+                    // - negative sign is 1 char, space between amount and settlement date another chat so 2 chars here
                     // Settlement date is 10 chars - 30/10/2024
                     // Reference is 11 chars 44624C0DHT5
-                    // 1 Space between them so total 22 chars
+                    // 1 Space between them so total 24 chars
+                    // not sure why 2 more chars need to be removed so total 26
 
-                    String invTransDetails = line.substring(11,(line.length()-transDetailsNoDateLength-transDetailsNoDateNoBalLength-22));
+                    String invTransDetails = line.substring(11,(line.length()-transDetailsNoDateLength-transDetailsNoDateNoBalLength-26));
 
                     //set transaction details for cash over write as this is much shorter.
-                    trans.setTransactionDetails(transDetails);
+                    trans.setTransactionDetails(invTransDetails);
                     itrans.setTransactionDetails(invTransDetails);
 
                     //Now strip the word 'Purchase' and a space which is 9 chars
-
-                    String quantityAndFundNameWithComma = line.substring((11+9),(line.length()-transDetailsNoDateLength-transDetailsNoDateNoBalLength-22));
+                    String quantityAndFundNameWithComma = line.substring((11+9),(line.length()-transDetailsNoDateLength-transDetailsNoDateNoBalLength-26));
                     String quantityAndFundName = quantityAndFundNameWithComma.replace(",","");
 
                     // next number DDDD.DD is the Quantity
@@ -154,11 +165,18 @@ public class DataModelerDodl {
                         break;
                     }
                     //Now the rest of the chars will be fund name
-                    String fundName = line.substring(((11+9)+quantityLength),line.indexOf("4462"));
+                    String fundName = line.substring(((11+9+1)+quantityLength),line.indexOf("4462")-1);
                     itrans.setInvName(fundName);
 
                     //Plan as of now is to always buy mutual funds and this is a purchase transactions.
                     itrans.setInvTransactionType(TransactionTypes.MF_BUY);
+
+                    try {
+                        itrans.setInvSymb(invTranslistFinal.getInvSymbolMap().get(fundName)[0]);
+                    } catch (Exception e) {
+                        System.out.println(" Error in fund:" + fundName);
+                        throw new RuntimeException(e);
+                    }
 
                     invTranslistFinal.getInvTransactionsList().add(itrans);
                 } //if investment transactions
