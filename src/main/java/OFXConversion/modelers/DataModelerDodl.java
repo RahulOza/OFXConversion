@@ -59,7 +59,7 @@ public class DataModelerDodl {
                 line = myscanner.nextLine();
                 line = myscanner.nextLine();
             }
-            //Matcher m = Pattern.compile("^\\d{2} [A-z]{3} \\d{4}").matcher(line);
+
             Matcher m = Pattern.compile("^(\\d{2})/(\\d{2})/(\\d{4})").matcher(line);
             if(m.find()) {
                 // we have found a transaction
@@ -84,19 +84,38 @@ public class DataModelerDodl {
 
                 //if it is just the date then don't continue
                 if(line.length() < 11){
-                    continue;
+                    //This is special case where transaction has been spilled over multiple lines
+                    /*
+                    CurrLine => 28/10/2024
+                    Line 1   => Purchase 5.0925 Vanguard FTSE Dev €pe ex-UK Eq Idx
+                    Line 2   => £ Acc
+                    Line 3   => 44624C0DH7C 30/10/2024 -2,000.02 8,644.54
+
+                    Idea is to append these into a single line
+
+                    */
+
+                    String fragmentedTransactionDate = line;
+
+                    String fragmentedTransactionDateFund = fragmentedTransactionDate + " " + myscanner.nextLine();
+                    String fragmentedTransactionDateFundFull = fragmentedTransactionDateFund + " " + myscanner.nextLine();
+                    line = fragmentedTransactionDateFundFull  + " " + myscanner.nextLine();
+
                 }
 
                 //Balance is the final number DDDD.DD in the remaining string
                 String transDetailsNoDateWithComma = line.substring(11);
                 String transDetailsNoDate = transDetailsNoDateWithComma.replace(",","");
+                Integer commaCount = 0;
+                if(transDetailsNoDate.length() != transDetailsNoDateWithComma.length())
+                    commaCount = commaCount + 1;
 
 
                 Pattern regex0 = Pattern.compile("(\\d+(?:\\.\\d+)?)");
                 Matcher matcher0 = regex0.matcher(transDetailsNoDate);
                 int transDetailsNoDateLength = 0;
                 while(matcher0.find()){
-                    transDetailsNoDateLength = matcher0.group(1).length() +  1;
+                    transDetailsNoDateLength = matcher0.group(1).length() +  commaCount;
                     if(firstTrans) {
                         transactionList.setFinalBalance(Double.parseDouble(matcher0.group(1)));
                         invTranslistFinal.setFinalBalance(Double.parseDouble(matcher0.group(1)));
@@ -108,8 +127,11 @@ public class DataModelerDodl {
                 firstTrans = Boolean.FALSE;
 
                 //Get next substring without date and without balance
-                String transDetailsNoDateNoBalWithComma = line.substring(11,line.length()-transDetailsNoDateLength);
+                String transDetailsNoDateNoBalWithComma = line.substring(11,line.length()-transDetailsNoDateLength-1);
                 String transDetailsNoDateNoBal = transDetailsNoDateNoBalWithComma.replace(",","");
+                commaCount = 0;
+                if(transDetailsNoDateNoBal.length() != transDetailsNoDateNoBalWithComma.length())
+                    commaCount = commaCount + 1;
 
                 // * BALANCE B/F is a special case with only the balance
                 if(transDetailsNoDate.startsWith("* BALANCE B/F *")) {
@@ -125,13 +147,14 @@ public class DataModelerDodl {
                 Matcher matcher1 = regex1.matcher(transDetailsNoDateNoBal);
                 int transDetailsNoDateNoBalLength = 0;
                 while(matcher1.find()){
-                    transDetailsNoDateNoBalLength = matcher1.group(1).length() + 1;
-                    trans.setTransactionAmount(Double.parseDouble(matcher1.group(1)));
+                    transDetailsNoDateNoBalLength = matcher1.group(1).length() + commaCount;
+                    trans.setTransactionAmount(-Double.parseDouble(matcher1.group(1)));
                     itrans.setTransactionAmount(Double.parseDouble(matcher1.group(1)));
                 }
 
                 //what will remain will be either fund name or transaction details.
-                String transDetails = line.substring(11,(line.length()-transDetailsNoDateLength-transDetailsNoDateNoBalLength));
+                //1 for the spaces.
+                String transDetails = line.substring(11,(line.length()-transDetailsNoDateLength-transDetailsNoDateNoBalLength)-1);
 
                 // Transaction details
                 trans.setTransactionDetails(transDetails);
@@ -156,7 +179,7 @@ public class DataModelerDodl {
 
 
                     String quantityAndFundName = quantityAndFundNameWithComma.replace(",","");
-                    Integer commaCount = 0;
+                    commaCount = 0;
                     if(quantityAndFundName.length() != quantityAndFundNameWithComma.length())
                         commaCount = commaCount + 1;
 
@@ -182,6 +205,9 @@ public class DataModelerDodl {
                         System.out.println(" Error in fund:" + fundName);
                         throw new RuntimeException(e);
                     }
+
+                    //calculate investment price
+                    itrans.setInvPrice(itrans.getTransactionAmount()/itrans.getInvQuantity());
 
                     invTranslistFinal.getInvTransactionsList().add(itrans);
                 } //if investment transactions
