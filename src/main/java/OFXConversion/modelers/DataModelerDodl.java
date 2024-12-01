@@ -148,7 +148,7 @@ public class DataModelerDodl {
                 int transDetailsNoDateNoBalLength = 0;
                 while(matcher1.find()){
                     transDetailsNoDateNoBalLength = matcher1.group(1).length() + commaCount;
-                    trans.setTransactionAmount(-Double.parseDouble(matcher1.group(1)));
+                    trans.setTransactionAmount(Double.parseDouble(matcher1.group(1)));
                     itrans.setTransactionAmount(Double.parseDouble(matcher1.group(1)));
                 }
 
@@ -208,6 +208,9 @@ public class DataModelerDodl {
 
                     //calculate investment price
                     itrans.setInvPrice(itrans.getTransactionAmount()/itrans.getInvQuantity());
+
+                    //if investment trasaction ..cash amount is negative
+                    trans.setTransactionAmount(-trans.getTransactionAmount());
 
                     invTranslistFinal.getInvTransactionsList().add(itrans);
                 } //if investment transactions
