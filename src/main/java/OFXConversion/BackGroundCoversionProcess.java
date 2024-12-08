@@ -143,12 +143,32 @@ public class BackGroundCoversionProcess implements Runnable{
                     }//TSB
                 } // .qif
                 if(filename.toString().endsWith(".pdf")) {
-                    try {
-                        OFXConversion.convertFileChase(pollDirPath + "\\" + filename);
-                        processed = true;
-                    } catch (IOException e) {
-                        logger.severe(e.toString());
+
+                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixChaseFileName)){
+                        try {
+                            OFXConversion.convertFileChase(pollDirPath + "\\" + filename);
+                            processed = true;
+                        } catch (IOException e) {
+                            logger.severe(e.toString());
+                        }
+
                     }
+                    else{
+                        if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixDodlFileName)){
+                            try {
+                                OFXConversion.convertFileDodl(pollDirPath + "\\" + filename);
+                                processed = true;
+                            } catch (Exception e) {
+                                logger.severe(e.toString());
+                            }
+
+                        }
+                        else{
+                            //not in Chase or Dodle format
+                            logger.info("PDF file not with Chase or Dodle prefix:"+filename);
+                        }
+                    }
+
                 }//chase
 
                 if(!processed){
