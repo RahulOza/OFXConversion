@@ -180,8 +180,8 @@ public class OFXConversion {
 
     public static void main(String[] args) throws IOException {
 
-        Double myVersion = 2.3;
-        String myVersionDetails = "Vanguard Xlsx fixes";
+        Double myVersion = 2.4;
+        String myVersionDetails = "Dodl statements support";
 
 
         logger.info(" ######### OfxGen v"+myVersion+" ("+ myVersionDetails +") ##########");
