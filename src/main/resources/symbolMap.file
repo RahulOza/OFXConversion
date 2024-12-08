@@ -85,7 +85,6 @@ Johnson & Johnson,JNJ,ST
 Bank of Nova Scotia,BNS,ST
 Franklin Resources,BEN,ST
 Canadian Natural Resources,CNQ,ST
-Realty Income,O,ST
 Sysco,SYY,ST
 Sherwin-Williams,SHW,ST
 WW Grainger,GWW,ST
@@ -99,9 +98,6 @@ Caterpillar,CAT,ST
 McDonald's,MCD,ST
 Royal Bank of Canada,RY,ST
 Lowe's,LOW,ST
-Chubb,CB,ST
-AT&T,T,ST
-Procter & Gamble,PG,ST
 Chevron,CVX,ST
 Ecolab,ECL,ST
 Roper Technologies,ROP,ST
@@ -113,5 +109,6 @@ PIMCO US Short-Term High Yield Corporate Bond Index (Dist) Dup,STHS,ST
 Vanguard USD Corporate 1-3 Year Bond (Dist),VUSC,ST
 iShares US Equity Index (UK) D Acc,GB00B5VRGY09,MF
 Vanguard FTSE 100 Idx Unit Tr £ Acc,GB00BD3RZ368,MF
-iShares US Equity Index (UK) D Acc,TBD,MF
-Vanguard FTSE 250 ETF GBP Acc,TBD1,MF
+iShares US Equity Index (UK) D Acc,GB00B5VRGY09,MF
+Vanguard FTSE 250 ETF GBP Acc,VMIG,MF
+Vanguard FTSE Dev €pe ex-UK Eq Idx £ Acc,GB00B5B71H80,MF
