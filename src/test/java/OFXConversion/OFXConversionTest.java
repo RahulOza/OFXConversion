@@ -230,6 +230,28 @@ public class OFXConversionTest {
 
         logger.info("testChase2 Competed Successfully");
     }
+
+    @Test
+    public void testChip() throws IOException{
+
+        DataModelerChip DM = new DataModelerChip();
+
+        logger.info("testChip  Started");
+
+        TransactionList transactionList = DM.createTransactionList(testFilePathChip);
+
+        Double initialBalanceRounded = Double.parseDouble(df.format(transactionList.getInitialBalance()));
+        assertEquals(initialBalanceRounded, testintialBalanceChip);
+
+        Double finalBalanceRounded = Double.parseDouble(df.format(transactionList.getFinalBalance()));
+        assertEquals(finalBalanceRounded, testfinalBalanceChip);
+
+        convertFileChip(OfxgenGetPropertyValues.testFilePathChip);
+
+        logger.info("testChip Competed Successfully");
+    }
+
+
     @Test
     public void testFreetrade() throws Exception{
 

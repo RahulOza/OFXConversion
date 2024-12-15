@@ -164,8 +164,20 @@ public class BackGroundCoversionProcess implements Runnable{
 
                         }
                         else{
-                            //not in Chase or Dodle format
-                            logger.info("PDF file not with Chase or Dodle prefix:"+filename);
+                            if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixChipFileName)){
+                                try {
+                                    OFXConversion.convertFileChip(pollDirPath + "\\" + filename);
+                                    processed = true;
+                                } catch (Exception e) {
+                                    logger.severe(e.toString());
+                                }
+
+                            }
+                            else {
+
+                                //not in Chase or Dodle or chip format
+                                logger.info("PDF file not with Chase or Dodle or Chip prefix:" + filename);
+                            }
                         }
                     }
 

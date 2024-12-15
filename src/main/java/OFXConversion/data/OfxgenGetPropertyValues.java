@@ -112,6 +112,14 @@ public class OfxgenGetPropertyValues {
     public static Double testfinalBalanceDodl =0.0;
     public static String prefixDodlFileName ="";
 
+    //Chip
+    public static String chipAccountType = "";
+    public static String chipAccountId = "";
+    public static String testFilePathChip = "";
+    public static Double testintialBalanceChip = 0.0;
+    public static Double testfinalBalanceChip = 0.0;
+    public static String prefixChipFileName = "";
+
     //local variables
     private static String result = "";
     private static InputStream inputStream;
@@ -232,6 +240,14 @@ public class OfxgenGetPropertyValues {
             testfinalBalanceDodl = Double.parseDouble(prop.getProperty("ofxgenprops.testing.dodl.finalBalanceDodl"));
             prefixDodlFileName = prop.getProperty("ofxgenprops.backgroundprocessing.dodl.dodlFileName");
 
+
+            //Chip
+            chipAccountType = prop.getProperty("ofxgenprops.chip.accountype");
+            chipAccountId = prop.getProperty("ofxgenprops.chip.dodlAccountId");
+            testFilePathChip = prop.getProperty("ofxgenprops.testing.chip.testFilePathChip");
+            testintialBalanceChip = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chip.initialBalanceChip"));
+            testfinalBalanceChip = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chip.finalBalanceChip"));
+            prefixChipFileName = prop.getProperty("ofxgenprops.backgroundprocessing.chip.chipFileName");
 
             logger.info(result);
 

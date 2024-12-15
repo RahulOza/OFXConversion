@@ -178,6 +178,19 @@ public class OFXConversion {
 
     }
 
+    public static void convertFileChip(String fileName) throws IOException {
+        DataModelerChip DM = new DataModelerChip();
+        OfxGen OfGen = new OfxGen();
+
+        TransactionList transactionList = DM.createTransactionList(fileName);
+
+        transactionList.getTransactionsList().sort(new TransactionList());
+
+        transactionList.printTransactionList();
+
+        OfGen.ofxFileWriter(transactionList, fileName, OfxgenGetPropertyValues.chipAccountId, OfxgenGetPropertyValues.chipAccountType);
+    }
+
     public static void main(String[] args) throws IOException {
 
         Double myVersion = 2.4;
