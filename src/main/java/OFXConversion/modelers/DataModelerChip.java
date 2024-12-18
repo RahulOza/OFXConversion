@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.math.RoundingMode;
@@ -85,37 +86,46 @@ import static java.lang.Double.parseDouble;
                     trans.setTransactionDate(LocalDate.parse(line.substring(0, 10), myformatter));
 
                     //Balance is the final number DDDD.DD in the remaining string
-                    String transDetailsNoDateWithComma = line.substring(11);
+                    String transDetailsNoDateWithCommaPadded = line.substring(11);
+                    String transDetailsNoDateWithComma = transDetailsNoDateWithCommaPadded.trim();
                     String transDetailsNoDate = transDetailsNoDateWithComma.replace(",","");
-                    int commaCount = 0;
-                    if(transDetailsNoDate.length() != transDetailsNoDateWithComma.length())
-                        commaCount = commaCount + 1;
+                    int commaCount = transDetailsNoDateWithComma.length() - transDetailsNoDate.length() + 1; //+1 for space between date and details
 
                     String transDetailsNoDateNoCurr = transDetailsNoDate.replace("£","");
-                    if(transDetailsNoDateNoCurr.length() != transDetailsNoDate.length())
-                        commaCount = commaCount + 1;
+                    commaCount = commaCount + transDetailsNoDate.length() - transDetailsNoDateNoCurr.length();
 
                     firstAmount = true;
-                    Pattern regex0 = Pattern.compile("(\\d+(?:\\.\\d+)?)");
-                    Matcher matcher0 = regex0.matcher(transDetailsNoDateNoCurr);
-                    int transDetailsNoDateLength = commaCount;
-                    while(matcher0.find()){
-                        transDetailsNoDateLength = transDetailsNoDateLength + matcher0.group(1).length();
+                    //Pattern regex0 = Pattern.compile("(\\d+(?:\\.\\d+)?)");
+                    Matcher m2 = Pattern.compile("(\\d+(?:\\.\\d+)?)").matcher(transDetailsNoDateNoCurr);
+                    int transAmtLength = commaCount;
+                    while(m2.find()){
+                        transAmtLength = transAmtLength + m2.group(1).length();
+                        //System.out.println("Found amount: " + m2.group(1) + " with Length: " + m2.group(1).length());
                         if(firstTrans) {
-                            transactionList.setFinalBalance(Double.parseDouble(matcher0.group(1)));
+                            transactionList.setFinalBalance(Double.parseDouble(m2.group(1)));
+                            //additional space as there are 2 amounts in this line
+                           // commaCount = commaCount + 1;
                         }
                         if(firstAmount) {
-                                String noSignTransAmount = matcher0.group(1).replace("+", "");
-                                trans.setTransactionAmount((parseDouble(noSignTransAmount)));
+                            trans.setTransactionAmount(Double.parseDouble(m2.group(1)));
                             firstAmount = false;
                         }
                     }
+
+                    //Debugging aid
+                    //System.out.println(" for String:[" + transDetailsNoDateWithComma + "]");
                     firstTrans = false;
-                    trans.setTransactionDetails(transDetailsNoDateNoCurr.substring(0,transDetailsNoDateNoCurr.length()-transDetailsNoDateLength));
-                    if(trans.getTransactionDetails().startsWith("Withdraw")){
+
+                    String onlyTransactionDetails = transDetailsNoDateWithComma.substring(0,transDetailsNoDateWithComma.length()-transAmtLength);
+
+                    if(onlyTransactionDetails.startsWith("Withdraw") || onlyTransactionDetails.startsWith("Transfer")){
                         //Amount is negative
                         trans.setTransactionAmount(-trans.getTransactionAmount());
+                        // also account for - sign character
+                        transAmtLength = transAmtLength + 1;
                     }
+                    //System.out.println(" Total Length: " + transDetailsNoDateWithComma.length() + " commaCount:" + commaCount + " transAmtLength:" + transAmtLength);
+                    trans.setTransactionDetails(transDetailsNoDateWithComma.substring(0,transDetailsNoDateWithComma.length()-transAmtLength));
                     transactionList.getTransactionsList().add(trans);
                 }
                 transactionList.setInitialBalance(initialBalance);
