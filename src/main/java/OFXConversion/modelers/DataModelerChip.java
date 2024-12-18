@@ -50,31 +50,39 @@ import static java.lang.Double.parseDouble;
 
             Scanner myscanner = new Scanner(originalStr);
             boolean firstTrans = true;
+            boolean firstAmount = true;
 
-            DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
+            DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 
             while (myscanner.hasNextLine()) {
                 String line = myscanner.nextLine();
 
+                //To aid debugging
+                if(line.startsWith("Date Description")){
+                    continue;
+                }
                 Matcher m = Pattern.compile("^(\\d{2})/(\\d{2})/(\\d{4})").matcher(line);
                 if (m.find()) {
                     //Once we get a date, we can start processing the transaction details
-                    String transDetails = line.substring(12);
+                    //too short for a transaction
+                    if(line.length() < 15){
+                        continue;
+                    }
+                    String transDetails = line.substring(11);
 
                     //If there is another date then this isn't a transaction
                     Matcher m1 = Pattern.compile("(\\d{2})/(\\d{2})/(\\d{4})").matcher(transDetails);
                     if (m1.find()) {
                             continue;
                     }
+
                     /*
                     Date        Description     Amount  Balance
-                    01 Jan 2021 Withdraw        -£500   £3,004.73
+                    23/11/2024  Withdraw        -£500   £3,004.73
                      */
-                    //First 12 characters are the date, so extract these
-
+                    //First 11 characters are the date, so extract these
                     Transactions trans = new Transactions();
-                    trans.setTransactionDate(LocalDate.parse(line.substring(0, 11), myformatter));
-                    trans.setTransactionDetails(transDetails);
+                    trans.setTransactionDate(LocalDate.parse(line.substring(0, 10), myformatter));
 
                     //Balance is the final number DDDD.DD in the remaining string
                     String transDetailsNoDateWithComma = line.substring(11);
@@ -83,27 +91,31 @@ import static java.lang.Double.parseDouble;
                     if(transDetailsNoDate.length() != transDetailsNoDateWithComma.length())
                         commaCount = commaCount + 1;
 
+                    String transDetailsNoDateNoCurr = transDetailsNoDate.replace("£","");
+                    if(transDetailsNoDateNoCurr.length() != transDetailsNoDate.length())
+                        commaCount = commaCount + 1;
+
+                    firstAmount = true;
                     Pattern regex0 = Pattern.compile("(\\d+(?:\\.\\d+)?)");
-                    Matcher matcher0 = regex0.matcher(transDetailsNoDate);
-                    int transDetailsNoDateLength = 0;
+                    Matcher matcher0 = regex0.matcher(transDetailsNoDateNoCurr);
+                    int transDetailsNoDateLength = commaCount;
                     while(matcher0.find()){
-                        transDetailsNoDateLength = matcher0.group(1).length() +  commaCount;
+                        transDetailsNoDateLength = transDetailsNoDateLength + matcher0.group(1).length();
                         if(firstTrans) {
                             transactionList.setFinalBalance(Double.parseDouble(matcher0.group(1)));
                         }
-                        firstTrans = false;
-                        if (matcher0.group(1).contains("-")) {
-                            String noSignTransAmount = matcher0.group(1).replace("-", "");
-                            trans.setTransactionAmount(-(parseDouble(noSignTransAmount)));
-                        }
-                        if (matcher0.group(1).contains("+")) {
-                            String noSignTransAmount = matcher0.group(1).replace("+", "");
-                            trans.setTransactionAmount((parseDouble(noSignTransAmount)));
+                        if(firstAmount) {
+                                String noSignTransAmount = matcher0.group(1).replace("+", "");
+                                trans.setTransactionAmount((parseDouble(noSignTransAmount)));
+                            firstAmount = false;
                         }
                     }
-                    String transDetailsNoDateNoBalWithComma = line.substring(11,line.length()-transDetailsNoDateLength-1);
-
-                    trans.setTransactionDetails(transDetailsNoDateNoBalWithComma);
+                    firstTrans = false;
+                    trans.setTransactionDetails(transDetailsNoDateNoCurr.substring(0,transDetailsNoDateNoCurr.length()-transDetailsNoDateLength));
+                    if(trans.getTransactionDetails().startsWith("Withdraw")){
+                        //Amount is negative
+                        trans.setTransactionAmount(-trans.getTransactionAmount());
+                    }
                     transactionList.getTransactionsList().add(trans);
                 }
                 transactionList.setInitialBalance(initialBalance);
