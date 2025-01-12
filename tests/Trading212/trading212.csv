@@ -1,15 +1,8 @@
-Action,Time,ISIN,Ticker,Name,No. of shares,Price / share,Currency (Price / share),Exchange rate,Currency (Result),Total,Currency (Total),Notes,ID
-Interest on cash,2023-11-19 22:09:22.59,,,,,,,,,0.01,"GBP","Interest on cash",5ba50150-2e6d-4e13-92e9-fd94d910a34b
-Interest on cash,2023-12-05 22:09:39.141,,,,,,,,,0.01,"GBP","Interest on cash",c2de87b0-98b7-4e15-bded-96727b93eb8d
-Interest on cash,2023-12-21 22:10:30.974,,,,,,,,,0.01,"GBP","Interest on cash",80da4f5a-b4bd-49ca-bdcf-9aa187227032
-Withdrawal,2024-01-04 15:34:49.23,,,,,,,,,0.00,"GBP","Withholding tax refund - interest on cash Q4 2023.",24fe2783-d80b-4d7d-8f27-6ad8609c57f2
-Interest on cash,2024-01-06 22:13:41.69,,,,,,,,,0.01,"GBP","Interest on cash",dd6ce6e7-cf94-4674-b3b4-668025b69a67
-Interest on cash,2024-01-22 22:11:59.234,,,,,,,,,0.01,"GBP","Interest on cash",8132e283-2f8c-4e5b-b2dd-c792accb58bc
-Interest on cash,2024-02-06 22:11:23.207,,,,,,,,,0.01,"GBP","Interest on cash",c912a7ec-c931-442d-844f-ea2ddbb63b13
-Deposit,2024-09-14 18:06:29.7,,,,,,,,,400.00,"GBP","Transaction ID: e5fca0d9-ca6f-429a-a149-7fc6ce080940",3cf48add-25cd-4d04-8f48-219575051505
-Market buy,2024-09-16 07:00:34.846,IE00BHZRQZ17,FRIN,"Franklin FTSE India (Acc)",5.4869650000,36.45,GBP,1.00000,"GBP",200.00,"GBP",,EOF20500676861
-Market buy,2024-09-16 07:01:00.206,IE00BYVTMW98,EQGB,"Invesco EQQQ Nasdaq-100 (Acc)",0.5401901300,37024.00,GBX,100.00000,"GBP",200.00,"GBP",,EOF20500679615
-Deposit,2024-10-26 11:39:45.677,,,,,,,,,500.00,"GBP","Transaction ID: 9ee342b8-ec5b-4d97-add7-d7da1fdc6127",c34fc95a-1032-4a15-9e74-8f6bd59eeb1b
-Market buy,2024-10-28 08:00:59.243,IE00BHZRQZ17,FRIN,"Franklin FTSE India (Acc)",7.3612650000,35.32,GBP,1.00000,"GBP",260.00,"GBP",,EOF22600484010
-Market buy,2024-10-28 08:01:01.298,IE00BYVTMW98,EQGB,"Invesco EQQQ Nasdaq-100 (Acc)",0.0640259500,38966.00,GBX,100.00000,"GBP",24.95,"GBP",,EOF22600484378
-Market buy,2024-10-28 08:01:01.903,IE00BYVTMW98,EQGB,"Invesco EQQQ Nasdaq-100 (Acc)",0.5765729300,38965.00,GBX,100.00000,"GBP",224.66,"GBP",,EOF22600484487
+Action,Time,ISIN,Ticker,Name,Notes,ID,No. of shares,Price / share,Currency (Price / share),Exchange rate,Currency (Result),Total,Currency (Total)
+Deposit,2024-11-23 14:51:20.446,,,,"Transaction ID: 453bb52c-db07-4809-9f1e-df1e8c7a48e9",caea7f46-8c6b-4c51-a16a-57fda4e737f6,,,,,,500.00,"GBP"
+Market buy,2024-11-25 08:00:33.668,IE00BHZRQZ17,FRIN,"Franklin FTSE India (Acc)",,EOF23950194148,7.2564860000,35.83,GBP,1.00000,"GBP",260.00,"GBP"
+Market buy,2024-11-25 08:00:42.281,IE00BYVTMW98,EQGB,"Invesco EQQQ Nasdaq-100 (Acc)",,EOF23950197754,0.6045949100,39696.00,GBX,100.00000,"GBP",240.00,"GBP"
+Dividend adjustment,2024-12-10 13:46:45.144,,,,"2023 US dividends withholding tax adjustment",2f668cf5-583c-42d6-8b48-f807fe32d16f,,,,,,0.02,"GBP"
+Deposit,2024-12-16 13:55:33.175,,,,"Transaction ID: 3879be0b-6c8d-4a80-8427-4e40b23ca742",02cfe643-a999-4491-bcb0-29b3ca6db2f2,,,,,,500.00,"GBP"
+Market buy,2024-12-16 13:57:27.577,IE00BHZRQZ17,FRIN,"Franklin FTSE India (Acc)",,EOF25102721185,6.8965480000,36.25,GBP,1.00000,"GBP",250.00,"GBP"
+Market buy,2024-12-16 13:58:04.36,IE00BYVTMW98,EQGB,"Invesco EQQQ Nasdaq-100 (Acc)",,EOF25102721261,0.6007882200,41612.00,GBX,100.00000,"GBP",250.00,"GBP"
