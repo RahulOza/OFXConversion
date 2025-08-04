@@ -53,6 +53,10 @@ public class OfxgenGetPropertyValues {
     public static Double testinitialBalanceByond1 =0.0;
     public static Double testFinalBalanceByond1 =0.0;
     public static String testFilePathByond1 ="";
+    public static String prefixByondFileName2 ="";
+    public static Double testinitialBalanceByond2 =0.0;
+    public static Double testFinalBalanceByond2 =0.0;
+    public static String testFilePathByond2 ="";
 
     //Vanguard
     public static String vanguardAccountType = "";
@@ -187,6 +191,11 @@ public class OfxgenGetPropertyValues {
             testFinalBalanceByond1 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.byond.finalBalanceByond1"));
             testFilePathByond1 = prop.getProperty("ofxgenprops.testing.byond.testFilePathByond1");
             prefixByondFileName1 = prop.getProperty("ofxgenprops.backgroundprocessing.byond.prefixByondFileName1");
+
+            testinitialBalanceByond2 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.byond.intialBalanceByond2"));
+            testFinalBalanceByond2 = Double.parseDouble(prop.getProperty("ofxgenprops.testing.byond.finalBalanceByond2"));
+            testFilePathByond2 = prop.getProperty("ofxgenprops.testing.byond.testFilePathByond2");
+            prefixByondFileName2 = prop.getProperty("ofxgenprops.backgroundprocessing.byond.prefixByondFileName2");
 
             //Vanguard
             vanguardAccountType = prop.getProperty("ofxgenprops.vanguard.accountype");

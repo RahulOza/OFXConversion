@@ -91,6 +91,28 @@ public class OFXConversionTest {
         convertFileByond(OfxgenGetPropertyValues.testFilePathByond1);
         logger.info("testByond1 Competed Successfully");
     }
+
+    @Test
+    public void testByond2() throws IOException {
+
+        DataModelerByond DM = new DataModelerByond();
+
+        logger.info("testByond2 Started");
+
+        TransactionList transactionList = DM.createTransactionList(OfxgenGetPropertyValues.testFilePathByond2);
+
+        df.setRoundingMode(RoundingMode.DOWN);
+        Double initialBalanceRounded = Double.parseDouble(df.format(transactionList.getInitialBalance()));
+        assertEquals(initialBalanceRounded, OfxgenGetPropertyValues.testinitialBalanceByond2);
+
+        df.setRoundingMode(RoundingMode.UP);
+        Double finalBalanceRounded = Double.parseDouble(df.format(transactionList.getFinalBalance()));
+
+        assertEquals(finalBalanceRounded, OfxgenGetPropertyValues.testFinalBalanceByond2);
+
+        convertFileByond(OfxgenGetPropertyValues.testFilePathByond2);
+        logger.info("testByond2 Competed Successfully");
+    }
     @Test
     public void testAmazon() throws IOException {
         DataModelerAmazon DM = new DataModelerAmazon();
