@@ -178,6 +178,26 @@ public class OFXConversion {
 
     }
 
+    public static void convertFileEquate(String fileName) throws Exception {
+        DataModelerEquate DM = new DataModelerEquate();
+        OfxGen OfGen = new OfxGen();
+
+        AllTransactions transactionLists = DM.createTransactionList(fileName);
+
+        transactionLists.getCashTrans().getTransactionsList().sort(new TransactionList());
+
+        transactionLists.getCashTrans().printTransactionList();
+
+        transactionLists.getInvTrans().getInvTransactionsList().sort(new InvTransactionList());
+
+        transactionLists.getInvTrans().printTransactionList();
+
+        OfGen.ofxFileWriter(transactionLists.getCashTrans(),fileName, OfxgenGetPropertyValues.equateAccountId,OfxgenGetPropertyValues.equateAccountType);
+
+        OfGen.ofxInvFileWriter(transactionLists.getInvTrans(),fileName,OfxgenGetPropertyValues.equateAccountId,OfxgenGetPropertyValues.equateAccountType);
+
+    }
+
     public static void convertFileChip(String fileName) throws IOException {
         DataModelerChip DM = new DataModelerChip();
         OfxGen OfGen = new OfxGen();
@@ -193,8 +213,8 @@ public class OFXConversion {
 
     public static void main(String[] args) throws IOException {
 
-        Double myVersion = 2.4;
-        String myVersionDetails = "Dodl statements support";
+        Double myVersion = 2.5;
+        String myVersionDetails = "equate statements support";
 
 
         logger.info(" ######### OfxGen v"+myVersion+" ("+ myVersionDetails +") ##########");

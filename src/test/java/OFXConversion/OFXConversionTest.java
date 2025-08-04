@@ -315,6 +315,27 @@ public class OFXConversionTest {
 
     }
 
+    @Test
+    public void testEquate() throws Exception{
+
+        DataModelerEquate DM = new DataModelerEquate();
+
+        logger.info("testEquate Started");
+
+        AllTransactions alltransactionLists = DM.createTransactionList(testFilePathEquate);
+
+        Double initialBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getInitialBalance()));
+        assertEquals(initialBalanceRounded, testintialBalanceEquate);
+
+        Double finalBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getFinalBalance()));
+        assertEquals(finalBalanceRounded, testfinalBalanceEquate);
+
+        convertFileEquate(testFilePathEquate);
+
+        logger.info("testEquate Competed Successfully");
+
+    }
+
     @After
     public void tearDown()  {
     }

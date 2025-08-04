@@ -120,6 +120,14 @@ public class OfxgenGetPropertyValues {
     public static Double testfinalBalanceChip = 0.0;
     public static String prefixChipFileName = "";
 
+    //Equate
+    public static String equateAccountType = "";
+    public static String equateAccountId = "";
+    public static String testFilePathEquate ="";
+    public static Double testintialBalanceEquate =0.0;
+    public static Double testfinalBalanceEquate =0.0;
+    public static String prefixEquateFileName ="";
+
     //local variables
     private static String result = "";
     private static InputStream inputStream;
@@ -249,8 +257,15 @@ public class OfxgenGetPropertyValues {
             testfinalBalanceChip = Double.parseDouble(prop.getProperty("ofxgenprops.testing.chip.finalBalanceChip"));
             prefixChipFileName = prop.getProperty("ofxgenprops.backgroundprocessing.chip.chipFileName");
 
-            logger.info(result);
+            //Equate
+            equateAccountType = prop.getProperty("ofxgenprops.equate.accountype");
+            equateAccountId = prop.getProperty("ofxgenprops.equate.equateAccountId");
+            testFilePathEquate = prop.getProperty("ofxgenprops.testing.Equate.testFilePathEquate");
+            testintialBalanceEquate = Double.parseDouble(prop.getProperty("ofxgenprops.testing.Equate.initialBalanceEquate"));
+            testfinalBalanceEquate = Double.parseDouble(prop.getProperty("ofxgenprops.testing.Equate.finalBalanceEquate"));
+            prefixEquateFileName = prop.getProperty("ofxgenprops.backgroundprocessing.equate.equateFileNam");
 
+            logger.info(result);
 
         } catch (Exception e) {
             System.out.println("Exception: " + e);
