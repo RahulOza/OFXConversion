@@ -316,6 +316,27 @@ public class OFXConversionTest {
 
     }
 
+
+    public void testTrading212Card() throws Exception{
+
+        DataModelerTrading212Card DM = new DataModelerTrading212Card();
+
+        logger.info("testTrading212 Card Started");
+
+        AllTransactions alltransactionLists = DM.createTransactionList(testFilePathTrading212Card);
+
+        Double initialBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getInitialBalance()));
+        assertEquals(initialBalanceRounded, testintialBalanceTrading212Card);
+
+        Double finalBalanceRounded = Double.parseDouble(df.format(alltransactionLists.getCashTrans().getFinalBalance()));
+        assertEquals(finalBalanceRounded, testfinalBalanceTrading212Card);
+
+        convertFileTrading212(testFilePathTrading212Card);
+
+        logger.info("testTrading212 Card Competed Successfully");
+
+    }
+
     @Test
     public void testDodl() throws Exception{
 

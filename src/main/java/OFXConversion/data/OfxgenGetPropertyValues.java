@@ -132,6 +132,15 @@ public class OfxgenGetPropertyValues {
     public static Double testfinalBalanceEquate =0.0;
     public static String prefixEquateFileName ="";
 
+    //Trading 212Card
+    public static String trading212CardAccountType = "";
+    public static String trading212CardAccountId = "";
+    public static String testFilePathTrading212Card ="";
+    public static Double testintialBalanceTrading212Card =0.0;
+    public static Double testfinalBalanceTrading212Card =0.0;
+    public static String prefixTrading212CardFileName ="";
+
+
     //local variables
     private static String result = "";
     private static InputStream inputStream;
@@ -273,6 +282,15 @@ public class OfxgenGetPropertyValues {
             testintialBalanceEquate = Double.parseDouble(prop.getProperty("ofxgenprops.testing.Equate.initialBalanceEquate"));
             testfinalBalanceEquate = Double.parseDouble(prop.getProperty("ofxgenprops.testing.Equate.finalBalanceEquate"));
             prefixEquateFileName = prop.getProperty("ofxgenprops.backgroundprocessing.equate.equateFileNam");
+
+
+            //Trading212Card
+            trading212CardAccountType = prop.getProperty("ofxgenprops.trading212Card.accountype");
+            trading212CardAccountId = prop.getProperty("ofxgenprops.trading212Card.trading212AccountId");
+            testFilePathTrading212Card = prop.getProperty("ofxgenprops.testing.trading212Card.testFilePathTrading212");
+            testintialBalanceTrading212Card = Double.parseDouble(prop.getProperty("ofxgenprops.testing.trading212Card.initialBalanceTrading212"));
+            testfinalBalanceTrading212Card = Double.parseDouble(prop.getProperty("ofxgenprops.testing.trading212Card.finalBalanceTrading212"));
+            prefixTrading212CardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.trading212Card.trading212FileName");
 
             logger.info(result);
 
