@@ -281,7 +281,7 @@ public class OfxgenGetPropertyValues {
             testFilePathEquate = prop.getProperty("ofxgenprops.testing.Equate.testFilePathEquate");
             testintialBalanceEquate = Double.parseDouble(prop.getProperty("ofxgenprops.testing.Equate.initialBalanceEquate"));
             testfinalBalanceEquate = Double.parseDouble(prop.getProperty("ofxgenprops.testing.Equate.finalBalanceEquate"));
-            prefixEquateFileName = prop.getProperty("ofxgenprops.backgroundprocessing.equate.equateFileNam");
+            prefixEquateFileName = prop.getProperty("ofxgenprops.backgroundprocessing.equate.equateFileName");
 
 
             //Trading212Card

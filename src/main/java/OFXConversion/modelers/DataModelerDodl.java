@@ -4,13 +4,11 @@ import OFXConversion.data.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.math.RoundingMode;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -23,6 +21,24 @@ public class DataModelerDodl {
         doc.close();
         return pdfAsText;
 
+    }
+
+    static Boolean isCredit(String trans) {
+
+        if (trans.contains("Lifetime ISA Government Bonus")) {
+            return true;
+        }
+        else if (trans.contains("Direct debit")) {
+            return true;
+        }
+        else if (trans.contains("Gross interest")) {
+            return true;
+        }
+        else if (trans.contains("CASH CORRECTION")) {
+            return true;
+        }
+
+        return false;
     }
 
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
@@ -47,27 +63,60 @@ public class DataModelerDodl {
        Scanner myscanner = new Scanner(originalStr);
        boolean firstTrans = Boolean.TRUE;
 
-        DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+        DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("dd/MM/yy", Locale.ENGLISH);
 
         // First let us use dd mmm yyyy to split the statements into chunks of blocks from which we can mine
         // transaction details
 
+        Boolean foundTrans = false;
         while (myscanner.hasNextLine()){
             String line = myscanner.nextLine();
-            // Ignore if there is date immediately after text 'Trupta Oza'
-            if(line.startsWith("Trupta Oza")){
-                line = myscanner.nextLine();
-                line = myscanner.nextLine();
+
+            if(line.startsWith("GBP Brought Forward Balance")){
+
+                //extract and set initial balance
+
+                Pattern regex00 = Pattern.compile("(\\d+(?:\\.\\d+)?)");
+                Matcher matcher00 = regex00.matcher(line);
+
+                if(matcher00.find()) {
+                    transactionList.setInitialBalance(Double.parseDouble(matcher00.group(1)));
+                    invTranslistFinal.setInitialBalance(Double.parseDouble(matcher00.group(1)));
+                }
+                foundTrans = true;
+                continue;
+
             }
 
-            Matcher m = Pattern.compile("^(\\d{2})/(\\d{2})/(\\d{4})").matcher(line);
+            if(line.startsWith("GBP Closing Balance")){
+
+                //extract and set initial balance
+
+                Pattern regex00 = Pattern.compile("(\\d+(?:\\.\\d+)?)");
+                Matcher matcher00 = regex00.matcher(line);
+
+                if(matcher00.find()) {
+                    transactionList.setFinalBalance(Double.parseDouble(matcher00.group(1)));
+                    invTranslistFinal.setFinalBalance(Double.parseDouble(matcher00.group(1)));
+                }
+                break;
+
+            }
+
+            if(!foundTrans){
+                continue;
+            }
+
+            Matcher m = Pattern.compile("^(\\d{2})/(\\d{2})/(\\d{2})").matcher(line);
             if(m.find()) {
                 // we have found a transaction
                 //Overall looks like this
-
-                //Date        Description                                           Reference     Settlement Date   Receipt Payment   Balance
-                //19/11/2024  Debit Card Payment                                                                    10.00             10.55
-                //19/11/2024  Purchase 587.42 iShares US Equity Index (UK) D Acc    44624C0HJF0   04/11/2024        -3,643.99         0.55
+                /* GBP Brought Forward Balance £28.35
+                23/01/25 Dodl Charge – Dec 2024 2.94 25.41
+                28/01/25 Lifetime ISA Government Bonus 83.34 108.75
+                04/02/25 Direct debit 333.33 442.08
+                10/02/25 Bought 0.2854 VANGUARD INVESTMENTS UK LTD @ £175.16 49.99 392.09
+                */
 
                 Transactions trans = new Transactions();
                 InvTransactions itrans = new InvTransactions();
@@ -79,121 +128,90 @@ public class DataModelerDodl {
                 // *BALANCE B/F* ==> cash only
 
                 //Date - first 10 chars
-                trans.setTransactionDate(LocalDate.parse(line.substring(0, 10), myformatter));
-                itrans.setTransactionDate(LocalDate.parse(line.substring(0, 10), myformatter));
+                trans.setTransactionDate(LocalDate.parse(line.substring(0, 8), myformatter));
+                itrans.setTransactionDate(LocalDate.parse(line.substring(0, 8), myformatter));
 
-                //if it is just the date then don't continue
-                if(line.length() < 11){
-                    //This is special case where transaction has been spilled over multiple lines
-                    /*
-                    CurrLine => 28/10/2024
-                    Line 1   => Purchase 5.0925 Vanguard FTSE Dev €pe ex-UK Eq Idx
-                    Line 2   => £ Acc
-                    Line 3   => 44624C0DH7C 30/10/2024 -2,000.02 8,644.54
-
-                    Idea is to append these into a single line
-
-                    */
-
-                    String fragmentedTransactionDate = line;
-
-                    String fragmentedTransactionDateFund = fragmentedTransactionDate + " " + myscanner.nextLine();
-                    String fragmentedTransactionDateFundFull = fragmentedTransactionDateFund + " " + myscanner.nextLine();
-                    line = fragmentedTransactionDateFundFull  + " " + myscanner.nextLine();
-
-                }
-
+                int transDetailsNoDateLength = 0;
+                int balAndAmtLength = 0;
                 //Balance is the final number DDDD.DD in the remaining string
-                String transDetailsNoDateWithComma = line.substring(11);
-                String transDetailsNoDate = transDetailsNoDateWithComma.replace(",","");
-                Integer commaCount = 0;
-                if(transDetailsNoDate.length() != transDetailsNoDateWithComma.length())
-                    commaCount = commaCount + 1;
-
-
+                String transDetailsNoDate = line.substring(9);
+                transDetailsNoDateLength = transDetailsNoDate.length();
+                //find all the numbers in the line
                 Pattern regex0 = Pattern.compile("(\\d+(?:\\.\\d+)?)");
                 Matcher matcher0 = regex0.matcher(transDetailsNoDate);
-                int transDetailsNoDateLength = 0;
-                while(matcher0.find()){
-                    transDetailsNoDateLength = matcher0.group(1).length() +  commaCount;
-                    if(firstTrans) {
-                        transactionList.setFinalBalance(Double.parseDouble(matcher0.group(1)));
-                        invTranslistFinal.setFinalBalance(Double.parseDouble(matcher0.group(1)));
-                    }
-                    transactionList.setInitialBalance(Double.parseDouble(matcher0.group(1)));
-                    invTranslistFinal.setInitialBalance(Double.parseDouble(matcher0.group(1)));
+
+                int counter = 0;
+
+                while (matcher0.find()) {
+                    counter++;
                 }
-                //there is always a balance
-                firstTrans = Boolean.FALSE;
+
+                Matcher matcher1 = regex0.matcher(transDetailsNoDate);
+                int travCtr = 1;
+                while(matcher1.find()){
+
+                    //last - 1 is transaction amount
+                    //if only one that that is initial balance
+                    if(travCtr == counter){
+                        balAndAmtLength= balAndAmtLength + matcher1.group(1).length();
+                    }
+                    else if (travCtr == (counter - 1)){
+                        balAndAmtLength= balAndAmtLength + matcher1.group(1).length();
+                        if(isCredit(transDetailsNoDate)){
+                            trans.setTransactionAmount(Double.parseDouble(matcher1.group(1)));
+                        }
+                        else{
+                            trans.setTransactionAmount(-Double.parseDouble(matcher1.group(1)));
+                        }
+
+                    }
+                    travCtr++;
+                }
 
                 //Get next substring without date and without balance
-                String transDetailsNoDateNoBalWithComma = line.substring(11,line.length()-transDetailsNoDateLength-1);
-                String transDetailsNoDateNoBal = transDetailsNoDateNoBalWithComma.replace(",","");
-                commaCount = 0;
-                if(transDetailsNoDateNoBal.length() != transDetailsNoDateNoBalWithComma.length())
-                    commaCount = commaCount + 1;
+                String transDetailsNoDateNoBal = line.substring(8,line.length()-balAndAmtLength-1);
 
-                // * BALANCE B/F is a special case with only the balance
-                if(transDetailsNoDate.startsWith("* BALANCE B/F *")) {
-                    //We just have the transaction details
-                    trans.setTransactionDetails(transDetailsNoDateNoBal);
-                    trans.setTransactionAmount(transactionList.getInitialBalance());
-                    transactionList.getTransactionsList().add(trans);
-                    continue;
-                }
-
-                //Amount is the number DDDD.DD in the remaining string
-                Pattern regex1 = Pattern.compile("(\\d+(?:\\.\\d+)?)");
-                Matcher matcher1 = regex1.matcher(transDetailsNoDateNoBal);
-                int transDetailsNoDateNoBalLength = 0;
-                while(matcher1.find()){
-                    transDetailsNoDateNoBalLength = matcher1.group(1).length() + commaCount;
-                    trans.setTransactionAmount(Double.parseDouble(matcher1.group(1)));
-                    itrans.setTransactionAmount(Double.parseDouble(matcher1.group(1)));
-                }
-
-                //what will remain will be either fund name or transaction details.
-                //1 for the spaces.
-                String transDetails = line.substring(11,(line.length()-transDetailsNoDateLength-transDetailsNoDateNoBalLength)-1);
 
                 // Transaction details
-                trans.setTransactionDetails(transDetails);
+                trans.setTransactionDetails(transDetailsNoDateNoBal.trim());
+
+                transDetailsNoDateNoBal = transDetailsNoDateNoBal.trim();
 
                 //Investment transactions are the ones starting with Purchase
-                if(transDetails.startsWith("Purchase")){
-                    // For investment transactions strip the settlement date and reference
-                    // - negative sign is 1 char, space between amount and settlement date another chat so 2 chars here
-                    // Settlement date is 10 chars - 30/10/2024
-                    // Reference is 11 chars 44624C0DHT5
-                    // 1 Space between them so total 24 chars
-                    // not sure why 2 more chars need to be removed so total 26
+                if(transDetailsNoDateNoBal.startsWith("Bought")){
+                    // For investment transactions we need to extract Quantity, instrument and price
+                    //10/02/25 Bought 0.2854 VANGUARD INVESTMENTS UK LTD @ £175.16 49.99 392.09
 
-                    String invTransDetails = line.substring(11,(line.length()-transDetailsNoDateLength-transDetailsNoDateNoBalLength-26));
-
-                    //set transaction details for cash over write as this is much shorter.
-                    trans.setTransactionDetails(invTransDetails);
-                    itrans.setTransactionDetails(invTransDetails);
-
-                    //Now strip the word 'Purchase' and a space which is 9 chars
-                    String quantityAndFundNameWithComma = line.substring((11+9),(line.length()-transDetailsNoDateLength-transDetailsNoDateNoBalLength-26));
+                    //we now have
+                    //Bought 0.2854 VANGUARD INVESTMENTS UK LTD @ £175.16
 
 
-                    String quantityAndFundName = quantityAndFundNameWithComma.replace(",","");
-                    commaCount = 0;
-                    if(quantityAndFundName.length() != quantityAndFundNameWithComma.length())
-                        commaCount = commaCount + 1;
+                    //set inv details
+                    itrans.setTransactionDetails(transDetailsNoDateNoBal.trim());
 
-                    // next number DDDD.DD is the Quantity
+
+                    //  extract Quantity and price
                     Pattern regex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
-                    Matcher matcher = regex.matcher(quantityAndFundName);
+                    Matcher matcher = regex.matcher(transDetailsNoDateNoBal);
                     int quantityLength = 0;
+                    int priceLength = 0;
+                    Boolean first = true;
                     while(matcher.find()){
-                        quantityLength = matcher.group(1).length()+1;
-                        itrans.setInvQuantity(Double.parseDouble(matcher.group(1)));
-                        break;
+                        if(first) {
+                            quantityLength = matcher.group(1).length() + 1;
+                            itrans.setInvQuantity(Double.parseDouble(matcher.group(1)));
+                            first = false;
+                        }
+                        else{
+                            priceLength = matcher.group(1).length() + 1;
+                            itrans.setInvPrice(Double.parseDouble(matcher.group(1)));
+                        }
                     }
+                    // Bought 0.2854 VANGUARD INVESTMENTS UK LTD @ £175.16
+                    // Bought = 6 chars + space
+
                     //Now the rest of the chars will be fund name
-                    String fundName = line.substring(((11+9+commaCount)+quantityLength),line.indexOf("4462")-1);
+                    String fundName = transDetailsNoDateNoBal.substring(((6+1)+quantityLength),transDetailsNoDateNoBal.indexOf("@")-1);
                     itrans.setInvName(fundName);
 
                     //Plan as of now is to always buy mutual funds and this is a purchase transactions.
@@ -207,10 +225,7 @@ public class DataModelerDodl {
                     }
 
                     //calculate investment price
-                    itrans.setInvPrice(itrans.getTransactionAmount()/itrans.getInvQuantity());
-
-                    //if investment trasaction ..cash amount is negative
-                    trans.setTransactionAmount(-trans.getTransactionAmount());
+                    itrans.setTransactionAmount(itrans.getInvQuantity() * itrans.getInvPrice());
 
                     invTranslistFinal.getInvTransactionsList().add(itrans);
                 } //if investment transactions
