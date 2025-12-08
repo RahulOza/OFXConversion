@@ -188,15 +188,22 @@ public class OFXConversion {
 
         transactionLists.getCashTrans().printTransactionList();
 
+        transactionLists.getCardTrans().getTransactionsList().sort(new TransactionList());
+
+        transactionLists.getCardTrans().printTransactionList();
+
         transactionLists.getInvTrans().getInvTransactionsList().sort(new InvTransactionList());
 
         transactionLists.getInvTrans().printTransactionList();
 
-        OfGen.ofxFileWriter(transactionLists.getCashTrans(),fileName, OfxgenGetPropertyValues.trading212CardAccountId,OfxgenGetPropertyValues.trading212CardAccountType);
+        OfGen.ofxFileWriter(transactionLists.getCashTrans(),fileName.replace(fileName.substring(fileName.length()-OfxgenGetPropertyValues.Trading212FilePrefix.length()-1),"Cash"+ OfxgenGetPropertyValues.Trading212FilePrefix), OfxgenGetPropertyValues.trading212InvAccountId,OfxgenGetPropertyValues.trading212InvAccountType);
 
-        OfGen.ofxInvFileWriter(transactionLists.getInvTrans(),fileName,OfxgenGetPropertyValues.trading212CardAccountId,OfxgenGetPropertyValues.trading212CardAccountType);
+        OfGen.ofxFileWriter(transactionLists.getCardTrans(),fileName, OfxgenGetPropertyValues.trading212CardAccountId,OfxgenGetPropertyValues.trading212CardAccountType);
+
+        OfGen.ofxInvFileWriter(transactionLists.getInvTrans(),fileName, OfxgenGetPropertyValues.trading212InvAccountId,OfxgenGetPropertyValues.trading212InvAccountType);
 
     }
+
 
     public static void convertFileEquate(String fileName) throws Exception {
         DataModelerEquate DM = new DataModelerEquate();

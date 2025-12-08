@@ -41,10 +41,19 @@ public class DataModelerTrading212Card {
         Col.put("Total Amount", 12);
         // Currency (Total)
         Col.put("Currency Total",13);
+        //Currency converson fee
+        Col.put("Currency Conversion Fee",14);
+        //Currency of the currency conversion fee
+        Col.put("Currency",15);
+        //Merchant Name
+        Col.put("Merchant name",16);
+        //Merchant Category
+        Col.put("Merchant Category",17);
     }
 
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
         TransactionList translistFinal = new TransactionList();
+        TransactionList translistCardFinal = new TransactionList();
         InvTransactionList invTranslistFinal = new InvTransactionList();
 
         invTranslistFinal.readSymbolMap();
@@ -65,40 +74,57 @@ public class DataModelerTrading212Card {
 
                     if (tokens.length < 14) {
                         //if there are less than the mandated fields we cannot process
-                        throw new Exception("Less than 14 fields in this line ..pls revisit");
+                        throw new Exception("Less than 16 fields in this line ..pls revisit");
                     }
+                    Transactions transCard = new Transactions();
                     Transactions trans = new Transactions();
                     InvTransactions itrans = new InvTransactions();
+
                     //some transactions are cash only while others are investments as well
                     // DIVIDEND ==> Inv and cash
                     // Market Buy ==> Inv and cash
                     // Deposit ==> cash only
                     // INTEREST_FROM_CASH ==> cash only
 
-                    //Date
-                    trans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
-                    itrans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
 
-                    //transaction details
-                    trans.setTransactionDetails(tokens[Col.get("Action")]);
-                    itrans.setTransactionDetails(tokens[Col.get("Title")] + ":" + tokens[Col.get("Action")]);
+                        //These are Debit card transactions
+                        if(tokens[Col.get("Action")].equals("Card debit"))
+                            transCard.setTransactionDetails(tokens[Col.get("Merchant name")]);
+                        else {
+                            //Action is same as transaction detail?
+                            transCard.setTransactionDetails(tokens[Col.get("Action")]);
+                        }
+                        transCard.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
+                        transCard.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
 
-                    //Amount
-                    trans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
-                    itrans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
 
-                   /* if((!(tokens[Col.get("Action")].equals("Deposit")) || !(tokens[Col.get("Action")].equals("Market Buy")))) {
 
-                        //we only know about these two types for now, if anything else then need to error ??
-                        throw new Exception("Unknown Action, Neeed to code for this!");
-                        //TODO original loop for withdrowal, so fix this when the right time comes.
-                        //if withdrawal then amount is negative
-                        //trans.setTransactionAmount(-Double.parseDouble(tokens[Col.get("Total Amount")]));
-                    }*/
-
-                    //TODO - we don't know the text for dividend
-                    if (tokens[Col.get("Action")].equals("Market buy") || tokens[Col.get("Action")].equals("DIVIDEND")) {
+                    if (tokens[Col.get("Action")].equals("Market buy")) {
                         //Investment transactions ..
+
+                        /*
+                        //set this amount as credit from T212Card account
+                        trans.setTransactionDetails("R T212Card to T212");
+                        trans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
+                        trans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
+
+                        translistFinal.getTransactionsList().add(trans);*/
+
+                        //Also set the amount in card as a transfer
+                        transCard.setTransactionDetails("R T212Card to T212");
+                        transCard.setTransactionAmount(-Double.parseDouble(tokens[Col.get("Total Amount")]));
+                        transCard.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
+
+                        //transaction details
+                        trans.setTransactionDetails(tokens[Col.get("Action")]);
+                        itrans.setTransactionDetails(tokens[Col.get("Title")] + ":" + tokens[Col.get("Action")]);
+
+                        //Amount
+                        trans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
+                        itrans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
+
+                        trans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
+                        itrans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
 
                         //Name
                         itrans.setInvName(tokens[Col.get("Title")]);
@@ -116,9 +142,6 @@ public class DataModelerTrading212Card {
                             //price
                             itrans.setInvPrice(Double.parseDouble(tokens[Col.get("Price per Share in Account Currency")])/Double.parseDouble(tokens[Col.get("FX Rate")]));
                             //commission = fx fees + stamp duty for shares
-                            /*if(!tokens[Col.get("Stamp Duty")].isEmpty()){
-                                itrans.setInvCommission(itrans.getInvCommission() + Double.parseDouble(tokens[Col.get("Stamp Duty")]));
-                            }*/
 
                             switch (invTranslistFinal.getReverseSymbolMap().get(itrans.getInvSymb())[1]) {
                                 case "MF":
@@ -147,15 +170,16 @@ public class DataModelerTrading212Card {
 
                         }//buy/sell if/else
                         invTranslistFinal.getInvTransactionsList().add(itrans);
+                        translistFinal.getTransactionsList().add(trans);
                     }// order or dividend
-                    translistFinal.getTransactionsList().add(trans);
+                    translistCardFinal.getTransactionsList().add(transCard);
                 }//header
 
                 if (isHeader)
                     isHeader = false;
             }//while not null
         } //try
-        return (new AllTransactions(invTranslistFinal, translistFinal));
+        return (new AllTransactions(invTranslistFinal, translistFinal, translistCardFinal));
     }//function
 }//class
 

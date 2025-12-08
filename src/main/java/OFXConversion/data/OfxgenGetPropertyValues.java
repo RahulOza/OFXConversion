@@ -139,7 +139,11 @@ public class OfxgenGetPropertyValues {
     public static Double testintialBalanceTrading212Card =0.0;
     public static Double testfinalBalanceTrading212Card =0.0;
     public static String prefixTrading212CardFileName ="";
-
+    public static String trading212InvAccountId = "";
+    public static Double testintialBalanceTrading212Inv =0.0;
+    public static Double testfinalBalanceTrading212Inv =0.0;
+    public static String trading212InvAccountType = "";
+    public static String Trading212FilePrefix = "";
 
     //local variables
     private static String result = "";
@@ -286,11 +290,16 @@ public class OfxgenGetPropertyValues {
 
             //Trading212Card
             trading212CardAccountType = prop.getProperty("ofxgenprops.trading212Card.accountype");
+            trading212InvAccountType = prop.getProperty("ofxgenprops.trading212Inv.accountype");
             trading212CardAccountId = prop.getProperty("ofxgenprops.trading212Card.trading212AccountId");
+            trading212InvAccountId = prop.getProperty("ofxgenprops.trading212Inv.trading212AccountId");
             testFilePathTrading212Card = prop.getProperty("ofxgenprops.testing.trading212Card.testFilePathTrading212");
             testintialBalanceTrading212Card = Double.parseDouble(prop.getProperty("ofxgenprops.testing.trading212Card.initialBalanceTrading212"));
             testfinalBalanceTrading212Card = Double.parseDouble(prop.getProperty("ofxgenprops.testing.trading212Card.finalBalanceTrading212"));
+            testintialBalanceTrading212Inv = Double.parseDouble(prop.getProperty("ofxgenprops.testing.trading212Inv.initialBalanceTrading212"));
+            testfinalBalanceTrading212Inv = Double.parseDouble(prop.getProperty("ofxgenprops.testing.trading212Inv.finalBalanceTrading212"));
             prefixTrading212CardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.trading212Card.trading212FileName");
+            Trading212FilePrefix = prop.getProperty("ofxgenprops.trading212.filePrefix");
 
             logger.info(result);
 
