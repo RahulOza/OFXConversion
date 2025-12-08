@@ -178,6 +178,26 @@ public class OFXConversion {
 
     }
 
+    public static void convertFileTrading212Card(String fileName) throws Exception {
+        DataModelerTrading212Card DM = new DataModelerTrading212Card();
+        OfxGen OfGen = new OfxGen();
+
+        AllTransactions transactionLists = DM.createTransactionList(fileName);
+
+        transactionLists.getCashTrans().getTransactionsList().sort(new TransactionList());
+
+        transactionLists.getCashTrans().printTransactionList();
+
+        transactionLists.getInvTrans().getInvTransactionsList().sort(new InvTransactionList());
+
+        transactionLists.getInvTrans().printTransactionList();
+
+        OfGen.ofxFileWriter(transactionLists.getCashTrans(),fileName, OfxgenGetPropertyValues.trading212CardAccountId,OfxgenGetPropertyValues.trading212CardAccountType);
+
+        OfGen.ofxInvFileWriter(transactionLists.getInvTrans(),fileName,OfxgenGetPropertyValues.trading212CardAccountId,OfxgenGetPropertyValues.trading212CardAccountType);
+
+    }
+
     public static void convertFileEquate(String fileName) throws Exception {
         DataModelerEquate DM = new DataModelerEquate();
         OfxGen OfGen = new OfxGen();
