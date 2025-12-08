@@ -178,6 +178,33 @@ public class OFXConversion {
 
     }
 
+    public static void convertFileTrading212Card(String fileName) throws Exception {
+        DataModelerTrading212Card DM = new DataModelerTrading212Card();
+        OfxGen OfGen = new OfxGen();
+
+        AllTransactions transactionLists = DM.createTransactionList(fileName);
+
+        transactionLists.getCashTrans().getTransactionsList().sort(new TransactionList());
+
+        transactionLists.getCashTrans().printTransactionList();
+
+        transactionLists.getCardTrans().getTransactionsList().sort(new TransactionList());
+
+        transactionLists.getCardTrans().printTransactionList();
+
+        transactionLists.getInvTrans().getInvTransactionsList().sort(new InvTransactionList());
+
+        transactionLists.getInvTrans().printTransactionList();
+
+        OfGen.ofxFileWriter(transactionLists.getCashTrans(),fileName.replace(fileName.substring(fileName.length()-OfxgenGetPropertyValues.Trading212FilePrefix.length()-1),"Cash"+ OfxgenGetPropertyValues.Trading212FilePrefix), OfxgenGetPropertyValues.trading212InvAccountId,OfxgenGetPropertyValues.trading212InvAccountType);
+
+        OfGen.ofxFileWriter(transactionLists.getCardTrans(),fileName, OfxgenGetPropertyValues.trading212CardAccountId,OfxgenGetPropertyValues.trading212CardAccountType);
+
+        OfGen.ofxInvFileWriter(transactionLists.getInvTrans(),fileName, OfxgenGetPropertyValues.trading212InvAccountId,OfxgenGetPropertyValues.trading212InvAccountType);
+
+    }
+
+
     public static void convertFileEquate(String fileName) throws Exception {
         DataModelerEquate DM = new DataModelerEquate();
         OfxGen OfGen = new OfxGen();
@@ -213,8 +240,8 @@ public class OFXConversion {
 
     public static void main(String[] args) throws IOException {
 
-        Double myVersion = 2.5;
-        String myVersionDetails = "equate statements support";
+        Double myVersion = 2.6;
+        String myVersionDetails = "Trading 212 Card statements support";
 
 
         logger.info(" ######### OfxGen v"+myVersion+" ("+ myVersionDetails +") ##########");

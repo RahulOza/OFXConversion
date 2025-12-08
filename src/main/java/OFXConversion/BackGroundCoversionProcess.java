@@ -105,6 +105,22 @@ public class BackGroundCoversionProcess implements Runnable{
                            logger.severe(e.toString());
                        }
                    }//Trading212
+                   if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixEquateFileName)) {
+                       try {
+                           OFXConversion.convertFileEquate(pollDirPath + "\\" + filename);
+                           processed = true;
+                       } catch (Exception e) {
+                           logger.severe(e.toString());
+                       }
+                   }//Equate
+                   if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixTrading212CardFileName)) {
+                       try {
+                           OFXConversion.convertFileTrading212Card(pollDirPath + "\\" + filename);
+                           processed = true;
+                       } catch (Exception e) {
+                           logger.severe(e.toString());
+                       }
+                   }//Trading212Card
                } // .csv
                 if(filename.toString().endsWith(".Xls") || filename.toString().endsWith(".Xlsx")  ){
                     //if .Xls or Xlsx file can only be vanguard
@@ -151,7 +167,6 @@ public class BackGroundCoversionProcess implements Runnable{
                         } catch (IOException e) {
                             logger.severe(e.toString());
                         }
-
                     }
                     else{
                         if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixDodlFileName)){
