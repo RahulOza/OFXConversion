@@ -240,8 +240,8 @@ public class OFXConversion {
 
     public static void main(String[] args) throws IOException {
 
-        Double myVersion = 2.5;
-        String myVersionDetails = "equate statements support";
+        Double myVersion = 2.6;
+        String myVersionDetails = "Dodle and T212 Fixes";
 
 
         logger.info(" ######### OfxGen v"+myVersion+" ("+ myVersionDetails +") ##########");

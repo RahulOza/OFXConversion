@@ -16,6 +16,7 @@ public class DataModelerTrading212Card {
     public DataModelerTrading212Card() {
         Col = new HashMap<>();
     }
+
     public void populateCols() {
         Col.put("Action", 0);
         //Time
@@ -26,6 +27,7 @@ public class DataModelerTrading212Card {
         Col.put("Title", 4);
         //Notes
         Col.put("Notes", 5);
+        //ID
         Col.put("Order ID", 6);
         //No. of shares
         Col.put("Quantity", 7);
@@ -35,20 +37,26 @@ public class DataModelerTrading212Card {
         Col.put("Account Currency", 9);
         //Exchange rate
         Col.put("FX Rate", 10);
+        // Result
+        Col.put("Result",11);
         // Currency (Result)
-        Col.put("Currency Result",11);
+        Col.put("Currency Result",12);
         //Total
-        Col.put("Total Amount", 12);
-        // Currency (Total)
-        Col.put("Currency Total",13);
+        Col.put("Total Amount", 13);
+        //Currency (Total)
+        Col.put("Currency Total",14);
+        //Stamp Duty Reserve currency
+        Col.put("Stamp Duty Reserve currency",15);
+        //Currency (Stamp Duty)
+        Col.put("Currency Stamp Duty",16);
         //Currency converson fee
-        Col.put("Currency Conversion Fee",14);
+        Col.put("Currency Conversion Fee",17);
         //Currency of the currency conversion fee
-        Col.put("Currency",15);
+        Col.put("Currency",18);
         //Merchant Name
-        Col.put("Merchant name",16);
+        Col.put("Merchant name",19);
         //Merchant Category
-        Col.put("Merchant Category",17);
+        Col.put("Merchant Category",20);
     }
 
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
@@ -102,14 +110,6 @@ public class DataModelerTrading212Card {
                     if (tokens[Col.get("Action")].equals("Market buy")) {
                         //Investment transactions ..
 
-                        /*
-                        //set this amount as credit from T212Card account
-                        trans.setTransactionDetails("R T212Card to T212");
-                        trans.setTransactionAmount(Double.parseDouble(tokens[Col.get("Total Amount")]));
-                        trans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
-
-                        translistFinal.getTransactionsList().add(trans);*/
-
                         //Also set the amount in card as a transfer
                         transCard.setTransactionDetails("R T212Card to T212");
                         transCard.setTransactionAmount(-Double.parseDouble(tokens[Col.get("Total Amount")]));
@@ -126,8 +126,9 @@ public class DataModelerTrading212Card {
                         trans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
                         itrans.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
 
+                        String invName = tokens[Col.get("Title")].replace("\"","");
                         //Name
-                        itrans.setInvName(tokens[Col.get("Title")]);
+                        itrans.setInvName(invName);
                         //Ticker
                         itrans.setInvSymb(tokens[Col.get("Ticker")]);
 

@@ -1,92 +1,245 @@
-Action,Time,ISIN,Ticker,Name,Notes,ID,No. of shares,Price / share,Currency (Price / share),Exchange rate,Currency (Result),Total,Currency (Total),Currency conversion fee,Currency (Currency conversion fee),Merchant name,Merchant category
-New card cost,2025-08-12 23:25:48,,,,,2eb61ba8-ff69-46ec-afe0-57e4737bf412,,,,,,-4.95,"GBP",,,,
-Deposit,2025-08-12 23:47:39,,,,"Transaction ID: 3f2d73cc-2fda-4125-a73c-7e1424163298",ab0f39ff-a13c-4d27-9af3-445e6af25e83,,,,,,500.00,"GBP",,,,
-Card debit,2025-08-14 13:34:36,,,,,c2ad0731-936c-4d8b-922f-4b1792773b1d,,,,,,-213.48,"GBP",,,"Tesla","AUTOMOBILE"
-Card debit,2025-08-15 10:15:06,,,,,baad898f-5537-4317-8eaa-c29714b969df,,,,,,-1.50,"GBP",,,"Darent_S&B","BUSINESS_SERVICES"
-Card debit,2025-08-15 20:15:40,,,,,966d4597-6998-49a2-a4da-3a50f986ea51,,,,,,-4.85,"GBP",,,"Creams","RESTAURANTS"
-Spending cashback,2025-08-16 01:17:22,,,,,ef4bc899-6439-4246-a980-4add103a8ff7,,,,,,3.20,"GBP",,,,
-Deposit,2025-08-16 08:40:42,,,,"Transaction ID: c15bdacf-4e56-4d73-a46f-ffd149aa4b4d",68b9fee8-3387-4f80-b7f8-21c3280d6c0e,,,,,,350.00,"GBP",,,,
-Card debit,2025-08-16 19:13:31,,,,,b54daec4-3c0e-4c4c-aeea-d5d777c64048,,,,,,-0.99,"GBP",,,"The Lotus Shop","RETAIL_STORES"
-Spending cashback,2025-08-17 01:17:26,,,,,b9039231-2f02-403e-84fd-c7ead511199f,,,,,,0.09,"GBP",,,,
-Card debit,2025-08-17 11:14:28,,,,,7dd92f61-e7f6-445f-8752-7e2a2f905b4a,,,,,,-44.95,"GBP",,,"Paradise Biryani","RESTAURANTS"
-Card debit,2025-08-17 13:07:41,,,,,4b2aae0a-3cde-4e30-b23b-64b0d5ef135d,,,,,,-10.50,"GBP",,,"SQ *DANSON PARK ICE CR","RESTAURANTS"
-Card debit,2025-08-17 13:10:47,,,,,0d2ae1bf-6ab3-45d5-b3f2-f39246396107,,,,,,-6.00,"GBP",,,"SQ *DANSON PARK ICE CR","RESTAURANTS"
-Card debit,2025-08-17 21:14:22,,,,,bf5a53c6-8548-4a58-9078-7a0c5f299495,,,,,,-55.00,"GBP",,,"WWW.OFAAL.COM","MEMBERSHIPS"
-Spending cashback,2025-08-18 01:16:55,,,,,355968ac-2036-486d-9ab5-8a1885a86a15,,,,,,0.02,"GBP",,,,
-Market buy,2025-08-18 13:30:14,US0231351067,AMZN,"Amazon",,EOF37404421749,0.0188199200,230.2700000000,USD,1.35426968,"GBP",3.20,"GBP",,,,
-Card debit,2025-08-18 15:39:33,,,,,aaa4a244-6eae-4921-bece-4d552380996d,,,,,,-18.66,"GBP",,,"ALLI BHAVAN","RETAIL_STORES"
-Card debit,2025-08-18 15:48:18,,,,,708ff7ca-7e51-4b4a-aae9-4584b5909d86,,,,,,-4.00,"GBP",,,"POUNDLAND LTD  - 1104","RETAIL_STORES"
-Card debit,2025-08-18 16:13:52,,,,,5c8779e1-c669-4787-a3ce-93f0663214e0,,,,,,-8.05,"GBP",,,"POST OFFICE COUNTER","GOVERNMENT_SERVICES"
-Spending cashback,2025-08-19 01:16:47,,,,,6e0bc6c1-bf4c-4991-a9bb-1b80813e798c,,,,,,1.74,"GBP",,,,
-Market buy,2025-08-19 13:30:10,US0231351067,AMZN,"Amazon",,EOF37451130945,0.0108571800,230.0900000000,USD,1.35033975,"GBP",1.85,"GBP",,,,
-Spending cashback,2025-08-20 01:09:13,,,,,1e37351c-dd07-47bd-955d-2a663946d6ce,,,,,,0.34,"GBP",,,,
-Card debit,2025-08-23 20:59:26,,,,,489f9d78-4aae-4099-ac4e-e4347729e499,,,,,,-17.91,"GBP",,,"ASDA SUPERSTORE","RETAIL_STORES"
-Card debit,2025-08-24 13:19:02,,,,,e7b38113-a113-43a8-8da5-bda35b3d2bc5,,,,,,-8.50,"GBP",,,"The Royal Parks","BUSINESS_SERVICES"
-Card debit,2025-08-24 18:49:43,,,,,b1e48867-a36f-4314-bd50-59e7c35e85cf,,,,,,-2.00,"GBP",,,"SQ *ANTHONY HALPIN LIM","RETAIL_STORES"
-Card debit,2025-08-24 20:06:09,,,,,6e29344b-e0c6-4596-8359-72d5e2fee523,,,,,,-102.00,"GBP",,,"DINES* FREEWHEELIN PIZ","RESTAURANTS"
-Spending cashback,2025-08-25 01:10:44,,,,,33692410-d26b-40ba-ab6b-c43d891641d7,,,,,,0.27,"GBP",,,,
-Card debit,2025-08-25 09:05:43,,,,,ec4e61e8-c4cd-4761-ac01-aa01a5503f76,,,,,,-15.73,"GBP",,,"ASDA STORE 4745","RETAIL_STORES"
-Spending cashback,2025-08-26 01:16:29,,,,,d489b699-3c3c-4d0f-94e5-d61f29c17f7f,,,,,,1.69,"GBP",,,,
-Market buy,2025-08-26 07:00:32,IE00BHZRQZ17,FRIN,"Franklin FTSE India (Acc)",,EOF37756035615,0.0700578700,32.8300000000,GBP,1.00000000,"GBP",2.30,"GBP",,,,
-Spending cashback,2025-08-27 01:17:20,,,,,f50e1d6e-28bc-4f0b-8531-3aa7ac18095c,,,,,,0.24,"GBP",,,,
-Card debit,2025-08-29 11:12:04,,,,,2127cf76-63d9-4880-a294-be512465d799,,,,,,-8.00,"GBP",,,"SHREEJI","RETAIL_STORES"
-Card debit,2025-08-29 15:20:27,,,,,d8013c44-27eb-4bc1-b3d2-dcf4eef053bc,,,,,,-10.60,"GBP",,,"BEXLEY CIVIC OFFICES","GOVERNMENT_SERVICES"
-Card debit,2025-08-29 21:42:12,,,,,b7673247-af47-4c50-a3bd-336b95f57b44,,,,,,-13.30,"GBP",,,"Creams","RESTAURANTS"
-Card debit,2025-08-30 12:05:18,,,,,dc0cf016-d05a-4819-944c-86fa325c1d49,,,,,,-21.00,"GBP",,,"TRANSPORT FOR LONDON","TRANSPORT"
-Card debit,2025-08-30 12:27:34,,,,,bf2acc24-aac3-4b04-b127-d2413cffc65c,,,,,,-15.00,"GBP",,,"OYSTER WEB ADHOC","TRANSPORT"
-Spending cashback,2025-08-31 01:16:47,,,,,aaae1ba8-5450-42e6-82cd-9d07ec9fe0ed,,,,,,0.32,"GBP",,,,
-Spending cashback,2025-09-01 01:16:19,,,,,20a8a766-f76e-4163-838c-8bbc6c716ff8,,,,,,0.54,"GBP",,,,
-Market buy,2025-09-01 07:00:36,IE00BHZRQZ17,FRIN,"Franklin FTSE India (Acc)",,EOF38002245771,0.0342412400,32.1250000000,GBP,1.00000000,"GBP",1.10,"GBP",,,,
-Card debit,2025-09-02 14:06:41,,,,,7d4b9602-e2bc-43ea-ae1b-dd302ad9fec0,,,,,,-140.00,"GBP",,,"THE STTA","MEMBERSHIPS"
-Deposit,2025-09-02 14:12:28,,,,"Transaction ID: 085327cd-1508-4faf-b591-82fa40106d8e",ba524eb4-386b-41ae-91d8-6d1f35fe193e,,,,,,200.00,"GBP",,,,
-Card debit,2025-09-02 15:01:29,,,,,045cf0bb-5cdf-40b5-81a9-445d25004640,,,,,,-22.99,"GBP",,,"BERSHKA  BLUEWATER 165","CLOTHING_STORES"
-Card debit,2025-09-03 15:11:14,,,,,cd7565b3-fa9e-4e47-8435-819a00a4903a,,,,,,-14.00,"GBP",,,"DRIVING LICENCE WEB","GOVERNMENT_SERVICES"
-Spending cashback,2025-09-04 01:19:38,,,,,b8925a34-7c63-406b-bf47-b9466763e293,,,,,,2.44,"GBP",,,,
-Market buy,2025-09-04 13:30:07,US67066G1040,NVDA,"Nvidia",,EOF38251574538,0.0192271900,170.5800000000,USD,1.34416970,"GBP",2.44,"GBP",,,,
-Card debit,2025-09-04 18:43:58,,,,,dde74c4b-7006-4c86-8919-bbc7e2a59033,,,,,,-70.00,"GBP",,,"OPENRENT GAS SAFETY","BUSINESS_SERVICES"
-Deposit,2025-09-04 21:55:54,,,,"Transaction ID: 56c7637d-d037-4307-a4bb-fff1b470835c",5aaea0a3-78cc-4b8c-bca3-48fba60e6720,,,,,,250.00,"GBP",,,,
-Card debit,2025-09-05 10:34:02,,,,,a5011736-e3fb-4c69-bf8b-06a95ddd2202,,,,,,-10.00,"GBP",,,"WWW.OFAAL.COM","MEMBERSHIPS"
-Card debit,2025-09-05 16:08:29,,,,,4dd2893a-38d0-4100-bde4-358fe5da4af1,,,,,,-17.49,"GBP",,,"eBay O*22-13524-98401","RETAIL_STORES"
-Card debit,2025-09-05 16:08:29,,,,,4891fad5-d15c-4380-8e1d-2cfa656e9609,,,,,,-19.23,"GBP",,,"eBay O*22-13524-98401","RETAIL_STORES"
-Card debit,2025-09-05 16:08:29,,,,,c251f674-ca65-4cc4-9fd3-46df6372af53,,,,,,-13.90,"GBP",,,"eBay O*22-13524-98401","RETAIL_STORES"
-Card debit,2025-09-05 16:27:28,,,,,e72dc83f-3a77-464f-9951-e58ae45cd91b,,,,,,-8.00,"GBP",,,"Amazon.co.uk","MISCELLANEOUS"
-Card debit,2025-09-05 20:14:05,,,,,63ed39ec-1522-4501-8e27-62d8a7edbd4d,,,,,,-2.29,"GBP",,,"Nisa local Broadway","RETAIL_STORES"
-Card debit,2025-09-05 20:44:40,,,,,48a5de43-12ca-4263-8315-46753ed80f72,,,,,,-27.32,"GBP",,,"ALLI BHAVAN","RETAIL_STORES"
-Card debit,2025-09-05 20:46:52,,,,,9df5935f-2666-41de-bee6-b88b2320e6db,,,,,,-4.49,"GBP",,,"ALLI BHAVAN","RETAIL_STORES"
-Spending cashback,2025-09-06 01:19:30,,,,,28b9f8f6-3ca4-4344-9435-90eb37ebc515,,,,,,1.05,"GBP",,,,
-Card debit,2025-09-06 21:54:40,,,,,3e0d05fe-f0c1-4161-a18a-53fc1f230b99,,,,,,-1.70,"GBP",,,"BROADWAY SUPERMARKET","RETAIL_STORES"
-Spending cashback,2025-09-07 01:19:52,,,,,d9016a8d-ecbd-4aab-9495-25454ed485b0,,,,,,1.54,"GBP",,,,
-Card debit,2025-09-07 15:42:04,,,,,cebd839e-7713-438e-8195-413b1bb48ebf,,,,,,-4.58,"GBP",,,"Alers Store","RETAIL_STORES"
-Spending cashback,2025-09-08 01:19:10,,,,,48a9be7c-bce1-4d6e-b823-077bd2be22e5,,,,,,0.03,"GBP",,,,
-Market buy,2025-09-08 13:30:15,US67066G1040,NVDA,"Nvidia",,EOF38454643845,0.0084837100,167.7000000000,USD,1.35496968,"GBP",1.05,"GBP",,,,
-Market buy,2025-09-08 13:32:12,US67066G1040,NVDA,"Nvidia",,EOF38456814655,0.0124100300,168.1400000000,USD,1.35494963,"GBP",1.54,"GBP",,,,
-Spending cashback,2025-09-09 01:18:59,,,,,fcfb3133-c794-416c-af9f-9c339fb0e249,,,,,,0.07,"GBP",,,,
-Card debit,2025-09-09 11:36:30,,,,,592d07cd-688e-4bb9-b17c-8bc9e9dbdda1,,,,,,-35.73,"GBP",,,"W M MORRISON PLC","RETAIL_STORES"
-Card debit,2025-09-09 14:08:16,,,,,1b887e36-6ec1-4ed2-9f78-46733a20cb2a,,,,,,-254.99,"GBP",,,"WWW.ASDATYRES.CO.UK","AUTOMOBILE"
-Card debit,2025-09-10 14:56:57,,,,,5b201aeb-2dab-4a82-bec8-5cb60223ece5,,,,,,-52.96,"GBP",,,"DARTFORD MUSIC SCHOOL","MEMBERSHIPS"
-Deposit,2025-09-10 15:01:41,,,,"Transaction ID: 15096ca5-75f5-4238-bc18-6f2bbc0eb580",fa036c38-8e41-427e-a4cf-20baa5d46a3c,,,,,,300.00,"GBP",,,,
-Card debit,2025-09-10 15:02:28,,,,,75a1bfc1-8b16-4228-b58a-49b61064650d,,,,,,-52.96,"GBP",,,"DARTFORD MUSIC SCHOOL","MEMBERSHIPS"
-Spending cashback,2025-09-11 01:19:25,,,,,70581670-05ed-4c68-9add-0964dc3102b8,,,,,,4.36,"GBP",,,,
-Card debit,2025-09-11 10:50:45,,,,,f50b514d-6d04-44d5-b3ce-236e357bab3f,,,,,,-20.06,"GBP",,,"ASDA BEXLEY HEATH CR","RETAIL_STORES"
-Market buy,2025-09-11 13:30:00,US5500211090,LULU,"Lululemon Athletica",,EOF38602305871,0.0367765100,163.8900000000,USD,1.35444993,"GBP",4.46,"GBP",0.01,"GBP",,
-Card debit,2025-09-11 16:58:23,,,,,3af3fe63-6a00-4bd2-bc2f-a1f59c8082d8,,,,,,-61.77,"GBP",,,"SEC WATCHDOG LIMITED","BUSINESS_SERVICES"
-Spending cashback,2025-09-12 01:19:38,,,,,ad6dbe95-a0fc-4868-bf9b-3ab37506966c,,,,,,1.59,"GBP",,,,
-Market buy,2025-09-12 13:30:01,US5500211090,LULU,"Lululemon Athletica",,EOF38652906110,0.0130084500,165.5300000000,USD,1.35426964,"GBP",1.59,"GBP",,,,
-Card debit,2025-09-12 14:05:02,,,,,5fb49349-630b-4762-865f-bf1f9f07a214,,,,,,-0.99,"GBP",,,"ALLI BHAVAN","RETAIL_STORES"
-Card debit,2025-09-12 14:22:01,,,,,abae157e-f35e-48bd-b836-39fb00aa0529,,,,,,-13.25,"GBP",,,"MARKS&SPENCER PLC SACA","RETAIL_STORES"
-Spending cashback,2025-09-13 01:10:43,,,,,06989d17-8d86-4394-ab21-f43974a154bd,,,,,,1.22,"GBP",,,,
-Card debit,2025-09-13 14:11:47,,,,,8da0af8c-d65a-4dac-92bd-a692b227bc00,,,,,,-105.06,"GBP",,,"FMR* FIXMYRECLINER","MISCELLANEOUS"
-Deposit,2025-09-13 14:25:33,,,,"Transaction ID: a225aebd-ee00-4b67-a7f9-764b55d065fa",8ac8b07e-1597-4185-9619-f5abeadcd158,,,,,,500.00,"GBP",,,,
-Spending cashback,2025-09-14 01:20:03,,,,,98464f8d-37f1-460c-9f3f-ec14bde433b7,,,,,,0.22,"GBP",,,,
-Card debit,2025-09-14 09:24:14,,,,,9ed42315-37b3-4fa3-a47c-c03ca56ecedc,,,,,,-49.95,"GBP",,,"MADRAS FLAVOURS","RESTAURANTS"
-Card debit,2025-09-14 10:29:14,,,,,ad1f5278-606a-40be-a027-1737e2f5595f,,,,,,-1.99,"GBP",,,"MADRAS FLAVOURS","RESTAURANTS"
-Card debit,2025-09-14 14:41:13,,,,,3335ce91-4057-48ea-b209-e2421a842ab2,,,,,,-1.50,"GBP",,,"MATALAN STORE 266","CLOTHING_STORES"
-Card debit,2025-09-14 14:52:51,,,,,75479d47-59a3-4f52-92d2-17873b39de97,,,,,,-12.50,"GBP",,,"MATALAN STORE 266","CLOTHING_STORES"
-Spending cashback,2025-09-15 01:16:29,,,,,34898e84-43d7-428b-bb1f-d495884734e8,,,,,,1.57,"GBP",,,,
-Market buy,2025-09-15 07:00:32,IE00BHZRQZ17,FRIN,"Franklin FTSE India (Acc)",,EOF38701953891,0.0372632800,32.7400000000,GBP,1.00000000,"GBP",1.22,"GBP",,,,
-Market buy,2025-09-15 07:00:33,IE0032077012,EQQQ,"Invesco EQQQ Nasdaq-100 (Dist)",,EOF38701955808,0.0041155100,43494.0000000000,GBX,100.00000000,"GBP",1.79,"GBP",,,,
-Card debit,2025-09-15 15:41:39,,,,,f534e6ad-cc98-403e-a872-aa37176eeb14,,,,,,-6.00,"GBP",,,"Samosa Haus","RESTAURANTS"
-Spending cashback,2025-09-16 01:19:06,,,,,d2579fbe-2c1b-450a-9ccb-1d382571461b,,,,,,0.91,"GBP",,,,
-Card debit,2025-09-17 09:52:38,,,,,f37cfebb-1f71-4f19-9f90-049445a9bd5d,,,,,,-26.39,"GBP",,,"eBay O*26-13567-48209","RETAIL_STORES"
-Card debit,2025-09-17 15:32:58,,,,,a91f41bf-6070-4bc8-bde6-b4a3d102c7c0,,,,,,-20.00,"GBP",,,"OPENAI *CHATGPT SUBSCR","MISCELLANEOUS"
-Card debit,2025-09-20 20:53:45,,,,,ddec3ad9-f06b-4f56-b332-c46a49820859,,,,,,-1.69,"GBP",,,"ASDA BEXLEY HEATH CR","RETAIL_STORES"
+Action,Time,ISIN,Ticker,Name,Notes,ID,No. of shares,Price / share,Currency (Price / share),Exchange rate,Result,Currency (Result),Total,Currency (Total),Stamp duty reserve tax,Currency (Stamp duty reserve tax),Currency conversion fee,Currency (Currency conversion fee),Merchant name,Merchant category
+Card debit,2025-09-21 11:11:50,,,,,5cf2b38a-30ff-4c8d-bf2e-6f27886ba239,,,,,,,-18.00,"GBP",,,,,"eBay O*17-13595-06909","RETAIL_STORES"
+Card debit,2025-09-21 20:27:43,,,,,e31947e9-cc14-48f1-977f-54957992a487,,,,,,,-1.99,"GBP",,,,,"STOP & SHOP","RETAIL_STORES"
+Card debit,2025-09-24 14:54:01,,,,,555cdc7f-df0d-4129-8062-3d2d2d54c7db,,,,,,,-40.88,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card debit,2025-09-24 15:26:05,,,,,4e248323-70cd-4c56-b65e-1f7c6fe88132,,,,,,,-30.66,"GBP",,,,,"ASDA SUPERSTORE","RETAIL_STORES"
+Card debit,2025-09-25 14:58:18,,,,,4273ff1c-bf81-4b5b-8021-a137f2eef26d,,,,,,,-51.00,"GBP",,,,,"PRIMARK","CLOTHING_STORES"
+Card debit,2025-09-27 20:33:59,,,,,985bb913-797b-4434-a24d-e8733c9aa2c7,,,,,,,-5.00,"GBP",,,,,"SumUp  *GARBA MSFQYGTU","RETAIL_STORES"
+Card debit,2025-09-28 16:27:10,,,,,d41d0733-dc1f-49b7-b163-9b765c9fc1cb,,,,,,,-8.00,"GBP",,,,,"Amazon.co.uk","MISCELLANEOUS"
+Card debit,2025-10-01 09:26:16,,,,,b3a5c7c9-f63c-452e-8938-e458aeed6d67,,,,,,,-55.00,"GBP",,,,,"DARTFORD MUSIC SCHOOL","MEMBERSHIPS"
+Card debit,2025-10-01 09:30:57,,,,,35d55d83-0a59-4db0-9a15-8124a1f08c69,,,,,,,-79.99,"GBP",,,,,"GOOGLE *Google One","MISCELLANEOUS"
+Card debit,2025-10-01 15:40:40,,,,,29aaf4f2-028e-4b22-acdd-2b6a8c62da41,,,,,,,-4.00,"GBP",,,,,"MARKS&SPENCER PLC SACA","RETAIL_STORES"
+Card debit,2025-10-01 15:57:55,,,,,d172caa4-c291-494d-8f8a-7b46ce66388f,,,,,,,-7.99,"GBP",,,,,"BOOTS 0846","MISCELLANEOUS"
+Card debit,2025-10-01 20:36:32,,,,,bd47b68e-4a17-40c6-925d-b982645b12eb,,,,,,,-8.18,"GBP",,,,,"ASDA BEXLEYHEATH","RETAIL_STORES"
+Spending cashback,2025-10-03 01:11:48,,,,,014e62c0-09ba-4ad7-946a-352923c969cc,,,,,,,2.32,"GBP",,,,,,
+Market buy,2025-10-03 07:00:43,IE0032077012,EQQQ,"Invesco EQQQ Nasdaq-100 (Dist)",,EOF39663415275,0.0071046700,45463.0000000000,GBX,100.00000000,,"GBP",3.23,"GBP",,,,,,
+Card debit,2025-10-03 11:07:38,,,,,ecb1e7bd-a6c7-4b3a-9752-76ed6292be34,,,,,,,-19.25,"GBP",,,,,"KITTLE PHOTOGRAPHIC LI","BUSINESS_SERVICES"
+Card debit,2025-10-03 11:14:34,,,,,84aa44be-7eec-434b-afa8-6f92fc98233b,,,,,,,-15.00,"GBP",,,,,"PHOTOGRAPHS","PERSONAL_SERVICES"
+Deposit,2025-10-03 14:53:28,,,,"Transaction ID: ec29c3b2-8708-4696-9bd6-5037350bfa21",9dcc0317-4f39-45ba-a62e-dd3d410eb2d4,,,,,,,300.00,"GBP",,,,,,
+Card debit,2025-10-03 17:14:09,,,,,73bf0f08-4332-4303-9ee7-64fcdb2960c2,,,,,,,-5.52,"GBP",,,,,"YOURPARKINGSPACE.CO.UK","BUSINESS_SERVICES"
+Spending cashback,2025-10-05 01:22:18,,,,,9e5b82b6-a3e4-42cc-899b-90e81a12c7ef,,,,,,,0.60,"GBP",,,,,,
+Card debit,2025-10-05 20:08:59,,,,,5adef7fa-4ca5-44f6-bbd5-41ac45d89e58,,,,,,,-2.10,"GBP",,,,,"LONDIS","RETAIL_STORES"
+Card debit,2025-10-05 20:12:40,,,,,49a2d9bb-d115-4d57-919a-5e5ee82de32a,,,,,,,-1.75,"GBP",,,,,"MFG BROADWAY","AUTOMOBILE"
+Card debit,2025-10-06 12:05:58,,,,,a62025ec-00ab-4862-aaac-1a8015bf7df2,,,,,,,-5.40,"GBP",,,,,"STARBUCKS","RESTAURANTS"
+Card debit,2025-10-06 19:32:23,,,,,9418ed2e-b276-40d1-81f6-f3f46bd25d0e,,,,,,,-2.23,"GBP",,,,,"ASDA STORE 4745","RETAIL_STORES"
+Spending cashback,2025-10-07 01:11:17,,,,,b33b3e4f-c0ee-4e34-92fa-3c390010f8ef,,,,,,,0.06,"GBP",,,,,,
+Card debit,2025-10-07 13:22:54,,,,,dedd552a-59c1-46f1-98af-ec6588d841e2,,,,,,,-1.60,"GBP",,,,,"JUSTPARK","BUSINESS_SERVICES"
+Card debit,2025-10-07 14:29:37,,,,,7925f040-03c7-4448-81aa-fdfd3acf76a4,,,,,,,-1.60,"GBP",,,,,"JUSTPARK","BUSINESS_SERVICES"
+Spending cashback,2025-10-08 01:22:18,,,,,a70cf95d-bbba-4c64-80c2-71599344b41c,,,,,,,0.11,"GBP",,,,,,
+Card debit,2025-10-08 15:17:28,,,,,3a364069-83f5-457d-abcf-9d44ed95e6cf,,,,,,,-4.00,"GBP",,,,,"SumUp  *Sam Price Frui","RETAIL_STORES"
+Card debit,2025-10-08 15:35:25,,,,,edf267f4-c3f9-4ac7-ad27-35f3efcbadd7,,,,,,,-12.94,"GBP",,,,,"ASDA BEXLEYHEATH","RETAIL_STORES"
+Spending cashback,2025-10-09 01:22:24,,,,,c5d1fc66-f7a1-48ee-b319-07f39c0ad111,,,,,,,0.05,"GBP",,,,,,
+Spending cashback,2025-10-10 01:22:30,,,,,f911cd96-c40f-4565-be9a-2b911477deaa,,,,,,,0.25,"GBP",,,,,,
+Card debit,2025-10-10 14:03:38,,,,,4fbc283b-d1bc-4196-8a95-3cd4ec6ecad5,,,,,,,-55.00,"GBP",,,,,"DARTFORD MUSIC SCHOOL","MEMBERSHIPS"
+Spending cashback,2025-10-12 01:23:02,,,,,b90f51b4-78e0-4010-b0cb-1c63a5195291,,,,,,,0.83,"GBP",,,,,,
+Card debit,2025-10-12 11:08:02,,,,,911cf43e-7698-4c9b-a9c1-d6c4257524e0,,,,,,,-6.70,"GBP",,,,,"JUGAAD KITCHEN","RESTAURANTS"
+Card debit,2025-10-12 11:14:51,,,,,3e04d3d8-fdec-4149-83cd-50f000eb0563,,,,,,,-13.00,"GBP",,,,,"THE GLAM BEAUTY & BARB","PERSONAL_SERVICES"
+Market buy,2025-10-13 13:30:05,US7134481081,PEP,"PepsiCo",,EOF40206391593,0.0096662100,149.0000000000,USD,1.33357897,,"GBP",1.08,"GBP",,,,,,
+Spending cashback,2025-10-14 01:21:47,,,,,8f8100a8-a774-41f8-93c3-cd680b0b7af2,,,,,,,0.29,"GBP",,,,,,
+Card debit,2025-10-14 16:51:54,,,,,8aaec2c1-262b-4a51-a319-d2084721b326,,,,,,,-5.82,"GBP",,,,,"YOURPARKINGSPACE.CO.UK","BUSINESS_SERVICES"
+Card debit,2025-10-15 13:16:39,,,,,864abe10-aac7-42f1-81d5-46e6b99d5dbc,,,,,,,-14.13,"GBP",,,,,"SUPERDRUG STORES PLC","MISCELLANEOUS"
+Card debit,2025-10-15 13:17:57,,,,,cfc60443-8618-4d4e-b2d2-6cedfcfdf72e,,,,,,,-6.00,"GBP",,,,,"SUPERDRUG STORES PLC","MISCELLANEOUS"
+Card debit,2025-10-16 13:55:15,,,,,2988ff65-f203-4486-92b0-ce4438748d44,,,,,,,-3.00,"GBP",,,,,"CANCER RESEARCH LTD","MEMBERSHIPS"
+Card debit,2025-10-16 14:19:39,,,,,a00d2726-a680-4c39-95bd-12855213c876,,,,,,,-6.49,"GBP",,,,,"SUBWAY45434","RESTAURANTS"
+Card debit,2025-10-16 14:23:11,,,,,057e98f8-5c2c-4082-bc2d-29e72148249f,,,,,,,-28.00,"GBP",,,,,"TOWNLEY GRAMMAR SCHOOL","MEMBERSHIPS"
+Card debit,2025-10-16 14:38:55,,,,,01fc4f0b-cd2d-4ead-9e56-0e5eb15ac3c3,,,,,,,-3.00,"GBP",,,,,"RINGGO PARKING","BUSINESS_SERVICES"
+Card debit,2025-10-16 16:37:37,,,,,58046cc8-95ca-4499-a0f8-6ab6b45d69be,,,,,,,-19.49,"GBP",,,,,"MADRAS FLAVOURS","RESTAURANTS"
+Spending cashback,2025-10-17 01:18:01,,,,,3e739855-50dc-4612-be56-29cf18330ea2,,,,,,,0.39,"GBP",,,,,,
+Card debit,2025-10-17 16:35:45,,,,,1d6251c7-4c4e-4853-a86f-002a1d1bcac8,,,,,,,-20.00,"GBP",,,,,"OPENAI *CHATGPT SUBSCR","MISCELLANEOUS"
+Spending cashback,2025-10-18 01:13:24,,,,,1e875f91-7134-4a22-853d-23fd6dc3d7f7,,,,,,,0.90,"GBP",,,,,,
+Card debit,2025-10-18 15:40:11,,,,,55242da2-037c-4c79-81cd-156b0c493150,,,,,,,-3.96,"GBP",,,,,"ASDA BEXLEY HEATH CR","RETAIL_STORES"
+Spending cashback,2025-10-19 01:11:32,,,,,6509e073-cca2-4368-b5c1-07442e86def8,,,,,,,0.30,"GBP",,,,,,
+Card debit,2025-10-19 10:02:47,,,,,ea7942b3-35e7-49bb-8bda-58f79cd22ef8,,,,,,,-7.03,"GBP",,,,,"Nisa local Broadway","RETAIL_STORES"
+Card debit,2025-10-19 11:12:40,,,,,5232f610-7983-4810-921a-a29970859fba,,,,,,,-52.16,"GBP",,,0.00,"EUR","DEPARTMENT OF FOREIGN","GOVERNMENT_SERVICES"
+Card debit,2025-10-19 14:50:16,,,,,429ac336-a825-4197-9dba-9dec49610ce2,,,,,,,-9.03,"GBP",,,,,"SAVERS HEALTH & BEAUTY","MISCELLANEOUS"
+Card debit,2025-10-19 14:55:57,,,,,649a866c-f77b-4422-b884-ea20a84fab0d,,,,,,,-2.25,"GBP",,,,,"BOOTS 0846","MISCELLANEOUS"
+Card debit,2025-10-19 14:57:55,,,,,a093d8f6-76dd-4d93-a876-bae79b485708,,,,,,,-4.99,"GBP",,,,,"BOOTS 0846","MISCELLANEOUS"
+Card debit,2025-10-19 15:12:42,,,,,8c702e10-8181-4754-97d8-a3ec93e7e730,,,,,,,-1.98,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card debit,2025-10-19 15:14:25,,,,,27488d64-bdd0-4310-be5d-e4a414de540b,,,,,,,-2.98,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Deposit,2025-10-19 15:23:05,,,,"Transaction ID: ecb0c486-976a-4b34-bea5-94fcc991b5bd",a4f55c8b-3d92-4de8-8a13-6f9ff974d9fe,,,,,,,200.00,"GBP",,,,,,
+Card debit,2025-10-19 15:23:30,,,,,77b4d4a7-c56f-4be7-9079-aa2b07ab0fab,,,,,,,-92.36,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Spending cashback,2025-10-20 01:15:56,,,,,fbc71205-d466-49fa-bafd-feaa28e25e1b,,,,,,,0.17,"GBP",,,,,,
+Card debit,2025-10-20 10:34:22,,,,,2dc2aad1-af2e-4282-b4bd-ed523671fe17,,,,,,,-16.98,"GBP",,,,,"AMZNMktplace","MISCELLANEOUS"
+Card debit,2025-10-20 12:59:28,,,,,966e4355-b1fa-4504-806d-01c02175cef8,,,,,,,-9.75,"GBP",,,,,"POST OFFICE COUNTER","GOVERNMENT_SERVICES"
+Market buy,2025-10-20 13:30:07,US7134481081,PEP,"PepsiCo",,EOF40607958357,0.0137296500,154.4400000000,USD,1.34202983,,"GBP",1.58,"GBP",,,,,,
+Card debit,2025-10-20 15:04:54,,,,,cbf99ae0-9d0b-4ea6-a830-a03005339598,,,,,,,-39.45,"GBP",,,,,"AMZNMktplace","MISCELLANEOUS"
+Spending cashback,2025-10-21 01:11:29,,,,,d709256c-52d6-46de-b88e-60e53e051311,,,,,,,1.70,"GBP",,,,,,
+Card debit,2025-10-21 10:45:07,,,,,a304df02-3aad-48b8-9604-abb7ecd35745,,,,,,,-1.20,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card debit,2025-10-21 10:50:38,,,,,c45cd3ac-a0da-4c55-bf37-5b04566ad70a,,,,,,,-13.66,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Market buy,2025-10-21 13:30:04,US7134481081,PEP,"PepsiCo",,EOF40653863410,0.0187715500,154.7300000000,USD,1.33848936,,"GBP",2.17,"GBP",,,,,,
+Card debit,2025-10-21 15:46:58,,,,,5c1ff02c-536a-4f71-9a55-db30bc0a3946,,,,,,,-14.00,"GBP",,,,,"CHOICE DISCOUNT STORES","CLOTHING_STORES"
+Card debit,2025-10-21 16:09:40,,,,,55270b3b-1fc5-453d-8357-e0fc6c8501ca,,,,,,,-10.00,"GBP",,,,,"J D SPORTS","MISCELLANEOUS"
+Card debit,2025-10-21 16:23:26,,,,,da2a0ec5-1cf9-4456-b0e8-baf97afe5a7d,,,,,,,-27.32,"GBP",,,,,"SUPERDRUG STORES PLC","MISCELLANEOUS"
+Card debit,2025-10-21 16:30:26,,,,,25be40f3-7661-496b-b92c-ff888f3800c3,,,,,,,-2.24,"GBP",,,,,"SAVERS HEALTH & BEAUTY","MISCELLANEOUS"
+Deposit,2025-10-22 10:11:42,,,,"Transaction ID: fb781e82-f3b0-4648-9ccf-892a409c4902",f2bdd3a1-9427-46e9-a1ec-668036fbc77e,,,,,,,250.00,"GBP",,,,,,
+Card debit,2025-10-22 14:43:53,,,,,4851ed3a-733e-41b5-9f00-fa14e1b4c8e9,,,,,,,-13.00,"GBP",,,,,"THE GLAM BEAUTY & BARB","PERSONAL_SERVICES"
+Card debit,2025-10-22 15:19:41,,,,,8912a2ef-b56d-41c2-8c9f-5439b016a48f,,,,,,,-4.05,"GBP",,,,,"ASDA BEXLEY HEATH CR","RETAIL_STORES"
+Card debit,2025-10-22 15:20:20,,,,,e378d84f-6e90-40d8-aba8-31b7ede75b99,,,,,,,-13.00,"GBP",,,,,"SD LDN Bexleyheath 329","MISCELLANEOUS"
+Spending cashback,2025-10-23 01:14:04,,,,,b06e4dfe-88a7-4a1b-8c56-ae851a368a82,,,,,,,1.28,"GBP",,,,,,
+Card credit,2025-10-23 09:48:57,,,,,7b960125-9cd0-4837-a1b3-b97fed97b3bb,,,,,,,10.00,"GBP",,,,,"J D SPORTS  172","MISCELLANEOUS"
+Market buy,2025-10-23 13:30:03,US7134481081,PEP,"PepsiCo",,EOF40752285209,0.0111279000,153.5300000000,USD,1.33473944,,"GBP",1.28,"GBP",,,,,,
+Spending cashback,2025-10-24 01:06:31,,,,,eff6e785-c8f8-4863-b077-6222a676b9cf,,,,,,,1.04,"GBP",,,,,,
+Market buy,2025-10-24 07:00:31,GB0009895292,AZN,"AstraZeneca",,EOF40759240158,0.0081941100,12570.0000000000,GBX,100.00000000,,"GBP",1.04,"GBP",0.01,"GBP",,,,
+Card debit,2025-10-24 10:06:54,,,,,32fbe711-e094-42d8-bf63-a21e7406f1e2,,,,,,,-14.99,"GBP",,,,,"AMZNMktplace","MISCELLANEOUS"
+Card debit,2025-10-24 16:00:50,,,,,c4db2abd-caaa-4ed3-8704-0cc370ca90c3,,,,,,,-7.50,"GBP",,,,,"SD LDN Bexleyheath 329","MISCELLANEOUS"
+Card debit,2025-10-25 19:28:02,,,,,7a8939ad-8529-4497-a38a-c839e88c7b30,,,,,,,-85.03,"GBP",,,,,"DOMINOS PIZZA UK & IRE","RESTAURANTS"
+Spending cashback,2025-10-26 02:13:22,,,,,084d224f-2d4f-404e-8465-502f3daa8428,,,,,,,0.12,"GBP",,,,,,
+Card debit,2025-10-26 15:23:04,,,,,6888928c-0981-4ff6-b4e7-0a5591dfccdf,,,,,,,-23.40,"GBP",,,,,"MARKS&SPENCER PLC","RETAIL_STORES"
+Card debit,2025-10-26 15:23:53,,,,,058238f9-6818-4a2c-9d5e-6e6370bf0c1a,,,,,,,-8.10,"GBP",,,,,"MARKS&SPENCER PLC","RETAIL_STORES"
+Card debit,2025-10-26 15:40:58,,,,,6cdee831-b8d6-4d01-8d84-e26afb9216a2,,,,,,,-8.95,"GBP",,,,,"TORTILLA BLUEWATER","RESTAURANTS"
+Card debit,2025-10-26 16:52:47,,,,,94682f70-1ac6-47a6-befd-39a411483644,,,,,,,-119.80,"GBP",,,,,"Uniqlo Bluewater","CLOTHING_STORES"
+Card debit,2025-10-26 18:14:27,,,,,d09f9c27-1dfd-4922-9e40-e0a1384af475,,,,,,,-8.00,"GBP",,,,,"GRAVITY","ENTERTAINMENT"
+Spending cashback,2025-10-27 02:12:35,,,,,132078f1-21b4-4dc3-88da-addafef1b56b,,,,,,,1.27,"GBP",,,,,,
+Market buy,2025-10-27 08:00:33,GB0009895292,AZN,"AstraZeneca",,EOF40901108926,0.0110118000,12532.0000000000,GBX,100.00000000,,"GBP",1.39,"GBP",0.01,"GBP",,,,
+Deposit,2025-10-27 10:14:06,,,,"Transaction ID: 0af0063b-4cf5-4ae8-a8fe-39ed74b2b230",8e10c02a-d20e-4392-9a7c-ca47d8ab3abe,,,,,,,1615.00,"GBP",,,,,,
+Withdrawal,2025-10-27 10:43:00,,,,"Sent to Bank Account 09-01-28 / 39580938",6e7c446c-67c3-4f12-90df-94d18accdc42,,,,,,,-1400.00,"GBP",,,,,,
+Spending cashback,2025-10-28 02:20:46,,,,,cf7377b7-c9f1-4d00-aed4-c6cfd666846a,,,,,,,2.75,"GBP",,,,,,
+Market buy,2025-10-28 08:00:33,GB0009895292,AZN,"AstraZeneca",,EOF40969850403,0.0217287800,12610.0000000000,GBX,100.00000000,,"GBP",2.75,"GBP",0.01,"GBP",,,,
+Card debit,2025-10-28 16:27:11,,,,,cef976c4-2b37-4391-8433-ace8da505157,,,,,,,-7.99,"GBP",,,,,"Amazon.co.uk","MISCELLANEOUS"
+Spending cashback,2025-10-30 02:24:02,,,,,9664049d-4ab7-4d21-a817-d7223ce97f27,,,,,,,0.12,"GBP",,,,,,
+Card debit,2025-10-30 08:47:36,,,,,651bab01-22ba-491c-a643-617e90f05051,,,,,,,-39.64,"GBP",,,,,"Lidl GB","RETAIL_STORES"
+Card debit,2025-10-30 21:07:11,,,,,7e0a7e47-4a7c-4530-a20b-3f20f183e93a,,,,,,,-11.42,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card debit,2025-10-31 20:37:44,,,,,f66dfc37-a9b0-475a-b82a-e83097813c14,,,,,,,-6.65,"GBP",,,,,"ASDA STORE 4745","RETAIL_STORES"
+Card debit,2025-11-01 12:08:51,,,,,6a01913e-db6a-4368-be87-dce2d1a75514,,,,,,,-69.00,"GBP",,,,,"OPENRENT EPC CERTIFICA","BUSINESS_SERVICES"
+Deposit,2025-11-01 14:30:09,,,,"Transaction ID: 66b6d980-af13-489a-9173-67db3b3bdc4a",a5ae6863-b491-4215-a3fb-f0f528e082a0,,,,,,,200.00,"GBP",,,,,,
+Spending cashback,2025-11-01 16:38:12,,,,,7cb0b967-5584-4340-b2e5-d2e21233c486,,,,,,,0.45,"GBP",,,,,,
+Card debit,2025-11-01 19:35:47,,,,,cc238ece-260a-4186-8a29-b9dea99787c0,,,,,,,-97.00,"GBP",,,,,"MEDICFEST","OTHER"
+Spending cashback,2025-11-02 02:08:03,,,,,e6a2c55a-8e6f-429d-affe-68d31e05e46f,,,,,,,0.09,"GBP",,,,,,
+Card debit,2025-11-02 13:33:58,,,,,63642b18-809c-4fae-bf9d-82159e712afc,,,,,,,-4.72,"GBP",,,,,"ASDA BEXLEY HEATH CR","RETAIL_STORES"
+Spending cashback,2025-11-03 02:09:34,,,,,94c4f4ec-c0aa-4c7a-90f8-8746c4a92498,,,,,,,2.49,"GBP",,,,,,
+Market buy,2025-11-03 08:00:39,GB0009895292,AZN,"AstraZeneca",,EOF41202592454,0.0248847100,12578.0000000000,GBX,100.00000000,,"GBP",3.15,"GBP",0.02,"GBP",,,,
+Market buy,2025-11-03 14:30:45,US69608A1088,PLTR,"Palantir",,EOF41311997194,0.0082253000,205.7400000000,USD,1.31183970,,"GBP",1.29,"GBP",,,,,,
+Spending cashback,2025-11-04 02:08:48,,,,,60e0f3e2-5445-4bc1-9ea9-891653520dd6,,,,,,,0.08,"GBP",,,,,,
+Card debit,2025-11-05 11:55:03,,,,,5aea1065-1517-4124-b551-d84eaee7755c,,,,,,,-52.00,"GBP",,,,,"SUPERDRUG STORES PLC","MISCELLANEOUS"
+Card debit,2025-11-05 12:00:44,,,,,6b5dba70-951a-4739-a86a-6ca2f9ae479e,,,,,,,-5.00,"GBP",,,,,"SUPERDRUG STORES PLC","MISCELLANEOUS"
+Card debit,2025-11-05 16:11:39,,,,,55167ea3-56ba-46d8-9ba3-68d282f1b4e4,,,,,,,-54.75,"GBP",,,,,"ASDA STORE 4745","RETAIL_STORES"
+Spending cashback,2025-11-07 02:09:16,,,,,8a7685f4-376d-4e34-845a-e6324a590bfe,,,,,,,1.67,"GBP",,,,,,
+Market buy,2025-11-07 08:00:31,GB0009895292,AZN,"AstraZeneca",,EOF41460238362,0.0136556200,12742.0000000000,GBX,100.00000000,,"GBP",1.75,"GBP",0.01,"GBP",,,,
+Deposit,2025-11-07 15:07:08,,,,"Transaction ID: 2513d9b4-fbf8-4f96-9645-1caac3d9d8ed",ddf2100c-e8c0-4e3a-9f84-77f786613f08,,,,,,,250.00,"GBP",,,,,,
+Card debit,2025-11-07 15:08:52,,,,,e6591d92-3b0d-4c03-9f0c-8c30bf5cb126,,,,,,,-195.00,"GBP",,,,,"DVLA VEHICLE TAX","GOVERNMENT_SERVICES"
+Card debit,2025-11-07 15:13:13,,,,,846e2c85-5abe-4eb5-8e29-694ed1a1e2b8,,,,,,,-55.00,"GBP",,,,,"DARTFORD MUSIC SCHOOL","MEMBERSHIPS"
+Card debit,2025-11-07 19:36:53,,,,,fd0434f6-7f3c-4c91-9b4f-5008e87a3084,,,,,,,-0.75,"GBP",,,,,"TESCO STORES 6779","RETAIL_STORES"
+Card debit,2025-11-08 12:34:11,,,,,5dfce5ce-3e8d-4dae-a6cc-9c768841a463,,,,,,,-7.18,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card debit,2025-11-08 12:36:14,,,,,c68129d9-4304-4ced-aae8-c7bb465f96df,,,,,,,-9.58,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Spending cashback,2025-11-09 02:10:43,,,,,fcef5c03-a7d6-465b-89bd-8663a0dccd6b,,,,,,,0.84,"GBP",,,,,,
+Card debit,2025-11-09 11:22:28,,,,,1647e24c-ae79-4f51-842d-7200e58286ee,,,,,,,-7.30,"GBP",,,,,"Amazon.co.uk","MAIL_OR_TELEPHONE_ORDER"
+Card debit,2025-11-09 17:35:33,,,,,3a159bd3-768b-4ebb-98d5-d6c14701c4e9,,,,,,,-5.34,"GBP",,,,,"Nisa local Broadway","RETAIL_STORES"
+Card debit,2025-11-09 19:17:09,,,,,8f3ccfb1-f8ad-48bd-ac34-5f3446313307,,,,,,,-10.56,"GBP",,,,,"The Lotus Shop","RETAIL_STORES"
+Spending cashback,2025-11-10 02:08:32,,,,,c34eef8f-743f-428e-a88f-7bb660332913,,,,,,,0.25,"GBP",,,,,,
+Market sell,2025-11-10 08:00:32,GB0009895292,AZN,"AstraZeneca",,EOF41601181167,0.0295803000,12914.0000000000,GBX,100.00000000,0.09,"GBP",3.82,"GBP",,,,,,
+Market buy,2025-11-10 08:00:42,GB00B63H8491,RR,"Rolls-Royce",,EOF41601196623,0.4019097200,1152.0000000000,GBX,100.00000000,,"GBP",4.65,"GBP",0.02,"GBP",,,,
+Card debit,2025-11-10 09:39:37,,,,,7bf9fa1a-dbfb-4dc8-a46e-03bf6dcf12cb,,,,,,,-20.00,"GBP",,,,,"PARENTPAY E-COM R","MEMBERSHIPS"
+Card debit,2025-11-10 11:46:25,,,,,af2591e7-2223-4547-9b27-c7a7e2983b8e,,,,,,,-4.37,"GBP",,,,,"ASDA BEXLEY HEATH CR","RETAIL_STORES"
+Card debit,2025-11-10 11:49:44,,,,,421522c2-33cd-4073-834a-e1fc58b14d58,,,,,,,-1.65,"GBP",,,,,"ASDA BEXLEY HEATH CR","RETAIL_STORES"
+Market buy,2025-11-10 14:30:04,US69608A1088,PLTR,"Palantir",,EOF41655770879,0.0114234200,184.4000000000,USD,1.31654915,,"GBP",1.60,"GBP",,,,,,
+Card debit,2025-11-10 16:56:26,,,,,ba4c1be5-82ef-440f-bd93-551b57cddf81,,,,,,,-1.98,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Market buy,2025-11-10 16:56:27,US69608A1088,PLTR,"Palantir",,EOF41662006106,0.0223170800,189.8100000000,USD,1.31552948,,"GBP",3.22,"GBP",,,,,,
+Card debit,2025-11-10 16:58:04,,,,,7ff4bc79-49a2-49de-a868-3dfd2184bc83,,,,,,,-6.98,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card debit,2025-11-10 17:05:19,,,,,b7045bd4-731d-46ae-9ac3-701a6492286f,,,,,,,-6.08,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Deposit,2025-11-10 23:44:17,,,,"Transaction ID: 439f7fac-7856-4a62-9978-3a91417e90b5",9e6b0456-e9ea-4fad-9446-f8de4badb79c,,,,,,,250.00,"GBP",,,,,,
+Spending cashback,2025-11-11 02:08:57,,,,,4cbe9bfe-0171-4222-87d3-ab20163401e1,,,,,,,0.24,"GBP",,,,,,
+Spending cashback,2025-11-12 02:08:22,,,,,95b6f801-363b-45f4-a219-82bc4e751ffb,,,,,,,0.61,"GBP",,,,,,
+Spending cashback,2025-11-13 02:08:46,,,,,77cb441c-20fb-497b-af4e-3d284b52f788,,,,,,,0.11,"GBP",,,,,,
+Card debit,2025-11-14 10:35:41,,,,,9bc1d204-efaa-44b1-97a3-b50f9881d61f,,,,,,,-9.30,"GBP",,,,,"MARKS&SPENCER PLC SACA","RETAIL_STORES"
+Card debit,2025-11-14 10:56:23,,,,,62ad2832-1a18-471d-b8e9-5dc8c1c9e6fe,,,,,,,-8.20,"GBP",,,,,"ASDA BEXLEYHEATH","RETAIL_STORES"
+Card debit,2025-11-14 11:40:31,,,,,1b825371-876f-47b4-b105-2c0145315a75,,,,,,,-90.00,"GBP",,,,,"PARENTPAY E-COM R","MEMBERSHIPS"
+Market buy,2025-11-14 14:30:03,US69608A1088,PLTR,"Palantir",,EOF41852899190,0.0129191600,167.1600000000,USD,1.31680901,,"GBP",1.64,"GBP",,,,,,
+Card debit,2025-11-15 12:32:16,,,,,16a37b74-587c-4e14-ac8c-6bfe247b8760,,,,,,,-18.46,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card debit,2025-11-15 12:50:34,,,,,a4c578e7-750d-4c2d-9ddd-a7a253fcf956,,,,,,,-28.77,"GBP",,,,,"SQ *KESAR2","RESTAURANTS"
+Spending cashback,2025-11-16 02:30:16,,,,,9ed5f363-c70c-420f-9a81-77d37966dbd6,,,,,,,0.12,"GBP",,,,,,
+Spending cashback,2025-11-16 02:30:16,,,,,e5e037c8-48d3-4778-aca4-6b636a673a93,,,,,,,0.13,"GBP",,,,,,
+Spending cashback,2025-11-16 02:30:16,,,,,8cbc0623-06b9-4ed5-8ffd-fa8b8221176b,,,,,,,0.43,"GBP",,,,,,
+Card debit,2025-11-16 11:45:27,,,,,f78c8d7f-1c50-4bbe-b80a-b34e686e3a3f,,,,,,,-39.99,"GBP",,,,,"CURRYS ONLINE","MISCELLANEOUS"
+Card debit,2025-11-16 12:29:38,,,,,4edd4714-a8be-40bd-bae9-7b5957640be9,,,,,,,-6.00,"GBP",,,,,"SQ *SQUEEZE&SIP","RESTAURANTS"
+Card debit,2025-11-16 13:37:16,,,,,4f8f7b2c-2055-4412-acd3-6dd7eb674d45,,,,,,,-6.99,"GBP",,,,,"AMZNMktplace","MISCELLANEOUS"
+Deposit,2025-11-16 14:44:55,,,,"Transaction ID: 667c17b6-2deb-4344-8956-3052832abbee",a6fc7f4f-b68c-4be1-a234-7a3c4f267581,,,,,,,250.00,"GBP",,,,,,
+Card debit,2025-11-16 19:50:11,,,,,0ca9ce1f-e7e7-4be9-8afc-f93c52e59325,,,,,,,-3.29,"GBP",,,,,"The Lotus Shop","RETAIL_STORES"
+Spending cashback,2025-11-17 02:30:34,,,,,5ce60c64-4025-4368-8f82-5ee48660043c,,,,,,,0.27,"GBP",,,,,,
+Spending cashback,2025-11-17 02:30:34,,,,,f6baa73a-da12-459e-988e-130ebbcabc0f,,,,,,,0.09,"GBP",,,,,,
+Market buy,2025-11-17 08:00:31,GB0007980591,BP,"BP",,EOF41862342200,0.2321292900,460.9500000000,GBX,100.00000000,,"GBP",1.08,"GBP",0.01,"GBP",,,,
+Market buy,2025-11-17 08:00:33,GB00B63H8491,RR,"Rolls-Royce",,EOF41862344843,0.0971843700,1101.0000000000,GBX,100.00000000,,"GBP",1.08,"GBP",0.01,"GBP",,,,
+Card debit,2025-11-17 12:16:35,,,,,23956556-a511-439b-a45e-0aea21e95e2b,,,,,,,-6.16,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card debit,2025-11-17 12:24:37,,,,,954f84a3-7693-4a44-8115-c3f9ccd65c4d,,,,,,,-25.00,"GBP",,,,,"Mobile and Laptop Repa","MISCELLANEOUS"
+Market buy,2025-11-17 14:30:07,US69608A1088,PLTR,"Palantir",,EOF42006155646,0.0103407700,170.6700000000,USD,1.31705911,,"GBP",1.34,"GBP",,,,,,
+Card debit,2025-11-17 21:31:32,,,,,e327df39-20b6-4179-8b4c-5490b747004d,,,,,,,-13.14,"GBP",,,,,"ASDA SUPERSTORE","RETAIL_STORES"
+Spending cashback,2025-11-18 02:23:06,,,,,9e96de50-f470-4466-9c3f-1ea780289a03,,,,,,,0.04,"GBP",,,,,,
+Spending cashback,2025-11-18 02:23:06,,,,,73784b76-60ab-4d20-894d-3b64cc18e26d,,,,,,,1.35,"GBP",,,,,,
+Spending cashback,2025-11-18 02:23:06,,,,,79643289-c324-44a1-b79f-adb4020cdfa9,,,,,,,0.59,"GBP",,,,,,
+Market buy,2025-11-18 08:00:34,GB00B63H8491,RR,"Rolls-Royce",,EOF42012838226,0.0950605700,1073.0000000000,GBX,100.00000000,,"GBP",1.03,"GBP",0.01,"GBP",,,,
+Market buy,2025-11-18 08:00:36,GB0007980591,BP,"BP",,EOF42012840529,0.2227803800,457.8500000000,GBX,100.00000000,,"GBP",1.03,"GBP",0.01,"GBP",,,,
+Market buy,2025-11-18 14:30:06,US69608A1088,PLTR,"Palantir",,EOF42052636646,0.0207675700,168.5000000000,USD,1.31553967,,"GBP",2.66,"GBP",,,,,,
+Spending cashback,2025-11-19 02:12:41,,,,,7f25ab65-e55a-4735-9f0b-e3853f6b2dba,,,,,,,0.19,"GBP",,,,,,
+Spending cashback,2025-11-19 02:12:41,,,,,4ee3a405-038c-4369-bd5d-a63a013dcbfc,,,,,,,0.09,"GBP",,,,,,
+Spending cashback,2025-11-19 02:12:41,,,,,e6b6cf34-721a-47cb-857d-e962e4dd04dd,,,,,,,0.37,"GBP",,,,,,
+Spending cashback,2025-11-19 02:12:41,,,,,cfd0d78e-c552-47d4-9f46-bd7cb40499f7,,,,,,,0.10,"GBP",,,,,,
+Card debit,2025-11-20 12:22:14,,,,,d4a877c5-4475-4c9b-9457-e4a8e5f1e0c9,,,,,,,-20.52,"GBP",,,,,"eBay O*15-13852-21727","RETAIL_STORES"
+Card debit,2025-11-20 16:55:28,,,,,4e90c111-07c4-42bb-b9d2-5f5730f3bf38,,,,,,,-2.68,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card debit,2025-11-20 16:59:47,,,,,f3e6e561-eee1-41ac-bb02-42b8eee2f01c,,,,,,,-4.49,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Market buy,2025-11-20 16:59:49,US69608A1088,PLTR,"Palantir",,EOF42154646844,0.0106790800,160.4200000000,USD,1.30773894,,"GBP",1.31,"GBP",,,,,,
+Card debit,2025-11-20 17:09:02,,,,,d884daff-4348-4ca9-80e9-c0dd1cabafbe,,,,,,,-9.50,"GBP",,,,,"MARKS&SPENCER PLC SACA","RETAIL_STORES"
+Card debit,2025-11-20 17:16:17,,,,,1897d835-f188-4add-b618-7a55e0542cfd,,,,,,,-4.58,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card debit,2025-11-20 21:00:26,,,,,68f04dfb-1867-475e-b258-dfa08083c3a4,,,,,,,-6.73,"GBP",,,,,"ASDA SUPERSTORE","RETAIL_STORES"
+Spending cashback,2025-11-21 02:12:32,,,,,0c8a5151-c0d9-4b65-8ff2-a0142cd899f5,,,,,,,0.30,"GBP",,,,,,
+Card debit,2025-11-21 08:12:12,,,,,61147006-88c7-485b-a19a-2e84a3108c6e,,,,,,,-15.00,"GBP",,,,,"TRANSPORT FOR LONDON","TRANSPORT"
+Market buy,2025-11-21 14:30:03,US69608A1088,PLTR,"Palantir",,EOF42202485719,0.0099736400,156.0000000000,USD,1.30746877,,"GBP",1.19,"GBP",,,,,,
+Spending cashback,2025-11-22 02:13:25,,,,,a50606d5-023e-49f5-a837-3f9320271659,,,,,,,0.14,"GBP",,,,,,
+Spending cashback,2025-11-22 02:13:25,,,,,88895b4b-ffc9-4bf1-b28c-c42b7cd08486,,,,,,,0.10,"GBP",,,,,,
+Spending cashback,2025-11-22 02:13:25,,,,,ff219787-9ce6-41b8-93ed-c46cf9e8d541,,,,,,,0.04,"GBP",,,,,,
+Spending cashback,2025-11-22 02:13:25,,,,,f4afc50f-03fc-4fb5-8f7a-83cab85ea67a,,,,,,,0.06,"GBP",,,,,,
+Spending cashback,2025-11-22 02:13:25,,,,,d0117782-add3-41d6-bcef-3a422e2474ec,,,,,,,0.06,"GBP",,,,,,
+Card debit,2025-11-22 11:20:34,,,,,267fcf11-bd8f-4e1e-81e6-70c7bd6b1794,,,,,,,-5.19,"GBP",,,,,"SAVERS HEALTH & BEAUTY","MISCELLANEOUS"
+Card debit,2025-11-22 11:43:19,,,,,c5873819-7dba-42c0-83b8-87faaf7adcf9,,,,,,,-10.74,"GBP",,,,,"FARMFOODS 707","RETAIL_STORES"
+Card debit,2025-11-22 11:55:28,,,,,3068d00f-7bbf-4a5d-95a4-05823bb89827,,,,,,,-25.00,"GBP",,,,,"IN 'N' OUT CENTRES RET","AUTOMOBILE"
+Card debit,2025-11-22 12:04:59,,,,,4c506159-c3e1-4b6e-8869-f3f1561cc2b3,,,,,,,-2.75,"GBP",,,,,"WM MORRISONS STORE","RETAIL_STORES"
+Spending cashback,2025-11-23 02:14:31,,,,,33c3d928-f3a7-402b-9eaa-c6f3af7d45aa,,,,,,,0.22,"GBP",,,,,,
+Card debit,2025-11-23 13:48:39,,,,,852ac2fe-a3ed-4d97-b07e-6aac017362f4,,,,,,,-8.20,"GBP",,,,,"Morleys Bexleyheath","RESTAURANTS"
+Spending cashback,2025-11-24 02:25:59,,,,,914147f1-9acf-44db-939e-f72e26c9782a,,,,,,,0.07,"GBP",,,,,,
+Spending cashback,2025-11-24 02:25:59,,,,,e3934674-93ba-4ae2-bd06-b50ea2278ecd,,,,,,,0.37,"GBP",,,,,,
+Spending cashback,2025-11-24 02:25:59,,,,,009ded8c-0266-4c22-b694-1e0fcd0bec0a,,,,,,,0.16,"GBP",,,,,,
+Spending cashback,2025-11-24 02:25:59,,,,,a6881b74-89ec-4dec-9f8e-791ca23ebe8b,,,,,,,0.04,"GBP",,,,,,
+Market buy,2025-11-24 08:00:32,GB0007980591,BP,"BP",,EOF42250752517,0.2307438700,455.0500000000,GBX,100.00000000,,"GBP",1.06,"GBP",0.01,"GBP",,,,
+Market buy,2025-11-24 08:00:36,GB00B63H8491,RR,"Rolls-Royce",,EOF42250759344,0.1014492700,1035.0000000000,GBX,100.00000000,,"GBP",1.06,"GBP",0.01,"GBP",,,,
+Card debit,2025-11-24 10:29:23,,,,,60bd4b28-dffa-450b-a94e-7dfdbb4d642f,,,,,,,-4.00,"GBP",,,,,"ASDA BEXLEYHEATH","RETAIL_STORES"
+Market buy,2025-11-24 14:30:06,US69608A1088,PLTR,"Palantir",,EOF42353672408,0.0088924100,157.5000000000,USD,1.30892950,,"GBP",1.07,"GBP",,,,,,
+Card debit,2025-11-24 20:54:54,,,,,10315d1f-2095-4459-aea6-42e3ace59c66,,,,,,,-1.98,"GBP",,,,,"ASDA BEXLEYHEATH","RETAIL_STORES"
+Market buy,2025-11-24 20:54:55,US69608A1088,PLTR,"Palantir",,EOF42360176113,0.0086431800,162.3200000000,USD,1.31117848,,"GBP",1.07,"GBP",,,,,,
+Card debit,2025-11-24 21:04:50,,,,,155587a9-4867-4a9c-bd6b-8041cb6b5a8a,,,,,,,-6.28,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Spending cashback,2025-11-25 02:12:07,,,,,9a7beb1a-3bd2-444f-8638-bb28386dcc13,,,,,,,0.12,"GBP",,,,,,
+Card credit,2025-11-25 10:38:35,,,,,8bd4eb13-bc5b-4258-977a-3b6c08ea15b9,,,,,,,4.00,"GBP",,,,,"ASDA Stores","RETAIL_STORES"
+Card debit,2025-11-25 16:33:56,,,,,21d9abbd-5bae-4ca4-9905-b0500a19b003,,,,,,,-3.56,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Market buy,2025-11-25 16:33:58,US69608A1088,PLTR,"Palantir",,EOF42406014496,0.0094907500,161.1000000000,USD,1.31806881,,"GBP",1.16,"GBP",,,,,,
+Card debit,2025-11-25 16:39:59,,,,,7923b796-cbac-498b-ac81-8b672ee0e338,,,,,,,-17.82,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Spending cashback,2025-11-26 02:19:15,,,,,544a3596-ca15-4b74-9092-6dca7b6a59a5,,,,,,,0.06,"GBP",,,,,,
+Spending cashback,2025-11-26 02:19:15,,,,,0ea11422-9c6e-4db3-8671-2fd41bbc88dc,,,,,,,0.02,"GBP",,,,,,
+Spending cashback,2025-11-26 02:19:15,,,,,e9a7ae56-0ac1-459f-ad41-fa7d36913fb7,,,,,,,0.09,"GBP",,,,,,
+Deposit,2025-11-26 17:19:08,,,,"Transaction ID: 00dcccac-ed05-4106-80ba-5810d10b4e3e",e9d787f3-5c17-401b-aad3-d58458c1f794,,,,,,,350.00,"GBP",,,,,,
+Card debit,2025-11-26 17:20:46,,,,,b9950cd0-a388-4d0b-8990-99820e3abecd,,,,,,,-349.67,"GBP",,,,,"PAYPAL *PYPL Payin3","SERVICE_PROVIDERS"
+Spending cashback,2025-11-27 02:18:51,,,,,85cb4ad0-77b5-4168-9937-84e2fd46f5a1,,,,,,,0.05,"GBP",,,,,,
+Spending cashback,2025-11-27 02:18:51,,,,,f939d1e7-d691-47ff-8799-ab39b1ccf2df,,,,,,,0.26,"GBP",,,,,,
+Card debit,2025-11-29 16:26:16,,,,,5831f0e3-dca0-490e-8337-3b13409e48fa,,,,,,,-8.20,"GBP",,,,,"Great British Fish and","RESTAURANTS"
+Card debit,2025-11-29 16:29:59,,,,,d32b34b7-87fd-443a-887d-76297b3d8389,,,,,,,-4.75,"GBP",,,,,"Great British Fish and","RESTAURANTS"
+Card debit,2025-11-29 19:50:41,,,,,2ba8536e-e48d-4dde-9504-d9c2ff0d9a4f,,,,,,,-16.00,"GBP",,,,,"DINES* CHIMNEY CAKES","SERVICE_PROVIDERS"
+Spending cashback,2025-12-01 02:24:20,,,,,21781f73-0b08-42df-887a-7092011581af,,,,,,,0.24,"GBP",,,,,,
+Spending cashback,2025-12-01 02:24:20,,,,,d76672fa-48f8-4f57-ae2b-cda570c6b94e,,,,,,,0.12,"GBP",,,,,,
+Spending cashback,2025-12-01 02:24:20,,,,,2713839c-e32e-4a17-ab80-8dac6679aaed,,,,,,,0.07,"GBP",,,,,,
+Card debit,2025-12-03 15:18:46,,,,,97fc2cef-279b-4184-9d91-d7b554a583ec,,,,,,,-15.00,"GBP",,,,,"TOWNLEY GRAMMAR SCHOOL","MEMBERSHIPS"
+Card debit,2025-12-03 15:27:12,,,,,c0ebdfcb-8c80-469f-8dc9-caf995149f3d,,,,,,,-24.99,"GBP",,,,,"SMYTHS TOYS","RETAIL_STORES"
+Card debit,2025-12-03 21:09:23,,,,,ade208d6-bc12-4709-9cb9-b0dbce960e65,,,,,,,-10.02,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card credit,2025-12-04 21:21:16,,,,,a6bfbd49-8e01-4409-ab32-4368538b7e27,,,,,,,3.49,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Card debit,2025-12-04 21:22:05,,,,,ec038e0c-cec6-408c-b5d3-87e8ff626868,,,,,,,-4.58,"GBP",,,,,"ALLI BHAVAN","RETAIL_STORES"
+Spending cashback,2025-12-05 02:27:56,,,,,75a34607-1e9a-4313-ae27-4754ff97986c,,,,,,,0.07,"GBP",,,,,,
+Spending cashback,2025-12-05 02:27:56,,,,,ccd71924-060d-4c62-8373-5f635b36918b,,,,,,,0.05,"GBP",,,,,,
+Deposit,2025-12-05 14:49:18,,,,"Transaction ID: a172231e-1bcf-4953-9c01-6efa0ae3c55b",e6e930f0-ec19-4007-8f11-d042ae481fbd,,,,,,,500.00,"GBP",,,,,,
+Card debit,2025-12-05 14:50:03,,,,,5fa94d72-4bfb-465b-b4f4-69b7b1db850a,,,,,,,-55.00,"GBP",,,,,"DARTFORD MUSIC SCHOOL","MEMBERSHIPS"
+Card debit,2025-12-05 15:44:47,,,,,66093ba8-ceaa-4375-88ef-7b519fb52531,,,,,,,-5.99,"GBP",,,,,"NETFLIX.COM","UTILITIES"
+Spending cashback,2025-12-06 02:28:35,,,,,d35d6cca-f239-40ca-ae69-74708edf9fab,,,,,,,0.12,"GBP",,,,,,
+Spending cashback,2025-12-06 02:28:35,,,,,7209ec85-604e-4ceb-a9f8-071cb2e5a07a,,,,,,,-0.01,"GBP",,,,,,
+Spending cashback,2025-12-06 02:28:35,,,,,ccc1fc40-d156-4b1d-ac31-700a522284c3,,,,,,,0.02,"GBP",,,,,,
+Card debit,2025-12-06 12:53:10,,,,,9a06b935-a8ee-405d-8a04-f9cdc27fe930,,,,,,,-4.25,"GBP",,,,,"PAYBYPHONE RE  LB OF N","BUSINESS_SERVICES"
+Card debit,2025-12-06 13:52:00,,,,,85ffc215-d6d5-4939-9ecd-1abcb9fee12b,,,,,,,-2.95,"GBP",,,,,"TASTE OF INDIA PURE VE","RESTAURANTS"
+Spending cashback,2025-12-07 02:29:32,,,,,d67dfaf1-60ca-4aae-8820-7adf2e2a9b67,,,,,,,0.02,"GBP",,,,,,
+Spending cashback,2025-12-07 02:29:32,,,,,fbd437f6-b74d-4d91-9127-90de396f2d49,,,,,,,0.27,"GBP",,,,,,
+Card debit,2025-12-07 14:50:12,,,,,cb36da17-8c16-4c2f-8385-fcd81f110bd5,,,,,,,-30.73,"GBP",,,,,"FARMFOODS 707","RETAIL_STORES"
+Card debit,2025-12-07 15:17:28,,,,,e824a928-ef50-4a36-beb4-9d1e20650dc2,,,,,,,-22.62,"GBP",,,,,"ICELAND","RETAIL_STORES"
+Spending cashback,2025-12-08 02:31:09,,,,,8499c4a8-9fb1-473b-8cfc-fdb1496f64b1,,,,,,,0.01,"GBP",,,,,,
+Spending cashback,2025-12-08 02:31:09,,,,,2f2d2663-e442-4b52-ae29-318c54c5c947,,,,,,,0.02,"GBP",,,,,,
