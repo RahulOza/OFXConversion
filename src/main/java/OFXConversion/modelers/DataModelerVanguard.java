@@ -334,13 +334,26 @@ public class DataModelerVanguard {
                             String[] invSymTmpMap;
                             if(innerCell.getStringCellValue().indexOf('(') >0) {
                                 invNameTmp = innerCell.getStringCellValue().substring(0, innerCell.getStringCellValue().indexOf('('));
+                                // Here there may be an issue when currency is brackets e.g.
+                                // Exception - Vanguard FTSE All-World UCITS ETF (USD) Accumulating (VWRP)
+                                // Usual - Vanguard FTSE All-World UCITS ETF Accumulating (VWRP)
+
                                 invSymTmp = innerCell.getStringCellValue().substring(innerCell.getStringCellValue().indexOf('(') + 1, innerCell.getStringCellValue().indexOf(')'));
+
+                                if(invSymTmp.equals("USD") || invSymTmp.equals("GBP") || invSymTmp.equals("EUR")) {
+
+                                   String invSymTmpWithCurr = innerCell.getStringCellValue().replace("("+invSymTmp+")", "");
+
+                                   invSymTmp = invSymTmpWithCurr.substring(invSymTmpWithCurr.indexOf('(')+1,invSymTmpWithCurr.indexOf(')'));
+
+                                }
+
                                 //check if symbol exists else error out
                                 if(invTranslistFinal.getReverseSymbolMap().containsKey(invSymTmp)) {
                                     itrans.setInvSymb(invSymTmp);
                                 }
                                 else{
-                                    throw new Exception("Symbol in statement does not exist in mapfile, please add it to mapfile:"+ invNameTmp);
+                                    throw new Exception("Symbol in statement does not exist in mapfile, please add it to mapfile: " + invSymTmp);
                                 }
                             }
                             else{
