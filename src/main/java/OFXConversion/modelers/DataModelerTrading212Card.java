@@ -18,45 +18,57 @@ public class DataModelerTrading212Card {
     }
 
     public void populateCols() {
-        Col.put("Action", 0);
-        //Time
-        Col.put("Timestamp", 1);
-        Col.put("ISIN", 2);
-        Col.put("Ticker", 3);
-        //Name
-        Col.put("Title", 4);
-        //Notes
-        Col.put("Notes", 5);
-        //ID
-        Col.put("Order ID", 6);
-        //No. of shares
-        Col.put("Quantity", 7);
-        // Price / Share
-        Col.put("Price per Share in Account Currency", 8);
-        // Currency (Price / share)
-        Col.put("Account Currency", 9);
-        //Exchange rate
-        Col.put("FX Rate", 10);
-        // Result
-        Col.put("Result",11);
-        // Currency (Result)
-        Col.put("Currency Result",12);
-        //Total
-        Col.put("Total Amount", 13);
-        //Currency (Total)
-        Col.put("Currency Total",14);
-        //Stamp Duty Reserve currency
-        Col.put("Stamp Duty Reserve currency",15);
-        //Currency (Stamp Duty)
-        Col.put("Currency Stamp Duty",16);
-        //Currency converson fee
-        Col.put("Currency Conversion Fee",17);
-        //Currency of the currency conversion fee
-        Col.put("Currency",18);
-        //Merchant Name
-        Col.put("Merchant name",19);
-        //Merchant Category
-        Col.put("Merchant Category",20);
+        /* As they keep messing with the cols, col numbers will be variables.
+        */
+        int ColIndex = 0;
+
+        //Action - Col 0
+        Col.put("Action", ColIndex++);
+        //Time - Col 1
+        Col.put("Timestamp", ColIndex++);
+        // ISIN - Col 2
+        Col.put("ISIN", ColIndex++);
+        //Ticker - Col 3
+        Col.put("Ticker", ColIndex++);
+        //Name - Col 4
+        Col.put("Title", ColIndex++);
+        //Notes - Col 5
+        Col.put("Notes", ColIndex++);
+        //ID - Col 6
+        Col.put("Order ID", ColIndex++);
+        //No. of shares - Col 7
+        Col.put("Quantity", ColIndex++);
+        // Price / Share - Col 8
+        Col.put("Price per Share in Account Currency", ColIndex++);
+        // Currency (Price / share) - Col 9
+        Col.put("Account Currency", ColIndex++);
+        //Exchange rate - Col 10
+        Col.put("FX Rate", ColIndex++);
+        //Result - Col 11
+        //Column removed due to some reason, may reinstate later!
+        //Col.put("Result",ColIndex+ 1);
+        // Currency (Result) - Col 12
+        Col.put("Currency Result",ColIndex++);
+        //Total - Col 13
+        Col.put("Total Amount", ColIndex++);
+        //Currency (Total) - Col 14
+        Col.put("Currency Total", ColIndex++);
+        //Withholding Tax - Col 14.1
+        Col.put("Withholding Tax", ColIndex++);
+        //Currency Withholding Tax - Col 14.2
+        Col.put("Currency Withholding Tax", ColIndex++);
+        //Stamp Duty Reserve currency - Col 15
+        Col.put("Stamp Duty Reserve currency",ColIndex++);
+        //Currency (Stamp Duty) - Col 16
+        Col.put("Currency Stamp Duty",ColIndex++);
+        //Currency converson fee - Col 17
+        //Col.put("Currency Conversion Fee",ColIndex+ 1);
+        //Currency of the currency conversion fee - Col 18
+        //Col.put("Currency", ColIndex+ 1);
+        //Merchant Name - Col 19
+        Col.put("Merchant name", ColIndex++);
+        //Merchant Category - Col 20
+        Col.put("Merchant Category", ColIndex);
     }
 
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
@@ -133,7 +145,7 @@ public class DataModelerTrading212Card {
                         itrans.setInvSymb(tokens[Col.get("Ticker")]);
 
 
-                        if (tokens[Col.get("Action")].equals("DIVIDEND")) {
+                        if (tokens[Col.get("Action")].startsWith("Dividend")) {
                             itrans.setInvTransactionType(TransactionTypes.DIVIDEND);
                         } else {
                             //This is buy or sell order
@@ -143,6 +155,7 @@ public class DataModelerTrading212Card {
                             //price
                             itrans.setInvPrice(Double.parseDouble(tokens[Col.get("Price per Share in Account Currency")])/Double.parseDouble(tokens[Col.get("FX Rate")]));
                             //commission = fx fees + stamp duty for shares
+
 
                             switch (invTranslistFinal.getReverseSymbolMap().get(itrans.getInvSymb())[1]) {
                                 case "MF":
@@ -166,7 +179,7 @@ public class DataModelerTrading212Card {
                                     }
                                     break;
                                 default:
-                                    throw new Exception("invalid symbol encountered");
+                                    throw new Exception("invalid symbol encountered:" + itrans.getInvSymb());
                             }//switch
 
                         }//buy/sell if/else
