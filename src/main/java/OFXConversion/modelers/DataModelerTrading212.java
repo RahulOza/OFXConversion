@@ -36,11 +36,11 @@ public class DataModelerTrading212 {
         //Exchange rate
         Col.put("FX Rate", 10);
         // Currency (Result)
-        Col.put("Currency Result",11);
+        //Col.put("Currency Result",11);
         //Total
-        Col.put("Total Amount", 12);
+        Col.put("Total Amount", 11);
         // Currency (Total)
-        Col.put("Currency Total",13);
+        Col.put("Currency Total",12);
     }
 
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
@@ -63,7 +63,7 @@ public class DataModelerTrading212 {
 
                     String[] tokens = lineOfStatement.split(",",-1);
 
-                    if (tokens.length < 14) {
+                    if (tokens.length < 13) {
                         //if there are less than the mandated fields we cannot process
                         throw new Exception("Less than 14 fields in this line ..pls revisit");
                     }

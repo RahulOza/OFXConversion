@@ -78,7 +78,7 @@ public class DataModelerFreeTrade {
                     //    20               21                22                23                        24
                     // Dividend Gross Distribution Amount,Dividend Net Distribution Amount,Dividend Withheld Tax Percentage,Dividend Withheld Tax Amount
                     //                 25                             26                               27                         28
-                    if (tokens[Col.get("Type")].equals("MONTHLY_STATEMENT")) {
+                    if (tokens[Col.get("Type")].equals("MONTHLY_STATEMENT") || tokens[Col.get("Type")].equals("MONTHLY_SHARE_LENDING_STATEMENT") || tokens[Col.get("Type")].equals("TAX_CERTIFICATE") ) {
                         //nothing to process if just monthly statement
                         continue;
                     }
@@ -111,7 +111,7 @@ public class DataModelerFreeTrade {
                     }
 
 
-                    if (tokens[Col.get("Type")].equals("ORDER") || tokens[Col.get("Type")].equals("DIVIDEND")) {
+                    if (tokens[Col.get("Type")].equals("ORDER") || tokens[Col.get("Type")].equals("DIVIDEND") || tokens[Col.get("Type")].equals("SPECIAL_DIVIDEND")) {
                         //Investment transactions ..
 
                         //Name
@@ -120,7 +120,7 @@ public class DataModelerFreeTrade {
                         itrans.setInvSymb(tokens[Col.get("Ticker")]);
 
 
-                        if (tokens[Col.get("Type")].equals("DIVIDEND")) {
+                        if (tokens[Col.get("Type")].equals("DIVIDEND") || tokens[Col.get("Type")].equals("SPECIAL_DIVIDEND")) {
                             itrans.setInvTransactionType(TransactionTypes.DIVIDEND);
                         } else {
                             //This is buy or sell order

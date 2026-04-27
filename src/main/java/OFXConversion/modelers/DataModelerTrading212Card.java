@@ -48,7 +48,7 @@ public class DataModelerTrading212Card {
         //Column removed due to some reason, may reinstate later!
         //Col.put("Result",ColIndex+ 1);
         // Currency (Result) - Col 12
-        Col.put("Currency Result",ColIndex++);
+       // Col.put("Currency Result",ColIndex++);
         //Total - Col 13
         Col.put("Total Amount", ColIndex++);
         //Currency (Total) - Col 14
@@ -61,7 +61,7 @@ public class DataModelerTrading212Card {
         Col.put("Stamp Duty Reserve currency",ColIndex++);
         //Currency (Stamp Duty) - Col 16
         Col.put("Currency Stamp Duty",ColIndex++);
-        //Currency converson fee - Col 17
+        //Currency conversion fee - Col 17
         //Col.put("Currency Conversion Fee",ColIndex+ 1);
         //Currency of the currency conversion fee - Col 18
         //Col.put("Currency", ColIndex+ 1);
