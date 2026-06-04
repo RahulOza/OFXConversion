@@ -17,9 +17,9 @@ public class DataModelerTrading212Card {
         Col = new HashMap<>();
     }
 
-    public void populateCols() {
-        /* As they keep messing with the cols, col numbers will be variables.
-        */
+    /* public void populateCols() {
+        // As they keep messing with the cols, col numbers will be variables.
+        //
         int ColIndex = 0;
 
         //Action - Col 0
@@ -58,9 +58,9 @@ public class DataModelerTrading212Card {
         //Currency Withholding Tax - Col 14.2
         Col.put("Currency Withholding Tax", ColIndex++);
         //Stamp Duty Reserve currency - Col 15
-        Col.put("Stamp Duty Reserve currency",ColIndex++);
+        //Col.put("Stamp Duty Reserve currency",ColIndex++);
         //Currency (Stamp Duty) - Col 16
-        Col.put("Currency Stamp Duty",ColIndex++);
+        //Col.put("Currency Stamp Duty",ColIndex++);
         //Currency conversion fee - Col 17
         //Col.put("Currency Conversion Fee",ColIndex+ 1);
         //Currency of the currency conversion fee - Col 18
@@ -69,6 +69,70 @@ public class DataModelerTrading212Card {
         Col.put("Merchant name", ColIndex++);
         //Merchant Category - Col 20
         Col.put("Merchant Category", ColIndex);
+    } */
+
+    public void loadAndSanitiseCols(String [] tokens) throws Exception {
+        //get index of mandatory cols, ensure minimum number of fields are there to process data
+        int ctr = 0;
+        for(String token : tokens){
+
+            if(token.equals("Action")){
+                Col.put("Action",ctr);
+            }
+            if(token.equals("Time")){
+                Col.put("Timestamp",ctr);
+            }
+            if(token.equals("ISIN")){
+                Col.put("ISIN",ctr);
+            }
+            if(token.equals("Ticker")){
+                Col.put("Ticker",ctr);
+            }
+            if(token.equals("Name")){
+                Col.put("Title",ctr);
+            }
+            if(token.equals("Notes")){
+                Col.put("Notes",ctr);
+            }
+            //if(token.equals("Order ID")){
+            //    Col.put("Order ID",ctr);
+            //}
+            if(token.equals("No. of shares")){
+                Col.put("Quantity",ctr);
+            }
+            if(token.equals("Price / share")){
+                Col.put("Price per Share in Account Currency",ctr);
+            }
+            if(token.equals("Currency (Price / share)")){
+                Col.put("Account Currency",ctr);
+            }
+            if(token.equals("Exchange rate")){
+                Col.put("FX Rate",ctr);
+            }
+            if(token.equals("Total")){
+                Col.put("Total Amount",ctr);
+            }
+            if(token.equals("Currency(Total)")){
+                Col.put("Currency Total",ctr);
+            }
+            /* if(token.equals("Withholding Tax")){
+                Col.put("Withholding Tax",ctr);
+            }
+            if(token.equals("Currency Withholding Tax")){
+                Col.put("Currency Withholding Tax",ctr);
+            }*/
+            if(token.equals("Merchant name")){
+                Col.put("Merchant name",ctr);
+            }
+            if(token.equals("Merchant category")){
+                Col.put("Merchant Category",ctr);
+            }
+            ctr++;
+        }
+
+        if(ctr < 14){
+            throw new Exception("Less than 14 critical fields in the file ..pls revisit");
+        }
     }
 
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
@@ -77,7 +141,6 @@ public class DataModelerTrading212Card {
         InvTransactionList invTranslistFinal = new InvTransactionList();
 
         invTranslistFinal.readSymbolMap();
-        populateCols();
 
         try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
             DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
@@ -87,12 +150,17 @@ public class DataModelerTrading212Card {
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
 
+                if(isHeader){
+                    String[] tokens = lineOfStatement.split(",",-1);
+                    loadAndSanitiseCols(tokens);
+                }
+
                 // first line is the header so ignore it
                 if (!isHeader) {
 
                     String[] tokens = lineOfStatement.split(",",-1);
 
-                    if (tokens.length < 14) {
+                    if (tokens.length < 16) {
                         //if there are less than the mandated fields we cannot process
                         throw new Exception("Less than 16 fields in this line ..pls revisit");
                     }
@@ -119,7 +187,7 @@ public class DataModelerTrading212Card {
 
 
 
-                    if (tokens[Col.get("Action")].equals("Market buy")) {
+                    if (tokens[Col.get("Action")].equals("Market buy") || tokens[Col.get("Action")].startsWith("Dividend") || tokens[Col.get("Action")].equals("Market sell")) {
                         //Investment transactions ..
 
                         //Also set the amount in card as a transfer
@@ -188,9 +256,7 @@ public class DataModelerTrading212Card {
                     }// order or dividend
                     translistCardFinal.getTransactionsList().add(transCard);
                 }//header
-
-                if (isHeader)
-                    isHeader = false;
+                isHeader = false;
             }//while not null
         } //try
         return (new AllTransactions(invTranslistFinal, translistFinal, translistCardFinal));

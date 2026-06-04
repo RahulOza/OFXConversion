@@ -42,6 +42,70 @@ public class DataModelerTrading212 {
         // Currency (Total)
         Col.put("Currency Total",12);
     }
+    //TODO - Fix Trading212 and add loadAndSanitise function
+    public void loadAndSanitiseCols(String [] tokens) throws Exception {
+        //get index of mandatory cols, ensure minimum number of fields are there to process data
+        int ctr = 0;
+        for(String token : tokens){
+
+            if(token.equals("Action")){
+                Col.put("Action",ctr);
+            }
+            if(token.equals("Time")){
+                Col.put("Timestamp",ctr);
+            }
+            if(token.equals("ISIN")){
+                Col.put("ISIN",ctr);
+            }
+            if(token.equals("Ticker")){
+                Col.put("Ticker",ctr);
+            }
+            if(token.equals("Name")){
+                Col.put("Title",ctr);
+            }
+            if(token.equals("Notes")){
+                Col.put("Notes",ctr);
+            }
+            //if(token.equals("Order ID")){
+            //    Col.put("Order ID",ctr);
+            //}
+            if(token.equals("No. of shares")){
+                Col.put("Quantity",ctr);
+            }
+            if(token.equals("Price / share")){
+                Col.put("Price per Share in Account Currency",ctr);
+            }
+            if(token.equals("Currency (Price / share)")){
+                Col.put("Account Currency",ctr);
+            }
+            if(token.equals("Exchange rate")){
+                Col.put("FX Rate",ctr);
+            }
+            if(token.equals("Total")){
+                Col.put("Total Amount",ctr);
+            }
+            if(token.equals("Currency(Total)")){
+                Col.put("Currency Total",ctr);
+            }
+            /* if(token.equals("Withholding Tax")){
+                Col.put("Withholding Tax",ctr);
+            }
+            if(token.equals("Currency Withholding Tax")){
+                Col.put("Currency Withholding Tax",ctr);
+            }*/
+            if(token.equals("Merchant name")){
+                Col.put("Merchant name",ctr);
+            }
+            if(token.equals("Merchant category")){
+                Col.put("Merchant Category",ctr);
+            }
+            ctr++;
+        }
+
+        if(ctr < 14){
+            throw new Exception("Less than 14 critical fields in the file ..pls revisit");
+        }
+    }
 
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
         TransactionList translistFinal = new TransactionList();
@@ -97,7 +161,7 @@ public class DataModelerTrading212 {
                     }*/
 
                     //TODO - we don't know the text for dividend
-                    if (tokens[Col.get("Action")].equals("Market buy") || tokens[Col.get("Action")].equals("DIVIDEND")) {
+                    if (tokens[Col.get("Action")].equals("Market buy") || tokens[Col.get("Action")].equals("DIVIDEND") || tokens[Col.get("Action")].equals("Market sell")) {
                         //Investment transactions ..
 
                         //Name
