@@ -106,6 +106,7 @@ public class OfxgenGetPropertyValues {
     public static Double testintialBalanceTrading212 =0.0;
     public static Double testfinalBalanceTrading212 =0.0;
     public static String prefixTrading212FileName ="";
+    public static String trading212XferText = "";
 
 
     //Dodl
@@ -300,6 +301,7 @@ public class OfxgenGetPropertyValues {
             testfinalBalanceTrading212Inv = Double.parseDouble(prop.getProperty("ofxgenprops.testing.trading212Inv.finalBalanceTrading212"));
             prefixTrading212CardFileName = prop.getProperty("ofxgenprops.backgroundprocessing.trading212Card.trading212FileName");
             Trading212FilePrefix = prop.getProperty("ofxgenprops.trading212.filePrefix");
+            trading212XferText = prop.getProperty("ofxgenprops.trading212Card.trading212XferText");
 
             logger.info(result);
 

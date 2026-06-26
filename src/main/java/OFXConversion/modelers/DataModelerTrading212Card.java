@@ -191,7 +191,7 @@ public class DataModelerTrading212Card {
                         //Investment transactions ..
 
                         //Also set the amount in card as a transfer
-                        transCard.setTransactionDetails("R T212Card to T212");
+                        transCard.setTransactionDetails(OfxgenGetPropertyValues.trading212XferText);
                         transCard.setTransactionAmount(-Double.parseDouble(tokens[Col.get("Total Amount")]));
                         transCard.setTransactionDate(LocalDate.parse(tokens[Col.get("Timestamp")].substring(0,10), myformatter));
 
