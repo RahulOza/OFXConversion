@@ -16,6 +16,8 @@ public class DataModelerTrading212 {
     public DataModelerTrading212() {
         Col = new HashMap<>();
     }
+
+    //TODO - remove populateCols
     public void populateCols() {
         Col.put("Action", 0);
         //Time
@@ -42,7 +44,7 @@ public class DataModelerTrading212 {
         // Currency (Total)
         Col.put("Currency Total",12);
     }
-    //TODO - Fix Trading212 and add loadAndSanitise function
+
     public void loadAndSanitiseCols(String [] tokens) throws Exception {
         //get index of mandatory cols, ensure minimum number of fields are there to process data
         int ctr = 0;
@@ -51,7 +53,7 @@ public class DataModelerTrading212 {
             if(token.equals("Action")){
                 Col.put("Action",ctr);
             }
-            if(token.equals("Time")){
+            if(token.equals("Time (UTC)")){
                 Col.put("Timestamp",ctr);
             }
             if(token.equals("ISIN")){
@@ -66,9 +68,9 @@ public class DataModelerTrading212 {
             if(token.equals("Notes")){
                 Col.put("Notes",ctr);
             }
-            //if(token.equals("Order ID")){
-            //    Col.put("Order ID",ctr);
-            //}
+            if(token.equals("ID")){
+                Col.put("ID",ctr);
+            }
             if(token.equals("No. of shares")){
                 Col.put("Quantity",ctr);
             }
@@ -87,23 +89,16 @@ public class DataModelerTrading212 {
             if(token.equals("Currency(Total)")){
                 Col.put("Currency Total",ctr);
             }
-            /* if(token.equals("Withholding Tax")){
-                Col.put("Withholding Tax",ctr);
+            if(token.equals("Stamp duty reserve tax")){
+                Col.put("Stamp duty",ctr);
             }
-            if(token.equals("Currency Withholding Tax")){
-                Col.put("Currency Withholding Tax",ctr);
-            }*/
-            if(token.equals("Merchant name")){
-                Col.put("Merchant name",ctr);
-            }
-            if(token.equals("Merchant category")){
-                Col.put("Merchant Category",ctr);
+            if(token.equals("Currency Stamp duty reserve tax")){
+                Col.put("Currency Stamp duty reserve tax",ctr);
             }
             ctr++;
         }
-
-        if(ctr < 14){
-            throw new Exception("Less than 14 critical fields in the file ..pls revisit");
+        if(ctr < 13){
+            throw new Exception("Less than 13 critical fields in the file ..pls revisit");
         }
     }
 
@@ -112,7 +107,7 @@ public class DataModelerTrading212 {
         InvTransactionList invTranslistFinal = new InvTransactionList();
 
         invTranslistFinal.readSymbolMap();
-        populateCols();
+        //populateCols();
 
         try (BufferedReader inputStream = new BufferedReader(new FileReader(sourceFileName))) {
             DateTimeFormatter myformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
@@ -122,15 +117,11 @@ public class DataModelerTrading212 {
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
 
-                // first line is the header so ignore it
-                if (!isHeader) {
-
-                    String[] tokens = lineOfStatement.split(",",-1);
-
-                    if (tokens.length < 13) {
-                        //if there are less than the mandated fields we cannot process
-                        throw new Exception("Less than 14 fields in this line ..pls revisit");
-                    }
+                String[] tokens = lineOfStatement.split(",",-1);
+                if(isHeader){
+                    loadAndSanitiseCols(tokens);
+                }
+                else {// first line is the header so ignore it
                     Transactions trans = new Transactions();
                     InvTransactions itrans = new InvTransactions();
                     //some transactions are cash only while others are investments as well
@@ -160,7 +151,7 @@ public class DataModelerTrading212 {
                         //trans.setTransactionAmount(-Double.parseDouble(tokens[Col.get("Total Amount")]));
                     }*/
 
-                    //TODO - we don't know the text for dividend
+
                     if (tokens[Col.get("Action")].equals("Market buy") || tokens[Col.get("Action")].equals("DIVIDEND") || tokens[Col.get("Action")].equals("Market sell")) {
                         //Investment transactions ..
 
@@ -180,10 +171,9 @@ public class DataModelerTrading212 {
                             //price
                             itrans.setInvPrice(Double.parseDouble(tokens[Col.get("Price per Share in Account Currency")])/Double.parseDouble(tokens[Col.get("FX Rate")]));
                             //commission = fx fees + stamp duty for shares
-                            /*if(!tokens[Col.get("Stamp Duty")].isEmpty()){
+                            if(Col.containsKey("Stamp Duty") && !(tokens[Col.get("Stamp Duty")].isEmpty())){
                                 itrans.setInvCommission(itrans.getInvCommission() + Double.parseDouble(tokens[Col.get("Stamp Duty")]));
-                            }*/
-
+                            }
                                 switch (invTranslistFinal.getReverseSymbolMap().get(itrans.getInvSymb())[1]) {
                                     case "MF":
                                         if (tokens[Col.get("Action")].equals("Market buy")) {

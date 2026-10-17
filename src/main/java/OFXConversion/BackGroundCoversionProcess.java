@@ -102,7 +102,7 @@ public class BackGroundCoversionProcess implements Runnable{
                            OFXConversion.convertFileTrading212(pollDirPath + "\\" + filename);
                            processed = true;
                        } catch (Exception e) {
-                           logger.severe(e.toString());
+                           logger.info(e.toString());
                        }
                    }//Trading212
                    if(filename.toString().startsWith(OfxgenGetPropertyValues.prefixEquateFileName)) {

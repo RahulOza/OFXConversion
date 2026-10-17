@@ -17,60 +17,6 @@ public class DataModelerTrading212Card {
         Col = new HashMap<>();
     }
 
-    /* public void populateCols() {
-        // As they keep messing with the cols, col numbers will be variables.
-        //
-        int ColIndex = 0;
-
-        //Action - Col 0
-        Col.put("Action", ColIndex++);
-        //Time - Col 1
-        Col.put("Timestamp", ColIndex++);
-        // ISIN - Col 2
-        Col.put("ISIN", ColIndex++);
-        //Ticker - Col 3
-        Col.put("Ticker", ColIndex++);
-        //Name - Col 4
-        Col.put("Title", ColIndex++);
-        //Notes - Col 5
-        Col.put("Notes", ColIndex++);
-        //ID - Col 6
-        Col.put("Order ID", ColIndex++);
-        //No. of shares - Col 7
-        Col.put("Quantity", ColIndex++);
-        // Price / Share - Col 8
-        Col.put("Price per Share in Account Currency", ColIndex++);
-        // Currency (Price / share) - Col 9
-        Col.put("Account Currency", ColIndex++);
-        //Exchange rate - Col 10
-        Col.put("FX Rate", ColIndex++);
-        //Result - Col 11
-        //Column removed due to some reason, may reinstate later!
-        //Col.put("Result",ColIndex+ 1);
-        // Currency (Result) - Col 12
-       // Col.put("Currency Result",ColIndex++);
-        //Total - Col 13
-        Col.put("Total Amount", ColIndex++);
-        //Currency (Total) - Col 14
-        Col.put("Currency Total", ColIndex++);
-        //Withholding Tax - Col 14.1
-        Col.put("Withholding Tax", ColIndex++);
-        //Currency Withholding Tax - Col 14.2
-        Col.put("Currency Withholding Tax", ColIndex++);
-        //Stamp Duty Reserve currency - Col 15
-        //Col.put("Stamp Duty Reserve currency",ColIndex++);
-        //Currency (Stamp Duty) - Col 16
-        //Col.put("Currency Stamp Duty",ColIndex++);
-        //Currency conversion fee - Col 17
-        //Col.put("Currency Conversion Fee",ColIndex+ 1);
-        //Currency of the currency conversion fee - Col 18
-        //Col.put("Currency", ColIndex+ 1);
-        //Merchant Name - Col 19
-        Col.put("Merchant name", ColIndex++);
-        //Merchant Category - Col 20
-        Col.put("Merchant Category", ColIndex);
-    } */
-
     public void loadAndSanitiseCols(String [] tokens) throws Exception {
         //get index of mandatory cols, ensure minimum number of fields are there to process data
         int ctr = 0;
@@ -79,7 +25,7 @@ public class DataModelerTrading212Card {
             if(token.equals("Action")){
                 Col.put("Action",ctr);
             }
-            if(token.equals("Time")){
+            if(token.equals("Time (UTC)")){
                 Col.put("Timestamp",ctr);
             }
             if(token.equals("ISIN")){
@@ -133,6 +79,17 @@ public class DataModelerTrading212Card {
         if(ctr < 14){
             throw new Exception("Less than 14 critical fields in the file ..pls revisit");
         }
+
+        if(!Col.containsKey("Action")){
+            throw new Exception("Missing Action field in the file ..pls revisit");
+        }
+        if(!Col.containsKey("Timestamp")){
+            throw new Exception("Missing Time (UTC) field in the file ..pls revisit");
+        }
+        if(!Col.containsKey("Total Amount")){
+            throw new Exception("Missing Total field in the file ..pls revisit");
+        }
+
     }
 
     public AllTransactions createTransactionList(String sourceFileName) throws Exception {
@@ -150,20 +107,12 @@ public class DataModelerTrading212Card {
 
             while ((lineOfStatement = inputStream.readLine()) != null) {
 
+                String[] tokens = lineOfStatement.split(",",-1);
                 if(isHeader){
-                    String[] tokens = lineOfStatement.split(",",-1);
                     loadAndSanitiseCols(tokens);
                 }
-
-                // first line is the header so ignore it
-                if (!isHeader) {
-
-                    String[] tokens = lineOfStatement.split(",",-1);
-
-                    if (tokens.length < 16) {
-                        //if there are less than the mandated fields we cannot process
-                        throw new Exception("Less than 16 fields in this line ..pls revisit");
-                    }
+                else {// first line is the header so ignore it
+                //!header
                     Transactions transCard = new Transactions();
                     Transactions trans = new Transactions();
                     InvTransactions itrans = new InvTransactions();

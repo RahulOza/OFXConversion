@@ -240,7 +240,7 @@ public class OFXConversion {
 
     public static void main(String[] args) throws IOException {
 
-        Double myVersion = 2.6;
+        Double myVersion = 2.7;
         String myVersionDetails = "Dodle and T212 Fixes";
 
 
